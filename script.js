@@ -34,8 +34,8 @@ window.addEventListener('load', function(){
     class Player {
         constructor(game){
             this.game = game
-            this.width = 120
-            this.height = 120
+            this.width = 40
+            this.height = 40
             this.x = 20
             this.y = 100
             this.speedY = 0
@@ -43,11 +43,10 @@ window.addEventListener('load', function(){
             this.setSnakeSpeed = 2
         }
         update(){
-            // var setSnakeSpeed = 2
-            if (this.game.keys.includes('ArrowUp')) {this.speedY = -this.setSnakeSpeed; this.speedX = 0}
-            else if (this.game.keys.includes('ArrowDown')) {this.speedY = this.setSnakeSpeed; this.speedX = 0}
-            else if (this.game.keys.includes('ArrowLeft')) {this.speedX = -this.setSnakeSpeed; this.speedY = 0}
-            else if (this.game.keys.includes('ArrowRight')) {this.speedX = this.setSnakeSpeed; this.speedY = 0} 
+            if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {this.speedY = -this.setSnakeSpeed; this.speedX = 0}
+            else if (this.game.keys.includes('ArrowDown') && this.speedY === 0) {this.speedY = this.setSnakeSpeed; this.speedX = 0}
+            else if (this.game.keys.includes('ArrowLeft') && this.speedX === 0) {this.speedX = -this.setSnakeSpeed; this.speedY = 0}
+            else if (this.game.keys.includes('ArrowRight') && this.speedX === 0) {this.speedX = this.setSnakeSpeed; this.speedY = 0} 
             else if (this.game.keys.includes(' ')) {this.speedX = 0; this.speedY = 0}
             this.y += this.speedY
             this.x += this.speedX
