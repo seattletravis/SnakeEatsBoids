@@ -10,8 +10,10 @@ window.addEventListener('load', function(){
             this.game = game
             window.addEventListener('keydown', e => {
                 if ((   (e.key === 'ArrowUp') || 
-                        (e.key === 'ArrowDown') 
-                    
+                        (e.key === 'ArrowDown') ||
+                        (e.key === 'ArrowLeft') ||
+                        (e.key === 'ArrowRight') ||
+                        (e.key === 'Space')
                 ) && this.game.keys.indexOf(e.key) === -1){
                     this.game.keys.push(e.key)
                 }
@@ -40,10 +42,14 @@ window.addEventListener('load', function(){
             this.speedX = 0
         }
         update(){
-            if (this.game.keys.includes('ArrowUp')) this.speedY = -1
-            else if (this.game.keys.includes('ArrowDown')) this.speedY = 1
+            if (this.game.keys.includes('ArrowUp')) {this.speedY = -1; this.speedX = 0}
+            else if (this.game.keys.includes('ArrowDown')) {this.speedY = 1; this.speedX = 0}
+            else if (this.game.keys.includes('ArrowLeft')) {this.speedX = -1; this.speedY = 0}
+            else if (this.game.keys.includes('ArrowRight')) {this.speedX = 1; this.speedY = 0} 
+            else if (this.game.keys.includes('Space')) {this.speedX = 0; this.speedY = 0}
             this.y += this.speedY
             this.x += this.speedX
+
         }
         draw(context){
             context.fillRect(this.x, this.y, this.width, this.height)
