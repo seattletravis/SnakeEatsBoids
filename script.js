@@ -31,7 +31,33 @@ window.addEventListener('load', function(){
     class Particle {
 
     }
-    class Player {
+    // class Player {
+    //     constructor(game){
+    //         this.game = game
+    //         this.width = 40
+    //         this.height = 40
+    //         this.x = 20
+    //         this.y = 100
+    //         this.speedY = 0
+    //         this.speedX = 0
+    //         this.setSnakeSpeed = 2
+    //     }
+    //     update(){
+    //         if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {this.speedY = -this.setSnakeSpeed; this.speedX = 0}
+    //         else if (this.game.keys.includes('ArrowDown') && this.speedY === 0) {this.speedY = this.setSnakeSpeed; this.speedX = 0}
+    //         else if (this.game.keys.includes('ArrowLeft') && this.speedX === 0) {this.speedX = -this.setSnakeSpeed; this.speedY = 0}
+    //         else if (this.game.keys.includes('ArrowRight') && this.speedX === 0) {this.speedX = this.setSnakeSpeed; this.speedY = 0} 
+    //         else if (this.game.keys.includes(' ')) {this.speedX = 0; this.speedY = 0}
+    //         this.y += this.speedY
+    //         this.x += this.speedX
+
+    //     }
+    //     draw(context){
+    //         context.fillStyle = 'green'
+    //         context.fillRect(this.x, this.y, this.width, this.height)
+    //     }
+    // }
+    class Snake {
         constructor(game){
             this.game = game
             this.width = 40
@@ -41,7 +67,11 @@ window.addEventListener('load', function(){
             this.speedY = 0
             this.speedX = 0
             this.setSnakeSpeed = 2
+            this.snakePieces = 3
+            this.snakeSegments = []
+            
         }
+        
         update(){
             if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {this.speedY = -this.setSnakeSpeed; this.speedX = 0}
             else if (this.game.keys.includes('ArrowDown') && this.speedY === 0) {this.speedY = this.setSnakeSpeed; this.speedX = 0}
@@ -51,7 +81,18 @@ window.addEventListener('load', function(){
             this.y += this.speedY
             this.x += this.speedX
 
+            for (let i = 0; i <= this.snakePieces; i++){
+                this.snakeSegments.unshift({x: this.x, y: this.y})
+                if (this.snakeSegments.length > i) {
+                    this.snakeSegments.pop()
+                    console.log(this.snakeSegments)
+                }
+
+            }
+
         }
+
+
         draw(context){
             context.fillStyle = 'green'
             context.fillRect(this.x, this.y, this.width, this.height)
@@ -67,7 +108,15 @@ window.addEventListener('load', function(){
 
     }
     class UI {
-
+        constructor(game) {
+            this.game = game
+            this.fontSize = 25
+            this.fontFamily = 'Helvetica'
+            this.color = 'white'
+        }
+        draw(context){
+            
+        }
     }
     class Boid {
 
@@ -76,15 +125,15 @@ window.addEventListener('load', function(){
         constructor(width, height){
             this.width = width
             this.height = height
-            this.player = new Player(this)
+            this.snake = new Snake(this)
             this.input = new InputHandler(this)
             this.keys = []
         }
         update(){
-            this.player.update()
+            this.snake.update()
         }
         draw(context){
-            this.player.draw(context)
+            this.snake.draw(context)
         }
     }
 
@@ -93,10 +142,9 @@ window.addEventListener('load', function(){
     //animation loop
     function animate(timeStamp){
         const deltaTime = timeStamp - lastTime
-        console.log(deltaTime)
         lastTime = timeStamp
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        game.update()
+        game.update(deltaTime)
         game.draw(ctx)
         requestAnimationFrame(animate)
     }
