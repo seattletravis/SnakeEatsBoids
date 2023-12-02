@@ -13,9 +13,10 @@ window.addEventListener('load', function(){
                         (e.key === 'ArrowDown') ||
                         (e.key === 'ArrowLeft') ||
                         (e.key === 'ArrowRight') ||
-                        (e.key === 'Space')
+                        (e.key === ' ')
                 ) && this.game.keys.indexOf(e.key) === -1){
                     this.game.keys.push(e.key)
+                    console.log(this.game.keys)
                 }
             })
             window.addEventListener('keyup', e =>{
@@ -42,11 +43,12 @@ window.addEventListener('load', function(){
             this.speedX = 0
         }
         update(){
-            if (this.game.keys.includes('ArrowUp')) {this.speedY = -1; this.speedX = 0}
-            else if (this.game.keys.includes('ArrowDown')) {this.speedY = 1; this.speedX = 0}
-            else if (this.game.keys.includes('ArrowLeft')) {this.speedX = -1; this.speedY = 0}
-            else if (this.game.keys.includes('ArrowRight')) {this.speedX = 1; this.speedY = 0} 
-            else if (this.game.keys.includes('Space')) {this.speedX = 0; this.speedY = 0}
+            var setSnakeSpeed = 2
+            if (this.game.keys.includes('ArrowUp')) {this.speedY = -setSnakeSpeed; this.speedX = 0}
+            else if (this.game.keys.includes('ArrowDown')) {this.speedY = setSnakeSpeed; this.speedX = 0}
+            else if (this.game.keys.includes('ArrowLeft')) {this.speedX = -setSnakeSpeed; this.speedY = 0}
+            else if (this.game.keys.includes('ArrowRight')) {this.speedX = setSnakeSpeed; this.speedY = 0} 
+            else if (this.game.keys.includes(' ')) {this.speedX = 0; this.speedY = 0}
             this.y += this.speedY
             this.x += this.speedX
 
