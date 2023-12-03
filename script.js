@@ -103,18 +103,24 @@ window.addEventListener('load', function(){
             this.game = game
             this.width = 20
             this.height = 20
-            this.x = Math.random() * canvas.width
-            this.y = Math.random() * canvas.height
-            this.speedY = 2
-            this.speedX = 3
+            this.x = Math.random() * (canvas.width - 30) + 5
+            this.y = Math.random() * (canvas.height - 30) + 5
+            this.speedY = (Math.random() - 0.5) * 3
+            this.speedX = (Math.random() - 0.5) * 3
+            this.direction = Math.random() * Math.PI
+            this.speed = 3
             this.setBoidSpeed = 2
             this.boidPieces = 10
             this.boidSegments = []
         }
         
         update(){
-            if (this.y < 5 || this.y > canvas.height - 30) this.speedY = -this.speedY
-            if (this.x < 5 || this.x > canvas.width - 30) this.speedX = -this.speedX
+
+            if (this.y < 5 || this.y > canvas.height - 30) this.direction += Math.PI/2
+            if (this.x < 5 || this.x > canvas.width - 30) this.direction += Math.PI/2
+
+            this.speedX = this.speed * Math.cos(this.direction)
+            this.speedY = this.speed * Math.sin(this.direction)
 
             this.y += this.speedY
             this.x += this.speedX
