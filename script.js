@@ -60,14 +60,14 @@ window.addEventListener('load', function(){
     class Snake {
         constructor(game){
             this.game = game
-            this.width = 40
-            this.height = 40
+            this.width = 10
+            this.height = 10
             this.x = 20
             this.y = 100
             this.speedY = 0
             this.speedX = 0
             this.setSnakeSpeed = 2
-            this.snakePieces = 3
+            this.snakePieces = 30
             this.snakeSegments = []
             
         }
@@ -80,22 +80,29 @@ window.addEventListener('load', function(){
             else if (this.game.keys.includes(' ')) {this.speedX = 0; this.speedY = 0}
             this.y += this.speedY
             this.x += this.speedX
-
-            for (let i = 0; i <= this.snakePieces; i++){
-                this.snakeSegments.unshift({x: this.x, y: this.y})
-                if (this.snakeSegments.length > i) {
-                    this.snakeSegments.pop()
-                    console.log(this.snakeSegments)
-                }
-
+            this.snakeSegments.unshift({x: this.x, y: this.y})
+            console.log(this.snakeSegments)
+            if (this.snakeSegments.length > this.snakePieces) {
+                this.snakeSegments.pop()
             }
-
         }
 
+        // addSegement(x, y){
+        //     for (let i = 0; i <= this.snakePieces; i++){
+        //         this.snakeSegments.unshift({x, y})
+        //         console.log(this.snakeSegments)
+        //         if (this.snakeSegments.length > i) {
+        //             this.snakeSegments.pop()
+        //         }
+        //     }
+        // }
 
         draw(context){
             context.fillStyle = 'green'
-            context.fillRect(this.x, this.y, this.width, this.height)
+            this.snakeSegments.forEach((segment) => {
+                context.fillRect(segment.x, segment.y, this.width, this.height)
+            })
+            // context.fillRect(this.x, this.y, this.width, this.height)
         }
     }
     class Enemy {
