@@ -113,8 +113,8 @@ window.addEventListener('load', function(){
         }
         
         update(){
-            if (this.y < 5 || this.y > canvas.height - 25) this.speedY = -this.speedY
-            if (this.x < 5 || this.x > canvas.width - 25) this.speedX = -this.speedX
+            if (this.y < 5 || this.y > canvas.height - 30) this.speedY = -this.speedY
+            if (this.x < 5 || this.x > canvas.width - 30) this.speedX = -this.speedX
 
             this.y += this.speedY
             this.x += this.speedX
