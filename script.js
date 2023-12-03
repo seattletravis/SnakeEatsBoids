@@ -31,37 +31,12 @@ window.addEventListener('load', function(){
     class Particle {
 
     }
-    // class Player {
-    //     constructor(game){
-    //         this.game = game
-    //         this.width = 40
-    //         this.height = 40
-    //         this.x = 20
-    //         this.y = 100
-    //         this.speedY = 0
-    //         this.speedX = 0
-    //         this.setSnakeSpeed = 2
-    //     }
-    //     update(){
-    //         if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {this.speedY = -this.setSnakeSpeed; this.speedX = 0}
-    //         else if (this.game.keys.includes('ArrowDown') && this.speedY === 0) {this.speedY = this.setSnakeSpeed; this.speedX = 0}
-    //         else if (this.game.keys.includes('ArrowLeft') && this.speedX === 0) {this.speedX = -this.setSnakeSpeed; this.speedY = 0}
-    //         else if (this.game.keys.includes('ArrowRight') && this.speedX === 0) {this.speedX = this.setSnakeSpeed; this.speedY = 0} 
-    //         else if (this.game.keys.includes(' ')) {this.speedX = 0; this.speedY = 0}
-    //         this.y += this.speedY
-    //         this.x += this.speedX
 
-    //     }
-    //     draw(context){
-    //         context.fillStyle = 'green'
-    //         context.fillRect(this.x, this.y, this.width, this.height)
-    //     }
-    // }
     class Snake {
         constructor(game){
             this.game = game
-            this.width = 10
-            this.height = 10
+            this.width = 20
+            this.height = 20
             this.x = 20
             this.y = 100
             this.speedY = 0
@@ -81,28 +56,16 @@ window.addEventListener('load', function(){
             this.y += this.speedY
             this.x += this.speedX
             this.snakeSegments.unshift({x: this.x, y: this.y})
-            console.log(this.snakeSegments)
             if (this.snakeSegments.length > this.snakePieces) {
                 this.snakeSegments.pop()
             }
         }
-
-        // addSegement(x, y){
-        //     for (let i = 0; i <= this.snakePieces; i++){
-        //         this.snakeSegments.unshift({x, y})
-        //         console.log(this.snakeSegments)
-        //         if (this.snakeSegments.length > i) {
-        //             this.snakeSegments.pop()
-        //         }
-        //     }
-        // }
 
         draw(context){
             context.fillStyle = 'green'
             this.snakeSegments.forEach((segment) => {
                 context.fillRect(segment.x, segment.y, this.width, this.height)
             })
-            // context.fillRect(this.x, this.y, this.width, this.height)
         }
     }
     class Enemy {
