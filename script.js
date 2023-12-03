@@ -109,7 +109,7 @@ window.addEventListener('load', function(){
             this.speedX = 3
             this.setBoidSpeed = 2
             this.boidPieces = 10
-            this.boidSegments = [{x: this.x, y: this.y}]
+            this.boidSegments = []
         }
         
         update(){
