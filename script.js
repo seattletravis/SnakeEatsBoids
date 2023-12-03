@@ -1,8 +1,8 @@
 window.addEventListener('load', function(){
     const canvas = document.getElementById('canvas1')
     const ctx = canvas.getContext('2d')
-    canvas.width = 1500
-    canvas.height = 500
+    canvas.width = 750
+    canvas.height = 400
     
 
     class InputHandler {
@@ -103,8 +103,8 @@ window.addEventListener('load', function(){
             this.game = game
             this.width = 20
             this.height = 20
-            this.x = Math.random() * 1500
-            this.y = Math.random() * 500
+            this.x = Math.random() * canvas.width
+            this.y = Math.random() * canvas.height
             this.speedY = 2
             this.speedX = 3
             this.setBoidSpeed = 2
@@ -113,8 +113,8 @@ window.addEventListener('load', function(){
         }
         
         update(){
-            if (this.y < 5 || this.y > 475) this.speedY = -this.speedY
-            if (this.x < 5 || this.x > 1475) this.speedX = -this.speedX
+            if (this.y < 5 || this.y > canvas.height - 25) this.speedY = -this.speedY
+            if (this.x < 5 || this.x > canvas.width - 25) this.speedX = -this.speedX
 
             this.y += this.speedY
             this.x += this.speedX
