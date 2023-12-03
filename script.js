@@ -103,8 +103,8 @@ window.addEventListener('load', function(){
             this.game = game
             this.width = 20
             this.height = 20
-            this.x = 740
-            this.y = 240
+            this.x = Math.random() * 1500
+            this.y = Math.random() * 500
             this.speedY = 2
             this.speedX = 3
             this.setBoidSpeed = 2
@@ -126,8 +126,10 @@ window.addEventListener('load', function(){
         }
 
         draw(context){
-            context.fillStyle = 'purple'
+            let opacity = 1
             this.boidSegments.forEach((segment) => {
+                opacity -= 0.1
+                context.fillStyle = `rgba(160,32,240,${opacity})`
                 context.fillRect(segment.x, segment.y, this.width, this.height)
             })
         }
