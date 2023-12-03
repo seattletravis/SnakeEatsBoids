@@ -38,7 +38,6 @@ window.addEventListener('load', function(){
             this.setSnakeSpeed = 2
             this.snakePieces = 30
             this.snakeSegments = []
-            
         }
         
         update(){
@@ -67,8 +66,8 @@ window.addEventListener('load', function(){
             this.game = game
             this.width = 20
             this.height = 20
-            this.x = 200
-            this.y = 500
+            this.x = 300
+            this.y = 200
         }
         update(){
             
@@ -100,8 +99,32 @@ window.addEventListener('load', function(){
         }
     }
     class Boid {
+        constructor(game){
+            this.game = game
+            this.width = 20
+            this.height = 20
+            this.x = 740
+            this.y = 240
+            this.speedY = 0
+            this.speedX = 0
+            this.setBoidSpeed = 2
+            this.boidPieces = 10
+            this.boidSegments = [{x: this.x, y: this.y}]
+        }
+        
+        update(){
+            
 
+        }
+
+        draw(context){
+            context.fillStyle = 'purple'
+            this.boidSegments.forEach((segment) => {
+                context.fillRect(segment.x, segment.y, this.width, this.height)
+            })
+        }
     }
+
     class Game {
         constructor(width, height){
             this.width = width
@@ -109,6 +132,7 @@ window.addEventListener('load', function(){
             this.snake = new Snake(this)
             this.input = new InputHandler(this)
             this.food = new Food(this)
+            this.boid = new Boid(this)
             this.keys = []
         }
         update(){
@@ -116,6 +140,8 @@ window.addEventListener('load', function(){
         }
         draw(context){
             this.snake.draw(context)
+            this.food.draw(context)
+            this.boid.draw(context)
         }
 
         
