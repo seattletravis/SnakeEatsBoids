@@ -105,15 +105,23 @@ window.addEventListener('load', function(){
             this.height = 20
             this.x = 740
             this.y = 240
-            this.speedY = 0
-            this.speedX = 0
+            this.speedY = 2
+            this.speedX = 3
             this.setBoidSpeed = 2
             this.boidPieces = 10
             this.boidSegments = [{x: this.x, y: this.y}]
         }
         
         update(){
-            
+            if (this.y < 5 || this.y > 475) this.speedY = -this.speedY
+            if (this.x < 5 || this.x > 1475) this.speedX = -this.speedX
+
+            this.y += this.speedY
+            this.x += this.speedX
+            this.boidSegments.unshift({x: this.x, y: this.y})
+            if (this.boidSegments.length > this.boidPieces) {
+                this.boidSegments.pop()
+            }
 
         }
 
@@ -137,6 +145,7 @@ window.addEventListener('load', function(){
         }
         update(){
             this.snake.update()
+            this.boid.update()
         }
         draw(context){
             this.snake.draw(context)
