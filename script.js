@@ -66,8 +66,8 @@ window.addEventListener('load', function(){
             this.game = game
             this.width = 20
             this.height = 20
-            this.x = 300
-            this.y = 200
+            this.x = Math.random() * (canvas.width - 25) + 5
+            this.y = Math.random() * (canvas.height - 25) + 5
         }
         update(){
             
@@ -154,8 +154,6 @@ window.addEventListener('load', function(){
             this.food.draw(context)
             this.boid.draw(context)
         }
-
-        
     }
 
     const game = new Game(canvas.width, canvas.height)
