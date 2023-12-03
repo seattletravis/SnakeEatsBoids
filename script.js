@@ -25,12 +25,6 @@ window.addEventListener('load', function(){
             })
         }
     }
-    class Projectile {
-
-    }
-    class Particle {
-
-    }
 
     class Snake {
         constructor(game){
@@ -68,6 +62,23 @@ window.addEventListener('load', function(){
             })
         }
     }
+    class Food {
+        constructor(game) {
+            this.game = game
+            this.width = 20
+            this.height = 20
+            this.x = 200
+            this.y = 500
+        }
+        update(){
+            
+        }
+
+        draw(context){
+            context.fillStyle = 'red'
+            context.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
     class Enemy {
         
     }
@@ -97,6 +108,7 @@ window.addEventListener('load', function(){
             this.height = height
             this.snake = new Snake(this)
             this.input = new InputHandler(this)
+            this.food = new Food(this)
             this.keys = []
         }
         update(){
@@ -105,6 +117,8 @@ window.addEventListener('load', function(){
         draw(context){
             this.snake.draw(context)
         }
+
+        
     }
 
     const game = new Game(canvas.width, canvas.height)
@@ -119,7 +133,4 @@ window.addEventListener('load', function(){
         requestAnimationFrame(animate)
     }
     animate(0)
-
-
-
 })
