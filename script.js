@@ -133,8 +133,14 @@ window.addEventListener('load', function(){
 
         draw(context){
             let opacity = 1
+            this.width = 20
+            this.height = 20
             this.boidSegments.forEach((segment) => {
                 opacity -= 0.1
+                segment.x += 1
+                segment.y += 1
+                this.width -= 2
+                this.height -= 2
                 context.fillStyle = `rgba(160,32,240,${opacity})`
                 context.fillRect(segment.x, segment.y, this.width, this.height)
             })
