@@ -76,10 +76,23 @@ window.addEventListener('load', function(){
         draw(context){
             context.fillStyle = 'red'
             context.fillRect(this.x, this.y, this.width, this.height)
+            context.arc()
         }
     }
     class Enemy {
-        
+        constructor(game){
+            this.game = game
+            this.x = this.game.width
+            this.speedX = Math.random() * -1.5 - 0.5
+            this.markedForDeletion = False
+        }
+        update(){
+            this.x += this.speedX
+            if (this.x + this.width < 0) this.markedForDeletion = true
+        }
+
+
+
     }
     class Layer {
 
@@ -103,6 +116,7 @@ window.addEventListener('load', function(){
             this.game = game
             this.width = 20
             this.height = 20
+            this.radius = 10
             this.x = Math.random() * (canvas.width - 30) + 5
             this.y = Math.random() * (canvas.height - 30) + 5
             this.speedY = (Math.random() - 0.5) * 3
@@ -131,6 +145,23 @@ window.addEventListener('load', function(){
 
         }
 
+        // draw(context){
+        //     let opacity = 1
+        //     this.width = 20
+        //     this.height = 20
+        //     this.boidSegments.forEach((segment) => {
+        //         opacity -= 0.1
+        //         segment.x += 1
+        //         segment.y += 1
+        //         this.width -= 2
+        //         this.height -= 2
+        //         context.fillStyle = `rgba(160,32,240,${opacity})`
+        //         // context.fillRect(segment.x, segment.y, this.width, this.height)
+        //         context.arc(segment.x, segment.y, this.radius, 0, Math.PI, 1)
+        //         context.fill()
+        //     })
+        // }
+
         draw(context){
             let opacity = 1
             this.width = 20
@@ -143,6 +174,7 @@ window.addEventListener('load', function(){
                 this.height -= 2
                 context.fillStyle = `rgba(160,32,240,${opacity})`
                 context.fillRect(segment.x, segment.y, this.width, this.height)
+
             })
         }
     }
@@ -153,7 +185,7 @@ window.addEventListener('load', function(){
             this.height = height
             this.snake = new Snake(this)
             this.input = new InputHandler(this)
-            this.food = new Food(this)
+            // this.food = new Food(this)
             this.boid = new Boid(this)
             this.keys = []
         }
@@ -163,7 +195,7 @@ window.addEventListener('load', function(){
         }
         draw(context){
             this.snake.draw(context)
-            this.food.draw(context)
+            // this.food.draw(context)
             this.boid.draw(context)
         }
     }
