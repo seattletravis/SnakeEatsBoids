@@ -96,7 +96,12 @@ window.addEventListener('load', function(){
     }
     class Angler1 extends Enemy {
         constructor(game){
-            
+            super(game)
+            this.width = 40
+            this.height = 40
+            this.y = Math.random() * (this.game.height * 9 - this.height)
+            // this.x = this.game wid
+
         }
 
     }
@@ -123,21 +128,23 @@ window.addEventListener('load', function(){
             this.x = Math.random() * (canvas.width - 30) + 15
             this.y = Math.random() * (canvas.height - 30) + 15
             this.radius = 10
-            this.speedY = 0
-            this.speedX = 0
             this.direction = Math.random() * Math.PI
-            this.speed = 3
+            this.speed = 2
+            this.speedY = this.speed * Math.cos(this.direction)
+            this.speedX = this.speed * Math.sin(this.direction)
             this.boidPieces = 10
             this.boidSegments = []
+
         }
         
         update(){
 
-            if (this.y < 15 || this.y > canvas.height - 15) this.direction += Math.PI/2
-            if (this.x < 15 || this.x > canvas.width - 15) this.direction += Math.PI/2
+            // this.speedX = this.speed * Math.cos(this.direction)
+            // this.speedY = this.speed * Math.sin(this.direction)
 
-            this.speedX = this.speed * Math.cos(this.direction)
-            this.speedY = this.speed * Math.sin(this.direction)
+            if (this.y < 15 || this.y > canvas.height - 15) this.speedY = -this.speedY
+            if (this.x < 15 || this.x > canvas.width - 15) this.speedX = -this.speedX
+
 
             this.y += this.speedY
             this.x += this.speedX
@@ -150,6 +157,7 @@ window.addEventListener('load', function(){
         draw(context){
             let opacity = 1;
             let radius = 10
+            // let this.
             this.boidSegments.forEach((segment) => {
                 opacity -= 0.1
                 radius -= 0.75
@@ -168,15 +176,36 @@ window.addEventListener('load', function(){
             this.snake = new Snake(this)
             this.input = new InputHandler(this)
             this.boid = new Boid(this)
+            this.boidTimer = 0
+            this.boidInterval = 1000
+            this.maxBoids = 5
             this.keys = []
+            this.boids = []
+            this.gameOver = false
         }
-        update(){
+        update(deltaTime){
             this.snake.update()
-            this.boid.update()
+            // this.boid.update()
+            this.boids.forEach(boid => {
+                boid.update()
+            })
+            this.boids = this.boids.filter(boid => !boid.markedForDeletion)
+            if (this.boidTimer > this.boidInterval && this.boids.length < this.maxBoids && !this.gameOver) {
+                this.addBoid()
+                this.boidTimer = 0
+            } else {
+                this.boidTimer += deltaTime
+            }
+
         }
         draw(context){
             this.snake.draw(context)
-            this.boid.draw(context)
+            this.boids.forEach(boid => {
+                boid.draw(context)
+            })
+        }
+        addBoid(){
+            this.boids.push(new Boid(this))
         }
     }
 
