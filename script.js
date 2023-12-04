@@ -129,7 +129,7 @@ window.addEventListener('load', function(){
             this.y = Math.random() * (canvas.height - 30) + 15
             this.radius = 10
             this.direction = Math.random() * Math.PI
-            this.speed = 2
+            this.speed = 1
             this.speedY = this.speed * Math.cos(this.direction)
             this.speedX = this.speed * Math.sin(this.direction)
             this.boidPieces = 10
@@ -139,12 +139,8 @@ window.addEventListener('load', function(){
         
         update(){
 
-            // this.speedX = this.speed * Math.cos(this.direction)
-            // this.speedY = this.speed * Math.sin(this.direction)
-
             if (this.y < 15 || this.y > canvas.height - 15) this.speedY = -this.speedY
             if (this.x < 15 || this.x > canvas.width - 15) this.speedX = -this.speedX
-
 
             this.y += this.speedY
             this.x += this.speedX
