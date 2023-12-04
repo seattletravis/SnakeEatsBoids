@@ -114,24 +114,22 @@ window.addEventListener('load', function(){
     class Boid {
         constructor(game){
             this.game = game
-            this.width = 20
-            this.height = 20
+            this.x = Math.random() * (canvas.width - 30) + 15
+            this.y = Math.random() * (canvas.height - 30) + 15
             this.radius = 10
-            this.x = Math.random() * (canvas.width - 30) + 5
-            this.y = Math.random() * (canvas.height - 30) + 5
-            this.speedY = (Math.random() - 0.5) * 3
-            this.speedX = (Math.random() - 0.5) * 3
+            this.speedY = 0
+            this.speedX = 0
             this.direction = Math.random() * Math.PI
             this.speed = 3
-            this.setBoidSpeed = 2
+            // this.setBoidSpeed = 2
             this.boidPieces = 10
             this.boidSegments = []
         }
         
         update(){
 
-            if (this.y < 5 || this.y > canvas.height - 30) this.direction += Math.PI/2
-            if (this.x < 5 || this.x > canvas.width - 30) this.direction += Math.PI/2
+            if (this.y < 15 || this.y > canvas.height - 15) this.direction += Math.PI/2
+            if (this.x < 15 || this.x > canvas.width - 15) this.direction += Math.PI/2
 
             this.speedX = this.speed * Math.cos(this.direction)
             this.speedY = this.speed * Math.sin(this.direction)
@@ -142,7 +140,19 @@ window.addEventListener('load', function(){
             if (this.boidSegments.length > this.boidPieces) {
                 this.boidSegments.pop()
             }
+        }
 
+        draw(context){
+            let opacity = 1;
+            let radius = 10
+            this.boidSegments.forEach((segment) => {
+                opacity -= 0.1
+                radius -= 0.75
+                context.fillStyle = `rgba(160,32,240,${opacity})`
+                context.beginPath()
+                context.arc(segment.x, segment.y, radius, 0, 2 * Math.PI, true)
+                context.fill()
+            })
         }
 
         // draw(context){
@@ -156,27 +166,9 @@ window.addEventListener('load', function(){
         //         this.width -= 2
         //         this.height -= 2
         //         context.fillStyle = `rgba(160,32,240,${opacity})`
-        //         // context.fillRect(segment.x, segment.y, this.width, this.height)
-        //         context.arc(segment.x, segment.y, this.radius, 0, Math.PI, 1)
-        //         context.fill()
+        //         context.fillRect(segment.x, segment.y, this.width, this.height)
         //     })
         // }
-
-        draw(context){
-            let opacity = 1
-            this.width = 20
-            this.height = 20
-            this.boidSegments.forEach((segment) => {
-                opacity -= 0.1
-                segment.x += 1
-                segment.y += 1
-                this.width -= 2
-                this.height -= 2
-                context.fillStyle = `rgba(160,32,240,${opacity})`
-                context.fillRect(segment.x, segment.y, this.width, this.height)
-
-            })
-        }
     }
 
     class Game {
@@ -185,7 +177,6 @@ window.addEventListener('load', function(){
             this.height = height
             this.snake = new Snake(this)
             this.input = new InputHandler(this)
-            // this.food = new Food(this)
             this.boid = new Boid(this)
             this.keys = []
         }
@@ -195,7 +186,6 @@ window.addEventListener('load', function(){
         }
         draw(context){
             this.snake.draw(context)
-            // this.food.draw(context)
             this.boid.draw(context)
         }
     }
