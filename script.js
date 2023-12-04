@@ -4,7 +4,6 @@ window.addEventListener('load', function(){
     canvas.width = 750
     canvas.height = 400
     
-
     class InputHandler {
         constructor(game){
             this.game = game
@@ -80,18 +79,25 @@ window.addEventListener('load', function(){
         }
     }
     class Enemy {
-        constructor(game){
+        constructor(game) {
             this.game = game
             this.x = this.game.width
             this.speedX = Math.random() * -1.5 - 0.5
             this.markedForDeletion = False
         }
-        update(){
+        update() {
             this.x += this.speedX
             if (this.x + this.width < 0) this.markedForDeletion = true
         }
-
-
+        draw(context) {
+            context.fillStyle = 'red'
+            context.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+    class Angler1 extends Enemy {
+        constructor(game){
+            
+        }
 
     }
     class Layer {
@@ -121,7 +127,6 @@ window.addEventListener('load', function(){
             this.speedX = 0
             this.direction = Math.random() * Math.PI
             this.speed = 3
-            // this.setBoidSpeed = 2
             this.boidPieces = 10
             this.boidSegments = []
         }
@@ -154,21 +159,6 @@ window.addEventListener('load', function(){
                 context.fill()
             })
         }
-
-        // draw(context){
-        //     let opacity = 1
-        //     this.width = 20
-        //     this.height = 20
-        //     this.boidSegments.forEach((segment) => {
-        //         opacity -= 0.1
-        //         segment.x += 1
-        //         segment.y += 1
-        //         this.width -= 2
-        //         this.height -= 2
-        //         context.fillStyle = `rgba(160,32,240,${opacity})`
-        //         context.fillRect(segment.x, segment.y, this.width, this.height)
-        //     })
-        // }
     }
 
     class Game {
