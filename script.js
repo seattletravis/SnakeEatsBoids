@@ -128,11 +128,9 @@ window.addEventListener('load', function(){
             this.game = game
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
-            this.direction = Math.random() * Math.PI
-            this.speed = 1
-            // this.speedY = this.speed * Math.cos(this.direction)
-            // this.speedX = this.speed * Math.sin(this.direction)
-            this.velocity = new Victor(this.speed * Math.cos(this.direction),this.speed * Math.sin(this.direction))
+            this.speed = 2
+            var initialRandomDirection = Math.random() * Math.PI
+            this.velocity = new Victor(this.speed * Math.cos(initialRandomDirection),this.speed * Math.sin(initialRandomDirection))
             this.boidPieces = 10
             this.boidSegments = []
         }
