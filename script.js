@@ -3,6 +3,7 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d')
     canvas.width = 750
     canvas.height = 400
+    // var Victor = require('victor')
     
     class InputHandler {
         constructor(game){
@@ -125,8 +126,7 @@ window.addEventListener('load', function(){
     class Boid {
         constructor(game){
             this.game = game
-            this.x = Math.random() * (canvas.width - 30) + 15
-            this.y = Math.random() * (canvas.height - 30) + 15
+            this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
             this.direction = Math.random() * Math.PI
             this.speed = 1
@@ -134,17 +134,16 @@ window.addEventListener('load', function(){
             this.speedX = this.speed * Math.sin(this.direction)
             this.boidPieces = 10
             this.boidSegments = []
-
         }
         
         update(){
 
-            if (this.y < 15 || this.y > canvas.height - 15) this.speedY = -this.speedY
-            if (this.x < 15 || this.x > canvas.width - 15) this.speedX = -this.speedX
+            if (this.position.y < 15 || this.position.y > canvas.height - 15) this.speedY = -this.speedY
+            if (this.position.x < 15 || this.position.x > canvas.width - 15) this.speedX = -this.speedX
 
-            this.y += this.speedY
-            this.x += this.speedX
-            this.boidSegments.unshift({x: this.x, y: this.y})
+            this.position.y += this.speedY
+            this.position.x += this.speedX
+            this.boidSegments.unshift({x: this.position.x, y: this.position.y})
             if (this.boidSegments.length > this.boidPieces) {
                 this.boidSegments.pop()
             }
@@ -163,6 +162,20 @@ window.addEventListener('load', function(){
                 context.fill()
             })
         }
+
+        align(context){
+            neighborProximity = 50
+            var sum = new Victor()
+            var sum = new Victor()
+            var count = 0
+            for (var i = 0; i < boids.length; i ++) {
+                var dist = this.position.position(boids[i].position)
+            }
+        }
+
+
+
+
     }
 
     class Game {
@@ -174,7 +187,7 @@ window.addEventListener('load', function(){
             this.boid = new Boid(this)
             this.boidTimer = 0
             this.boidInterval = 1000
-            this.maxBoids = 5
+            this.maxBoids = 10
             this.keys = []
             this.boids = []
             this.gameOver = false
