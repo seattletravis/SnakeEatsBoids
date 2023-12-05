@@ -206,7 +206,9 @@ class Boid {
    * @param float | coefficient | The factor to be applied to the force
    */
   applyForce( force, coefficient ) {
-    if ( ! coefficient ) { var coefficient = 1; }
+    if ( !coefficient ) { 
+      var coefficient = 1; 
+    }
     force.multiply({x:coefficient,y:coefficient});
     this.velocity.add(force);
     this.velocity.limitMagnitude( this.maxSpeed );

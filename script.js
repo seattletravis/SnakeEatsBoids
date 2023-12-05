@@ -130,19 +130,19 @@ window.addEventListener('load', function(){
             this.radius = 10
             this.direction = Math.random() * Math.PI
             this.speed = 1
-            this.speedY = this.speed * Math.cos(this.direction)
-            this.speedX = this.speed * Math.sin(this.direction)
+            // this.speedY = this.speed * Math.cos(this.direction)
+            // this.speedX = this.speed * Math.sin(this.direction)
+            this.velocity = new Victor(this.speed * Math.cos(this.direction),this.speed * Math.sin(this.direction))
             this.boidPieces = 10
             this.boidSegments = []
         }
         
         update(){
+            if (this.position.y < 15 || this.position.y > canvas.height - 15) this.velocity.y = -this.velocity.y
+            if (this.position.x < 15 || this.position.x > canvas.width - 15) this.velocity.x = -this.velocity.x
 
-            if (this.position.y < 15 || this.position.y > canvas.height - 15) this.speedY = -this.speedY
-            if (this.position.x < 15 || this.position.x > canvas.width - 15) this.speedX = -this.speedX
-
-            this.position.y += this.speedY
-            this.position.x += this.speedX
+            this.position.y += this.velocity.y
+            this.position.x += this.velocity.x
             this.boidSegments.unshift({x: this.position.x, y: this.position.y})
             if (this.boidSegments.length > this.boidPieces) {
                 this.boidSegments.pop()
@@ -166,11 +166,12 @@ window.addEventListener('load', function(){
         align(context){
             neighborProximity = 50
             var sum = new Victor()
-            var sum = new Victor()
+            var steer = new Victor()
             var count = 0
             for (var i = 0; i < boids.length; i ++) {
                 var dist = this.position.position(boids[i].position)
             }
+            console.log(sum)
         }
 
 
