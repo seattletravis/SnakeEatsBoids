@@ -29,24 +29,20 @@ window.addEventListener('load', function(){
     class Snake {
         constructor(game){
             this.game = game
-            // this.width = 20
-            // this.height = 20
-            // this.x = 20
-            // this.y = 100
             this.radius = 10
             this.position = new Victor(20, 100)
             this.speedY = 0
             this.speedX = 0
-            this.setSnakeSpeed = 2
+            this.snakeSpeed = 2
             this.snakePieces = 30
             this.snakeSegments = []
         }
         
         update(){
-            if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {this.speedY = -this.setSnakeSpeed; this.speedX = 0}
-            else if (this.game.keys.includes('ArrowDown') && this.speedY === 0) {this.speedY = this.setSnakeSpeed; this.speedX = 0}
-            else if (this.game.keys.includes('ArrowLeft') && this.speedX === 0) {this.speedX = -this.setSnakeSpeed; this.speedY = 0}
-            else if (this.game.keys.includes('ArrowRight') && this.speedX === 0) {this.speedX = this.setSnakeSpeed; this.speedY = 0} 
+            if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {this.speedY = -this.snakeSpeed; this.speedX = 0}
+            else if (this.game.keys.includes('ArrowDown') && this.speedY === 0) {this.speedY = this.snakeSpeed; this.speedX = 0}
+            else if (this.game.keys.includes('ArrowLeft') && this.speedX === 0) {this.speedX = -this.snakeSpeed; this.speedY = 0}
+            else if (this.game.keys.includes('ArrowRight') && this.speedX === 0) {this.speedX = this.snakeSpeed; this.speedY = 0} 
             else if (this.game.keys.includes(' ')) {this.speedX = 0; this.speedY = 0}
             this.position.y += this.speedY
             this.position.x += this.speedX
@@ -59,7 +55,6 @@ window.addEventListener('load', function(){
         draw(context){
             context.fillStyle = 'green'
             this.snakeSegments.forEach((segment) => {
-                // context.fillRect(segment.x, segment.y, this.width, this.height)
                 context.fillStyle = 'green'
                 context.beginPath()
                 context.arc(segment.x, segment.y, this.radius, 0, 2 * Math.PI, true)
