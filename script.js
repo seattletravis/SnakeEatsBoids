@@ -29,10 +29,12 @@ window.addEventListener('load', function(){
     class Snake {
         constructor(game){
             this.game = game
-            this.width = 20
-            this.height = 20
-            this.x = 20
-            this.y = 100
+            // this.width = 20
+            // this.height = 20
+            // this.x = 20
+            // this.y = 100
+            this.radius = 10
+            this.position = new Victor(20, 100)
             this.speedY = 0
             this.speedX = 0
             this.setSnakeSpeed = 2
@@ -46,9 +48,9 @@ window.addEventListener('load', function(){
             else if (this.game.keys.includes('ArrowLeft') && this.speedX === 0) {this.speedX = -this.setSnakeSpeed; this.speedY = 0}
             else if (this.game.keys.includes('ArrowRight') && this.speedX === 0) {this.speedX = this.setSnakeSpeed; this.speedY = 0} 
             else if (this.game.keys.includes(' ')) {this.speedX = 0; this.speedY = 0}
-            this.y += this.speedY
-            this.x += this.speedX
-            this.snakeSegments.unshift({x: this.x, y: this.y})
+            this.position.y += this.speedY
+            this.position.x += this.speedX
+            this.snakeSegments.unshift({x: this.position.x, y: this.position.y})
             if (this.snakeSegments.length > this.snakePieces) {
                 this.snakeSegments.pop()
             }
@@ -57,7 +59,11 @@ window.addEventListener('load', function(){
         draw(context){
             context.fillStyle = 'green'
             this.snakeSegments.forEach((segment) => {
-                context.fillRect(segment.x, segment.y, this.width, this.height)
+                // context.fillRect(segment.x, segment.y, this.width, this.height)
+                context.fillStyle = 'green'
+                context.beginPath()
+                context.arc(segment.x, segment.y, this.radius, 0, 2 * Math.PI, true)
+                context.fill()
             })
         }
     }
