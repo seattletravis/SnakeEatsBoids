@@ -3,7 +3,6 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d')
     canvas.width = 750
     canvas.height = 400
-    // var Victor = require('victor')
     
     class InputHandler {
         constructor(game){
@@ -34,7 +33,7 @@ window.addEventListener('load', function(){
             this.speedY = 0
             this.speedX = 0
             this.snakeSpeed = 2
-            this.snakePieces = 200
+            this.snakePieces = 8
             this.snakeSegments = []
         }
         
@@ -136,8 +135,8 @@ window.addEventListener('load', function(){
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
             this.speed = 2
-            var initialRandomDirection = Math.random() * Math.PI
-            this.velocity = new Victor(this.speed * Math.cos(initialRandomDirection),this.speed * Math.sin(initialRandomDirection))
+            var initialDirection = Math.random() * Math.PI
+            this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.boidPieces = 10
             this.boidSegments = []
         }
