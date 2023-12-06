@@ -33,7 +33,7 @@ window.addEventListener('load', function(){
             this.speedY = 0
             this.speedX = 0
             this.snakeSpeed = 2
-            this.snakePieces = 8
+            this.snakePieces = 60
             this.snakeSegments = []
         }
         
@@ -156,7 +156,6 @@ window.addEventListener('load', function(){
         draw(context){
             let opacity = 1;
             let radius = 10
-            // let this.
             this.boidSegments.forEach((segment) => {
                 opacity -= 0.1
                 radius -= 0.75
@@ -177,10 +176,6 @@ window.addEventListener('load', function(){
             }
             console.log(sum)
         }
-
-
-
-
     }
 
     class Game {
