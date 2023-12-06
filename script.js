@@ -34,7 +34,7 @@ window.addEventListener('load', function(){
             this.speedY = 0
             this.speedX = 0
             this.snakeSpeed = 2
-            this.snakePieces = 30
+            this.snakePieces = 200
             this.snakeSegments = []
         }
         
@@ -53,22 +53,19 @@ window.addEventListener('load', function(){
         }
 
         draw(context){
-            // context.fillStyle = 'green'
-            // this.snakeSegments.forEach((segment) => {
-            //     context.fillStyle = 'green'
-            //     context.beginPath()
-            //     context.arc(segment.x, segment.y, this.radius, 0, 2 * Math.PI, true)
-            //     context.fill()
-            // })
+            for(let i = this.snakeSegments.length - 1; i >= 0; i--){
+                if (Math.floor(i / 8) % 2 === 0){
+                    context.fillStyle = 'red'
+                } else {
+                    context.fillStyle = 'green'
+                }
+                
 
-            for(let i = 0; i < this.snakeSegments.length; i++){
-                context.fillStyle = 'green'
                 context.beginPath()
                 context.arc(this.snakeSegments[i].x, this.snakeSegments[i].y, this.radius, 0, 2*Math.PI, false)
                 context.fill()
-            }
-            
 
+            }
         }
     }
     class Food {
