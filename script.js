@@ -86,7 +86,7 @@ window.addEventListener('load', function(){
         }
     }
 
-    class Enemy {
+    class Star {
         constructor(game){
             this.game = game
             this.x = this.game.width
@@ -106,30 +106,7 @@ window.addEventListener('load', function(){
         }
     }
 
-    class Angler1 extends Enemy {
-        constructor(game){
-            super(game)
 
-        }
-    }
-
-    class Layer {
-
-    }
-    class Background {
-
-    }
-    class UI {
-        constructor(game) {
-            this.game = game
-            this.fontSize = 25
-            this.fontFamily = 'Helvetica'
-            this.color = 'white'
-        }
-        draw(context){
-            
-        }
-    }
     class Boid {
         constructor(game){
             this.game = game
@@ -144,7 +121,6 @@ window.addEventListener('load', function(){
         }
         
         update(){
-            this.align()
             if (this.position.y < 15 || this.position.y > canvas.height - 15) this.velocity.y = -this.velocity.y
             if (this.position.x < 15 || this.position.x > canvas.width - 15) this.velocity.x = -this.velocity.x
 
@@ -170,20 +146,6 @@ window.addEventListener('load', function(){
             })
         }
 
-        align(){
-
-            // let distance = this.boids[0].position.distance(this.boids[1].position)
-            // console.log(distance)
-            // var maxProximity = 50
-            // var sum = new Victor()
-            // var steer = new Victor()
-            // var count = 0
-            // for (var i = 0; i < this.boids.length; i++) {
-            //     var dist = this.boids.position(this.boids[i].position)
-            // }
-            // console.log(sum)
-        }
-
         flock(){
             var alignForce = this.align(boids)
             console.log(alignForce)
@@ -201,8 +163,8 @@ window.addEventListener('load', function(){
             this.boid = new Boid(this)
             this.boidTimer = 0
             this.boidInterval = 1000
-            this.enemyTimer = 0
-            this.enemyInterval = 1000
+            this.starTimer = 0
+            this.starInterval = 1000
             this.maxBoids = 10
             this.keys = []
             this.boids = []
@@ -223,15 +185,15 @@ window.addEventListener('load', function(){
             } else {
                 this.boidTimer += deltaTime
             }
-            this.enemies.forEach(enemy => {
-                enemy.update()
+            this.enemies.forEach(star => {
+                star.update()
             } )
-            this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion == true)
-            if (this.enemyTimer > this.enemyInterval && !this.gameOver){
-                this.addEnemy()
-                this.enemyTimerTimer = 0
+            this.enemies = this.enemies.filter(star => !star.markedForDeletion == true)
+            if (this.starTimer > this.starInterval && !this.gameOver){
+                this.addStar()
+                this.starTimer = 0
             } else {
-                this.enemyTimer += deltaTime
+                this.starTimer += deltaTime
             }
 
             
@@ -242,8 +204,8 @@ window.addEventListener('load', function(){
 
 
         draw(context){
-            this.enemies.forEach(enemy => {
-                enemy.draw(context)
+            this.enemies.forEach(star => {
+                star.draw(context)
             })
             this.snake.draw(context)
             this.boids.forEach(boid => {
@@ -256,8 +218,8 @@ window.addEventListener('load', function(){
             this.boids.push(new Boid(this))
         }
 
-        addEnemy(){
-            this.enemies.push(new Enemy(this))
+        addStar(){
+            this.enemies.push(new Star(this))
         }
 
     }
