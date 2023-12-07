@@ -85,33 +85,28 @@ window.addEventListener('load', function(){
             context.arc()
         }
     }
+
     class Enemy {
-        constructor(game) {
+        constructor(game){
             this.game = game
             this.x = this.game.width
             this.speedX = Math.random() * -1.5 - 0.5
-            this.markedForDeletion = False
+            this.markedForDeletion = false
         }
-        update() {
+        update(){
             this.x += this.speedX
-            if (this.x + this.width < 0) this.markedForDeletion = true
+            if(this.x + this.width < 0) this.markedForDeletion = true
         }
-        draw(context) {
+        draw(context){
             context.fillStyle = 'red'
             context.fillRect(this.x, this.y, this.width, this.height)
         }
     }
+
     class Angler1 extends Enemy {
-        constructor(game){
-            super(game)
-            this.width = 40
-            this.height = 40
-            this.y = Math.random() * (this.game.height * 9 - this.height)
-            // this.x = this.game wid
-
-        }
-
+        
     }
+
     class Layer {
 
     }
@@ -132,6 +127,7 @@ window.addEventListener('load', function(){
     class Boid {
         constructor(game){
             this.game = game
+            this.boids = this.game.boids
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
             this.speed = 2
@@ -142,6 +138,7 @@ window.addEventListener('load', function(){
         }
         
         update(){
+            this.align()
             if (this.position.y < 15 || this.position.y > canvas.height - 15) this.velocity.y = -this.velocity.y
             if (this.position.x < 15 || this.position.x > canvas.width - 15) this.velocity.x = -this.velocity.x
 
@@ -151,6 +148,7 @@ window.addEventListener('load', function(){
             if (this.boidSegments.length > this.boidPieces) {
                 this.boidSegments.pop()
             }
+
         }
 
         draw(context){
@@ -166,17 +164,27 @@ window.addEventListener('load', function(){
             })
         }
 
-        align(context){
-            neighborProximity = 50
-            var sum = new Victor()
-            var steer = new Victor()
-            var count = 0
-            for (var i = 0; i < boids.length; i ++) {
-                var dist = this.position.position(boids[i].position)
-            }
-            console.log(sum)
+        align(){
+
+            // let distance = this.boids[0].position.distance(this.boids[1].position)
+            // console.log(distance)
+            // var maxProximity = 50
+            // var sum = new Victor()
+            // var steer = new Victor()
+            // var count = 0
+            // for (var i = 0; i < this.boids.length; i++) {
+            //     var dist = this.boids.position(this.boids[i].position)
+            // }
+            // console.log(sum)
+        }
+
+        flock(){
+            var alignForce = this.align(boids)
+            console.log(alignForce)
         }
     }
+
+
 
     class Game {
         constructor(width, height){
@@ -206,6 +214,9 @@ window.addEventListener('load', function(){
                 this.boidTimer += deltaTime
             }
 
+            
+
+
         }
         draw(context){
             this.snake.draw(context)
@@ -217,6 +228,13 @@ window.addEventListener('load', function(){
             this.boids.push(new Boid(this))
         }
     }
+
+
+
+
+
+
+
 
     const game = new Game(canvas.width, canvas.height)
     let lastTime = 0
