@@ -139,6 +139,7 @@ window.addEventListener('load', function(){
             var sum = new Victor()
             var count = 0
             var steer
+            var steerModifier = 0.5
             this.boids.forEach(boid => {
                 var distance = this.position.distance(boid.position)
                 if(distance > 0 && distance < this.proximal){
@@ -151,6 +152,9 @@ window.addEventListener('load', function(){
                 sum.normalize()
                 sum.multiply({x:this.speed, y:this.speed})
                 steer = sum.subtract(this.velocity)
+                steer.normalize()
+
+                steer.multiply({x:steerModifier,y:steerModifier})
                 this.velocity.add(steer)
             }
             //Boid Cohesion
