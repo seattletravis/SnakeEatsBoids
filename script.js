@@ -89,12 +89,12 @@ window.addEventListener('load', function(){
     class Star {
         constructor(game){
             this.game = game
-            this.x = this.game.width
-            this.speedX = Math.random() * -1.5 - 0.5
-            this.markedForDeletion = false
             this.width = Math.random() * 2
             this.height = this.width
-            this.y = Math.random() * (this.game.height * 0.9 - this.height)
+            this.x = this.game.width
+            this.y = Math.random() * (this.game.height * 1 - this.height)
+            this.speedX = Math.random() * -1 - 0.25
+            this.markedForDeletion = false
         }
         update(){
             this.x += this.speedX
@@ -145,14 +145,7 @@ window.addEventListener('load', function(){
                 context.fill()
             })
         }
-
-        flock(){
-            var alignForce = this.align(boids)
-            console.log(alignForce)
-        }
     }
-
-
 
     class Game {
         constructor(width, height){
@@ -164,16 +157,14 @@ window.addEventListener('load', function(){
             this.boidTimer = 0
             this.boidInterval = 1000
             this.starTimer = 0
-            this.starInterval = 1000
+            this.starInterval = 100
             this.maxBoids = 10
             this.keys = []
             this.boids = []
-            this.enemies = []
+            this.stars = []
             this.gameOver = false
         }
         update(deltaTime){
-
-
             this.snake.update()
             this.boids.forEach(boid => {
                 boid.update()
@@ -185,33 +176,30 @@ window.addEventListener('load', function(){
             } else {
                 this.boidTimer += deltaTime
             }
-            this.enemies.forEach(star => {
+            this.stars.forEach(star => {
                 star.update()
             } )
-            this.enemies = this.enemies.filter(star => !star.markedForDeletion == true)
+            this.stars = this.stars.filter(star => !star.markedForDeletion == true)
             if (this.starTimer > this.starInterval && !this.gameOver){
                 this.addStar()
                 this.starTimer = 0
             } else {
                 this.starTimer += deltaTime
             }
-
             
-
 
         }
 
 
 
         draw(context){
-            this.enemies.forEach(star => {
+            this.stars.forEach(star => {
                 star.draw(context)
             })
             this.snake.draw(context)
             this.boids.forEach(boid => {
                 boid.draw(context)
             })
-
         }
 
         addBoid(){
@@ -219,7 +207,7 @@ window.addEventListener('load', function(){
         }
 
         addStar(){
-            this.enemies.push(new Star(this))
+            this.stars.push(new Star(this))
         }
 
     }
