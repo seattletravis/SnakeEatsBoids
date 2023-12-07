@@ -110,6 +110,7 @@ window.addEventListener('load', function(){
     class Boid {
         constructor(game){
             this.game = game
+            this.proximal = 50
             this.boids = this.game.boids
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
@@ -121,15 +122,30 @@ window.addEventListener('load', function(){
         }
         
         update(){
+            //Boundary Handling
             if (this.position.y < 15 || this.position.y > canvas.height - 15) this.velocity.y = -this.velocity.y
             if (this.position.x < 15 || this.position.x > canvas.width - 15) this.velocity.x = -this.velocity.x
-
             this.position.y += this.velocity.y
             this.position.x += this.velocity.x
+            //Boid Segment Handling
             this.boidSegments.unshift({x: this.position.x, y: this.position.y})
             if (this.boidSegments.length > this.boidPieces) {
                 this.boidSegments.pop()
             }
+            //Boid Alignment
+            var sum = new Victor()
+            var count = 0
+
+            this.boids.forEach(boid => {
+                var distance = this.position.distance(boid.position)
+                if(distance > 0 && distance < this.proximal){
+                    sum.add(boid.velocity)
+                    count++
+                    console.log(sum)
+                }
+            })
+
+
 
         }
 
