@@ -123,8 +123,10 @@ window.addEventListener('load', function(){
         
         update(){
             //Boundary Handling
-            if (this.position.y < 15 || this.position.y > canvas.height - 15) this.velocity.y = -this.velocity.y
-            if (this.position.x < 15 || this.position.x > canvas.width - 15) this.velocity.x = -this.velocity.x
+            if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
+            if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
+            if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
+            if (this.position.x > canvas.width - 30) this.velocity.x = -Math.abs(this.velocity.x)
             this.position.y += this.velocity.y
             this.position.x += this.velocity.x
             //Boid Segment Handling
@@ -132,18 +134,27 @@ window.addEventListener('load', function(){
             if (this.boidSegments.length > this.boidPieces) {
                 this.boidSegments.pop()
             }
+
             //Boid Alignment
             var sum = new Victor()
             var count = 0
-
+            var steer
             this.boids.forEach(boid => {
                 var distance = this.position.distance(boid.position)
                 if(distance > 0 && distance < this.proximal){
                     sum.add(boid.velocity)
                     count++
-                    console.log(sum)
                 }
             })
+            if (count > 0) {
+                sum.divide({x:count, y:count})
+                sum.normalize()
+                sum.multiply({x:this.speed, y:this.speed})
+                steer = sum.subtract(this.velocity)
+                this.velocity.add(steer)
+            }
+            //Boid Cohesion
+            //Boid Seperation
 
 
 
