@@ -5,12 +5,12 @@
 }
 
 #canvas1 {
-    border: 5px solid black;
+    border: 5px solid blue;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: lightblue;
+    background: black;
     max-width: 100%;
     max-height: 100%;
 }

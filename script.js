@@ -92,19 +92,25 @@ window.addEventListener('load', function(){
             this.x = this.game.width
             this.speedX = Math.random() * -1.5 - 0.5
             this.markedForDeletion = false
+            this.width = Math.random() * 2
+            this.height = this.width
+            this.y = Math.random() * (this.game.height * 0.9 - this.height)
         }
         update(){
             this.x += this.speedX
             if(this.x + this.width < 0) this.markedForDeletion = true
         }
         draw(context){
-            context.fillStyle = 'red'
+            context.fillStyle = 'white'
             context.fillRect(this.x, this.y, this.width, this.height)
         }
     }
 
     class Angler1 extends Enemy {
-        
+        constructor(game){
+            super(game)
+
+        }
     }
 
     class Layer {
@@ -195,14 +201,18 @@ window.addEventListener('load', function(){
             this.boid = new Boid(this)
             this.boidTimer = 0
             this.boidInterval = 1000
+            this.enemyTimer = 0
+            this.enemyInterval = 1000
             this.maxBoids = 10
             this.keys = []
             this.boids = []
+            this.enemies = []
             this.gameOver = false
         }
         update(deltaTime){
+
+
             this.snake.update()
-            // this.boid.update()
             this.boids.forEach(boid => {
                 boid.update()
             })
@@ -213,20 +223,43 @@ window.addEventListener('load', function(){
             } else {
                 this.boidTimer += deltaTime
             }
+            this.enemies.forEach(enemy => {
+                enemy.update()
+            } )
+            this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion == true)
+            if (this.enemyTimer > this.enemyInterval && !this.gameOver){
+                this.addEnemy()
+                this.enemyTimerTimer = 0
+            } else {
+                this.enemyTimer += deltaTime
+            }
 
             
 
 
         }
+
+
+
         draw(context){
+            this.enemies.forEach(enemy => {
+                enemy.draw(context)
+            })
             this.snake.draw(context)
             this.boids.forEach(boid => {
                 boid.draw(context)
             })
+
         }
+
         addBoid(){
             this.boids.push(new Boid(this))
         }
+
+        addEnemy(){
+            this.enemies.push(new Enemy(this))
+        }
+
     }
 
 
