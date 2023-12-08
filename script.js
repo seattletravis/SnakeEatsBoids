@@ -136,33 +136,73 @@ window.addEventListener('load', function(){
             }
 
             //Boid Alignment
-            var sum = new Victor()
-            var count = 0
-            var steer
-            var steerModifier = 0.5
-            this.boids.forEach(boid => {
-                var distance = this.position.distance(boid.position)
-                if(distance > 0 && distance < this.proximal){
-                    sum.add(boid.velocity)
-                    count++
-                }
-            })
-            if (count > 0) {
-                sum.divide({x:count, y:count})
-                sum.normalize()
-                sum.multiply({x:this.speed, y:this.speed})
-                steer = sum.subtract(this.velocity)
-                steer.normalize()
+            var align = this.align()
+            // this.velocity.add(align)
 
-                steer.multiply({x:steerModifier,y:steerModifier})
-                this.velocity.add(steer)
-            }
             //Boid Cohesion
+
+
             //Boid Seperation
 
 
 
         }
+
+
+        
+        align(){
+            //Boid Alignment
+            var logit = this.boids[0].position.direction(this.boids[1])
+
+            console.log('boid1: direction', 
+            -this.boids[0].velocity.horizontalAngleDeg(),
+            'angle to Boid2:',
+            logit
+            )
+
+            // var sum = new Victor()
+            // var count = 0
+            // var steer = new Victor()
+            // var steerModifier = 0.5
+            // this.boids.forEach(boid => {
+            //     var distance = this.position.distance(boid.position)
+            //     if(distance > 0 && distance < this.proximal){
+            //         sum.add(boid.velocity)
+            //         count++
+            //     }
+            // })
+            // if (count > 0) {
+            //     sum.divide({x:count, y:count})
+            //     sum.normalize()
+            //     sum.multiply({x:this.speed, y:this.speed})
+            //     steer = sum.subtract(this.velocity)
+            //     steer.normalize()
+            //     steer.multiply({x:steerModifier,y:steerModifier})
+            //     // this.velocity.add(steer)
+            //     return steer
+            // } else {
+            //     return steer
+            // }
+        }
+        // cohesion() {
+        //     var sum = new Victor()
+        //     var count = 0
+        //     this.boids.forEach(boid => {
+        //         var distance = this.position.distance(boid.position)
+        //         if(distance > 0 && distance < this.proximal){
+        //             sum.add(boid.position)
+        //             count++
+        //         }
+        //     })
+        //     if (count > 0) {
+        //       sum.divide({x: count,y:count});
+        //       return this.seek(sum);
+        //     } else {
+        //       return sum;
+        //     }
+        //   }
+
+
 
         draw(context){
             let opacity = 1;
@@ -189,7 +229,7 @@ window.addEventListener('load', function(){
             this.boidInterval = 1000
             this.starTimer = 0
             this.starInterval = 100
-            this.maxBoids = 10
+            this.maxBoids = 2
             this.keys = []
             this.boids = []
             this.stars = []
