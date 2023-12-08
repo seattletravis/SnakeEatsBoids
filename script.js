@@ -114,7 +114,7 @@ window.addEventListener('load', function(){
             this.boids = this.game.boids
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
-            this.speed = 2
+            this.speed = 0.5
             var initialDirection = Math.random() * Math.PI
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.boidPieces = 10
@@ -152,13 +152,12 @@ window.addEventListener('load', function(){
         
         align(){
             //Boid Alignment
-            var logit = this.boids[0].position.direction(this.boids[1])
+            if (this.boids[0] && this.boids[1]){
 
-            console.log('boid1: direction', 
-            -this.boids[0].velocity.horizontalAngleDeg(),
-            'angle to Boid2:',
-            logit
-            )
+                var vec1 = this.boids[0].position.clone()
+                var vec2 = this.boids[1].position.clone()
+                console.log(vec1.subtract(vec2).horizontalAngleDeg())
+            }
 
             // var sum = new Victor()
             // var count = 0
