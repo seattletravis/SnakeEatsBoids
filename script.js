@@ -168,9 +168,11 @@ window.addEventListener('load', function(){
             if(!boid0){
                 return
             }else{
-                var boidInstance = boid0.velocity.clone()
-                boidInstance.invertY()
-                var angle = boidInstance.direction()
+                // var boidInstance = boid0.velocity.clone()
+                // boidInstance.invertY()
+                // var angle = boidInstance.direction()
+                var angle = boid0.velocity.clone().invertY().direction()
+
                 if (angle > 0) {
                     angle = angle
                 } else {
@@ -181,37 +183,40 @@ window.addEventListener('load', function(){
         }
         
         getDistanceTo(boid0, boid1){
+            if(!boid0 || !boid1){
+                return
+            }else{
+                var vec1 = boid0.position.clone()
+                var vec2 = boid1.position.clone()
+            }
+            return vec1.distance(vec2)
+        }
+
+        inRange(boid0, boid1){
+            if(!boid0 || !boid1){
+                return false
+            }else{
+                let vec1 = boid0.position.clone()
+                let vec2 = boid1.position.clone()
+                var distance = vec1.distance(vec2) 
+            }
+            if(distance < this.proximal){
+                return true
+            }else{
+                return false
+            }
+        }
+
+        inSight(boid0, boid1){
 
         }
 
         align(){
             //Boid Alignment
-            console.log(this.getAngleTo(this.boids[0], this.boids[1]))
+            // console.log(this.inRange(this.boids[0], this.boids[1]))
+            // console.log(this.getDistanceTo(this.boids[0], this.boids[1]))
             console.log(this.getAngleSelf(this.boids[0]))
 
-            // var sum = new Victor()
-            // var count = 0
-            // var steer = new Victor()
-            // var steerModifier = 0.5
-            // this.boids.forEach(boid => {
-            //     var distance = this.position.distance(boid.position)
-            //     if(distance > 0 && distance < this.proximal){
-            //         sum.add(boid.velocity)
-            //         count++
-            //     }
-            // })
-            // if (count > 0) {
-            //     sum.divide({x:count, y:count})
-            //     sum.normalize()
-            //     sum.multiply({x:this.speed, y:this.speed})
-            //     steer = sum.subtract(this.velocity)
-            //     steer.normalize()
-            //     steer.multiply({x:steerModifier,y:steerModifier})
-            //     // this.velocity.add(steer)
-            //     return steer
-            // } else {
-            //     return steer
-            // }
         }
 
 
