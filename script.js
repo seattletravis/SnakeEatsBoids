@@ -163,20 +163,24 @@ window.addEventListener('load', function(){
         }
 
         getAngleSelf(boid0){
-            if(boid0){
-                var angle = boid0.velocity.direction()
-                if (angle < 0) {
-                    angle = Math.abs(Math.PI - angle)
+            if(!boid0){
+                return
+            }else{
+                var boidInstance = boid0.velocity.clone()
+                boidInstance.invertY()
+                var angle = boidInstance.direction()
+                if (angle > 0) {
+                    angle = angle
+                } else {
+                    angle = (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
                 }
-                angle = (angle + Math.PI) % (Math.PI * 2)
-
             }
             return angle
         }
         
         align(){
             //Boid Alignment
-            this.getAngleTo(this.boids[0], this.boids[1])
+            console.log(this.getAngleTo(this.boids[0], this.boids[1]))
             console.log(this.getAngleSelf(this.boids[0]))
 
             // var sum = new Victor()
@@ -203,23 +207,7 @@ window.addEventListener('load', function(){
             //     return steer
             // }
         }
-        // cohesion() {
-        //     var sum = new Victor()
-        //     var count = 0
-        //     this.boids.forEach(boid => {
-        //         var distance = this.position.distance(boid.position)
-        //         if(distance > 0 && distance < this.proximal){
-        //             sum.add(boid.position)
-        //             count++
-        //         }
-        //     })
-        //     if (count > 0) {
-        //       sum.divide({x: count,y:count});
-        //       return this.seek(sum);
-        //     } else {
-        //       return sum;
-        //     }
-        //   }
+
 
 
 
