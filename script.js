@@ -135,8 +135,8 @@ window.addEventListener('load', function(){
                 this.boidSegments.pop()
             }
 
-            //Boid Alignment
-            var align = this.align()
+            //Boid Alignment - Call align method
+            this.align()
             // this.velocity.add(align)
 
             //Boid Cohesion
@@ -168,11 +168,7 @@ window.addEventListener('load', function(){
             if(!boid0){
                 return
             }else{
-                // var boidInstance = boid0.velocity.clone()
-                // boidInstance.invertY()
-                // var angle = boidInstance.direction()
                 var angle = boid0.velocity.clone().invertY().direction()
-
                 if (angle > 0) {
                     angle = angle
                 } else {
@@ -208,14 +204,17 @@ window.addEventListener('load', function(){
         }
 
         inSight(boid0, boid1){
-
+            let angleSelf = this.getAngleSelf(boid0)
+            let angleTo = this.getAngleTo(boid0, boid1)
+            console.log(angleSelf, angleTo)
         }
 
         align(){
             //Boid Alignment
             // console.log(this.inRange(this.boids[0], this.boids[1]))
             // console.log(this.getDistanceTo(this.boids[0], this.boids[1]))
-            console.log(this.getAngleSelf(this.boids[0]))
+            // console.log(this.getAngleSelf(this.boids[0]))
+            // this.inSight(this.boids[0], this.boids[1])
 
         }
 
