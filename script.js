@@ -115,7 +115,7 @@ window.addEventListener('load', function(){
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
             this.speed = 0.5
-            var initialDirection = Math.random() * Math.PI
+            var initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.boidPieces = 10
             this.boidSegments = []
@@ -148,16 +148,36 @@ window.addEventListener('load', function(){
 
         }
 
+        getAngleTo(boid0, boid1){
+            if(boid0 && boid1) {
+                var vec1 = boid0.position.clone()
+                var vec2 = boid1.position.clone()
+                var angle = vec1.subtract(vec2).direction()
+                if (angle > 0) {
+                    angle = Math.PI - angle
+                } else {
+                    angle = Math.abs(Math.PI - angle) % (Math.PI * 2)
+                }
+                return angle
+            }
+        }
 
+        getAngleSelf(boid0){
+            if(boid0){
+                var angle = boid0.velocity.direction()
+                if (angle < 0) {
+                    angle = Math.abs(Math.PI - angle)
+                }
+                angle = (angle + Math.PI) % (Math.PI * 2)
+
+            }
+            return angle
+        }
         
         align(){
             //Boid Alignment
-            if (this.boids[0] && this.boids[1]){
-
-                var vec1 = this.boids[0].position.clone()
-                var vec2 = this.boids[1].position.clone()
-                console.log(vec1.subtract(vec2).horizontalAngleDeg())
-            }
+            this.getAngleTo(this.boids[0], this.boids[1])
+            console.log(this.getAngleSelf(this.boids[0]))
 
             // var sum = new Victor()
             // var count = 0
