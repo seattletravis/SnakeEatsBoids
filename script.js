@@ -149,7 +149,9 @@ window.addEventListener('load', function(){
         }
 
         getAngleTo(boid0, boid1){
-            if(boid0 && boid1) {
+            if(!boid0 || !boid1){
+                return
+            }else{
                 var vec1 = boid0.position.clone()
                 var vec2 = boid1.position.clone()
                 var angle = vec1.subtract(vec2).direction()
@@ -178,6 +180,10 @@ window.addEventListener('load', function(){
             return angle
         }
         
+        getDistanceTo(boid0, boid1){
+
+        }
+
         align(){
             //Boid Alignment
             console.log(this.getAngleTo(this.boids[0], this.boids[1]))
