@@ -4,6 +4,8 @@ window.addEventListener('load', function(){
     canvas.width = 750
     canvas.height = 400
     
+
+    
     class InputHandler {
         constructor(game){
             this.game = game
@@ -121,32 +123,7 @@ window.addEventListener('load', function(){
             this.boidSegments = []
         }
         
-        update(){
-            //Boundary Handling
-            if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
-            if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
-            if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
-            if (this.position.x > canvas.width - 30) this.velocity.x = -Math.abs(this.velocity.x)
-            this.position.y += this.velocity.y
-            this.position.x += this.velocity.x
-            //Boid Segment Handling
-            this.boidSegments.unshift({x: this.position.x, y: this.position.y})
-            if (this.boidSegments.length > this.boidPieces) {
-                this.boidSegments.pop()
-            }
 
-            //Boid Alignment - Call align method
-            this.align()
-            // this.velocity.add(align)
-
-            //Boid Cohesion
-
-
-            //Boid Seperation
-
-
-
-        }
 
         getAngleTo(boid0, boid1){
             if(!boid0 || !boid1){
@@ -178,15 +155,15 @@ window.addEventListener('load', function(){
             return angle
         }
         
-        getDistanceTo(boid0, boid1){
-            if(!boid0 || !boid1){
-                return
-            }else{
-                var vec1 = boid0.position.clone()
-                var vec2 = boid1.position.clone()
-            }
-            return vec1.distance(vec2)
-        }
+        // getDistanceTo(boid0, boid1){
+        //     if(!boid0 || !boid1){
+        //         return
+        //     }else{
+        //         var vec1 = boid0.position.clone()
+        //         var vec2 = boid1.position.clone()
+        //     }
+        //     return vec1.distance(vec2)
+        // }
 
         inRange(boid0, boid1){
             if(!boid0 || !boid1){
@@ -203,7 +180,7 @@ window.addEventListener('load', function(){
             }
         }
 
-        inSight(boid0, boid1){
+        inLineOfSight(boid0, boid1){
             let angleSelf = this.getAngleSelf(boid0)
             let angleTo = this.getAngleTo(boid0, boid1)
             console.log(angleSelf, angleTo)
@@ -214,12 +191,31 @@ window.addEventListener('load', function(){
             // console.log(this.inRange(this.boids[0], this.boids[1]))
             // console.log(this.getDistanceTo(this.boids[0], this.boids[1]))
             // console.log(this.getAngleSelf(this.boids[0]))
-            // this.inSight(this.boids[0], this.boids[1])
+            this.inLineOfSight(this.boids[0], this.boids[1])
 
         }
 
+        update(){
+            //Boundary Handling
+            if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
+            if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
+            if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
+            if (this.position.x > canvas.width - 30) this.velocity.x = -Math.abs(this.velocity.x)
+            this.position.y += this.velocity.y
+            this.position.x += this.velocity.x
+            //Boid Segment Handling
+            this.boidSegments.unshift({x: this.position.x, y: this.position.y})
+            if (this.boidSegments.length > this.boidPieces) {
+                this.boidSegments.pop()
+            }
 
+            //Boid Alignment - Call align method
+            this.align()
+            // this.velocity.add(align)
+            //Boid Cohesion
+            //Boid Seperation
 
+        }
 
         draw(context){
             let opacity = 1;
@@ -241,7 +237,7 @@ window.addEventListener('load', function(){
             this.height = height
             this.snake = new Snake(this)
             this.input = new InputHandler(this)
-            this.boid = new Boid(this)
+            // this.boid = new Boid(this)
             this.boidTimer = 0
             this.boidInterval = 1000
             this.starTimer = 0
@@ -320,3 +316,4 @@ window.addEventListener('load', function(){
     }
     animate(0)
 })
+
