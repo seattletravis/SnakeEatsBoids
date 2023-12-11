@@ -35,7 +35,7 @@ window.addEventListener('load', function(){
             this.speedY = 0
             this.speedX = 0
             this.snakeSpeed = 2
-            this.snakePieces = 60
+            this.snakePieces = 1
             this.snakeSegments = []
         }
         
@@ -98,7 +98,7 @@ window.addEventListener('load', function(){
             this.boids = this.game.boids
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
-            this.speed = 0.5
+            this.speed = game.speed
             var initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.boidPieces = 5
@@ -224,6 +224,8 @@ window.addEventListener('load', function(){
             this.starTimer = 0
             this.starInterval = 100
             this.maxBoids = 1
+            this.speed = 0
+            this.maxSpeed = 3
             this.keys = []
             this.boids = []
             this.stars = []
@@ -283,10 +285,16 @@ window.addEventListener('load', function(){
             for(let i = 0; i < snake.snakeSegments.length; i++){
                 for(let j = 0; j < boid.boidSegments.length; j++ ){
                     let distance = Math.sqrt((Math.abs(snake.snakeSegments[i].x - boid.boidSegments[j].x)**2 + Math.abs(snake.snakeSegments[i].y - boid.boidSegments[j].y)**2))
-                    let checkDistance = snake.radius + boid.radius - 1
+                    let checkDistance = snake.radius + boid.radius - 2
                     if (distance < checkDistance) {
+
                         boid.markedForDeletion = true
                         this.maxBoids += 1
+                        this.snake.snakePieces += 2
+                        if (game.speed < game.maxSpeed){
+                            game.speed += 0.125
+                        }
+                        return
                     }
             }
         }
