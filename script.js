@@ -119,7 +119,7 @@ window.addEventListener('load', function(){
             this.speed = 0.5
             var initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
-            this.boidPieces = 10
+            this.boidPieces = 5
             this.boidSegments = []
         }
         
@@ -191,7 +191,7 @@ window.addEventListener('load', function(){
             // console.log(this.inRange(this.boids[0], this.boids[1]))
             // console.log(this.getDistanceTo(this.boids[0], this.boids[1]))
             // console.log(this.getAngleSelf(this.boids[0]))
-            this.inLineOfSight(this.boids[0], this.boids[1])
+            // this.inLineOfSight(this.boids[0], this.boids[1])
 
         }
 
@@ -222,7 +222,7 @@ window.addEventListener('load', function(){
             let radius = 10
             this.boidSegments.forEach((segment) => {
                 opacity -= 0.1
-                radius -= 0.75
+                radius  = Math.abs(radius - 1)
                 context.fillStyle = `rgba(160,32,240,${opacity})`
                 context.beginPath()
                 context.arc(segment.x, segment.y, radius, 0, 2 * Math.PI, true)
@@ -237,7 +237,6 @@ window.addEventListener('load', function(){
             this.height = height
             this.snake = new Snake(this)
             this.input = new InputHandler(this)
-            // this.boid = new Boid(this)
             this.boidTimer = 0
             this.boidInterval = 1000
             this.starTimer = 0
@@ -252,6 +251,9 @@ window.addEventListener('load', function(){
             this.snake.update()
             this.boids.forEach(boid => {
                 boid.update()
+                if (this.checkCollision(this.snake, boid)){
+                    boid.markedForDeletion = true
+                }
             })
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
             if (this.boidTimer > this.boidInterval && this.boids.length < this.maxBoids && !this.gameOver) {
@@ -274,8 +276,6 @@ window.addEventListener('load', function(){
 
         }
 
-
-
         draw(context){
             this.stars.forEach(star => {
                 star.draw(context)
@@ -292,6 +292,22 @@ window.addEventListener('load', function(){
 
         addStar(){
             this.stars.push(new Star(this))
+        }
+
+        checkCollision(snake, boid){
+            if(!snake.snakeSegments && !boid.boidSegments){
+                return
+            }
+            for(let i = 0; i < snake.snakeSegments.length; i++){
+                for(let j = 0; j < boid.boidSegments.length; j++ ){
+                    let distance = Math.sqrt((Math.abs(snake.snakeSegments[i].x - boid.boidSegments[j].x)**2 + Math.abs(snake.snakeSegments[i].y - boid.boidSegments[j].y)**2))
+                    let checkDistance = snake.radius + boid.radius
+                    if (distance < checkDistance) {
+                        boid.markedForDeletion = true
+                    }
+            }
+        }
+
         }
 
     }
