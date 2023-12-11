@@ -60,12 +60,9 @@ window.addEventListener('load', function(){
                 } else {
                     context.fillStyle = 'green'
                 }
-                
-
                 context.beginPath()
                 context.arc(this.snakeSegments[i].x, this.snakeSegments[i].y, this.radius, 0, 2*Math.PI, false)
                 context.fill()
-
             }
         }
     }
@@ -99,14 +96,15 @@ window.addEventListener('load', function(){
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
             this.speed = game.speed
+            this.red = game.red
+            this.green = game.green
+            this.blue = game.blue
             var initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.boidPieces = 5
             this.boidSegments = []
         }
         
-
-
         getAngleTo(boid0, boid1){
             if(!boid0 || !boid1){
                 return
@@ -205,7 +203,7 @@ window.addEventListener('load', function(){
             this.boidSegments.forEach((segment) => {
                 opacity -= 0.1
                 radius  = Math.abs(radius - 1)
-                context.fillStyle = `rgba(160,32,240,${opacity})`
+                context.fillStyle = `rgba(${this.red},${this.green},${255 - this.red},${opacity})`
                 context.beginPath()
                 context.arc(segment.x, segment.y, radius, 0, 2 * Math.PI, true)
                 context.fill()
@@ -225,6 +223,9 @@ window.addEventListener('load', function(){
             this.starInterval = 100
             this.maxBoids = 1
             this.speed = 0
+            this.red = 0
+            this.blue = 255
+            this.green = 0
             this.maxSpeed = 3
             this.keys = []
             this.boids = []
@@ -287,8 +288,15 @@ window.addEventListener('load', function(){
                     let distance = Math.sqrt((Math.abs(snake.snakeSegments[i].x - boid.boidSegments[j].x)**2 + Math.abs(snake.snakeSegments[i].y - boid.boidSegments[j].y)**2))
                     let checkDistance = snake.radius + boid.radius - 2
                     if (distance < checkDistance) {
-
                         boid.markedForDeletion = true
+                        if (this.red > 255){
+                            this.red = 255
+                            this.blue = 255
+                            this.green = 255
+                        }else{
+                            this.red += 5
+                            this.blue -= 5
+                        }
                         this.maxBoids += 1
                         this.snake.snakePieces += 2
                         if (game.speed < game.maxSpeed){
