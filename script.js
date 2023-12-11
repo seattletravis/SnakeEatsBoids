@@ -69,24 +69,6 @@ window.addEventListener('load', function(){
             }
         }
     }
-    class Food {
-        constructor(game) {
-            this.game = game
-            this.width = 20
-            this.height = 20
-            this.x = Math.random() * (canvas.width - 25) + 5
-            this.y = Math.random() * (canvas.height - 25) + 5
-        }
-        update(){
-            
-        }
-
-        draw(context){
-            context.fillStyle = 'red'
-            context.fillRect(this.x, this.y, this.width, this.height)
-            context.arc()
-        }
-    }
 
     class Star {
         constructor(game){
@@ -241,7 +223,7 @@ window.addEventListener('load', function(){
             this.boidInterval = 1000
             this.starTimer = 0
             this.starInterval = 100
-            this.maxBoids = 2
+            this.maxBoids = 1
             this.keys = []
             this.boids = []
             this.stars = []
@@ -301,9 +283,10 @@ window.addEventListener('load', function(){
             for(let i = 0; i < snake.snakeSegments.length; i++){
                 for(let j = 0; j < boid.boidSegments.length; j++ ){
                     let distance = Math.sqrt((Math.abs(snake.snakeSegments[i].x - boid.boidSegments[j].x)**2 + Math.abs(snake.snakeSegments[i].y - boid.boidSegments[j].y)**2))
-                    let checkDistance = snake.radius + boid.radius
+                    let checkDistance = snake.radius + boid.radius - 1
                     if (distance < checkDistance) {
                         boid.markedForDeletion = true
+                        this.maxBoids += 1
                     }
             }
         }
