@@ -30,7 +30,7 @@ window.addEventListener('load', function(){
     class Snake {
         constructor(game){
             this.game = game
-            this.radius = 10
+            this.radius = 8
             this.position = new Victor(20, 100)
             this.speedY = 0
             this.speedX = 0
@@ -54,6 +54,7 @@ window.addEventListener('load', function(){
         }
 
         draw(context){
+            let radius = this.radius
             for(let i = this.snakeSegments.length - 1; i >= 0; i--){
                 if (Math.floor(i / 8) % 2 === 0){
                     context.fillStyle = 'red'
@@ -61,7 +62,7 @@ window.addEventListener('load', function(){
                     context.fillStyle = 'green'
                 }
                 context.beginPath()
-                context.arc(this.snakeSegments[i].x, this.snakeSegments[i].y, this.radius, 0, 2*Math.PI, false)
+                context.arc(this.snakeSegments[i].x, this.snakeSegments[i].y, radius, 0, 2*Math.PI, false)
                 context.fill()
             }
         }
@@ -95,10 +96,10 @@ window.addEventListener('load', function(){
             this.boids = this.game.boids
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
-            this.speed = game.speed
-            this.red = game.red
-            this.green = game.green
-            this.blue = game.blue
+            this.speed = this.game.speed
+            this.red = this.game.red
+            this.green = this.game.green
+            this.blue = this.game.blue
             var initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.boidPieces = 5
@@ -199,7 +200,7 @@ window.addEventListener('load', function(){
 
         draw(context){
             let opacity = 1;
-            let radius = 10
+            let radius = this.radius
             this.boidSegments.forEach((segment) => {
                 opacity -= 0.1
                 radius  = Math.abs(radius - 1)
@@ -242,7 +243,7 @@ window.addEventListener('load', function(){
             })
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
             if (this.boidTimer > this.boidInterval && this.boids.length < this.maxBoids && !this.gameOver) {
-                this.addBoid()
+                this.addBoid(this)
                 this.boidTimer = 0
             } else {
                 this.boidTimer += deltaTime
@@ -299,8 +300,8 @@ window.addEventListener('load', function(){
                         }
                         this.maxBoids += 1
                         this.snake.snakePieces += 2
-                        if (game.speed < game.maxSpeed){
-                            game.speed += 0.125
+                        if (this.speed < this.maxSpeed){
+                            this.speed += 0.125
                         }
                         return
                     }
