@@ -10,10 +10,12 @@ As always this is a Travis Lamberte Original Implementation. I'm pulling out all
 
 AI Characteristics include:
 
-Alignment
+### Alignment:
 
 First check for other Boids that have affect: 1. Boid is 'In Sight' in front or to the sides. 2. Boid is 'In Range' within a certain distance. And 3. Boid is !self is not itself. 
 
-Cohesion
+Put
 
-Seperation
+### Cohesion:
+
+### Seperation:
