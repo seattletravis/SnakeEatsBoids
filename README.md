@@ -8,4 +8,10 @@ The Food in this implementation will be given Boid AI Characteristics based on C
 
 As always this is a Travis Lamberte Original Implementation. I'm pulling out all the stops on this one. Hopefully I'll be able to give them little AI's some a fighting chance against the Snake!!!
 
-AI Characteristics include
+AI Characteristics include:
+
+Alignment
+
+Cohesion
+
+Seperation
