@@ -10,11 +10,11 @@ As always this is a Travis Lamberte Original Implementation. I'm pulling out all
 
 AI Characteristics include:
 
-### Alignment:
-
 First check for other Boids that have affect: 1. Boid is 'In Sight' in front or to the sides. 2. Boid is 'In Range' within a certain distance. And 3. Boid is !self is not itself. 
 
-Put
+Put Boids that affect the boids incremental alignment movement in a list and average the direction and position. These can be used for alignment, cohesion, and seperation. 
+
+### Alignment:
 
 ### Cohesion:
 
