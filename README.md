@@ -12,6 +12,8 @@ AI Characteristics include:
 
 Alignment
 
+First check for other Boids that have affect: 1. Boid is 'In Sight' in front or to the sides. 2. Boid is 'In Range' within a certain distance. And 3. Boid is !self is not itself. 
+
 Cohesion
 
 Seperation
