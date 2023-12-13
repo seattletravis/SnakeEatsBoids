@@ -8,11 +8,16 @@ The Food in this implementation will be given Boid AI Characteristics based on C
 
 As always this is a Travis Lamberte Original Implementation. I'm pulling out all the stops on this one. Hopefully I'll be able to give them little AI's some a fighting chance against the Snake!!!
 
-AI Characteristics include:
+### AI Movement is affected by:
+1. Boid is 'In Sight' in front or to the sides.
 
-First check for other Boids that have affect: 1. Boid is 'In Sight' in front or to the sides. 2. Boid is 'In Range' within a certain distance. And 3. Boid is !self is not itself. 
+2. Boid is 'In Range' within a certain distance.
+
+3. Boid is !self is not itself. 
 
 Put Boids that affect the boids incremental alignment movement in a list and average the direction and position. These can be used for alignment, cohesion, and seperation. 
+
+AI Characteristics include:
 
 ### Alignment:
 
