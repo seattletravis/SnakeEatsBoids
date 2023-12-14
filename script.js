@@ -190,11 +190,9 @@ window.addEventListener('load', function(){
                 this.boidSegments.pop()
             }
 
-            //Boid Alignment - Call align method
-            this.align()
-            // this.velocity.add(align)
-            //Boid Cohesion
-            //Boid Seperation
+
+            // this.align()
+
 
         }
 
@@ -222,7 +220,7 @@ window.addEventListener('load', function(){
             this.boidInterval = 1000
             this.starTimer = 0
             this.starInterval = 100
-            this.maxBoids = 1
+            this.maxBoids = 2
             this.speed = 0
             this.red = 0
             this.blue = 255
@@ -240,6 +238,8 @@ window.addEventListener('load', function(){
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
                 }
+
+
             })
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
             if (this.boidTimer > this.boidInterval && this.boids.length < this.maxBoids && !this.gameOver) {
@@ -305,10 +305,24 @@ window.addEventListener('load', function(){
                         }
                         return
                     }
+                }
             }
         }
-
+        checkRange(boid0, boid1){
+            if(!boid0 || !boid1){
+                return false
+            }else{
+                let vec1 = boid0.position.clone()
+                let vec2 = boid1.position.clone()
+                var distance = vec1.distance(vec2) 
+            }
+            if(distance < this.proximal){
+                return true
+            }else{
+                return false
+            }
         }
+        
 
     }
 
