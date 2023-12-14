@@ -221,7 +221,8 @@ window.addEventListener('load', function(){
             this.starTimer = 0
             this.starInterval = 100
             this.maxBoids = 2
-            this.speed = 0
+            this.proximal = 100
+            this.speed = 1
             this.red = 0
             this.blue = 255
             this.green = 0
@@ -235,8 +236,13 @@ window.addEventListener('load', function(){
             this.snake.update()
             this.boids.forEach(boid => {
                 boid.update()
+                //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
+                }
+                // check if boid near snake
+                if (this.checkInRangeOfSnake(this.snake, boid)){
+                    console.log("It's close now")
                 }
 
 
@@ -258,8 +264,6 @@ window.addEventListener('load', function(){
             } else {
                 this.starTimer += deltaTime
             }
-            
-
         }
 
         draw(context){
@@ -281,7 +285,7 @@ window.addEventListener('load', function(){
         }
 
         checkCollision(snake, boid){
-            if(!snake.snakeSegments && !boid.boidSegments){
+            if(!snake.snakeSegments || !boid.boidSegments){
                 return
             }
             for(let i = 0; i < snake.snakeSegments.length; i++){
@@ -308,18 +312,19 @@ window.addEventListener('load', function(){
                 }
             }
         }
-        checkRange(boid0, boid1){
-            if(!boid0 || !boid1){
+        checkInRangeOfSnake(snake, boid){
+            if(!snake.snakeSegments || !boid.boidSegments){
                 return false
-            }else{
-                let vec1 = boid0.position.clone()
-                let vec2 = boid1.position.clone()
-                var distance = vec1.distance(vec2) 
             }
-            if(distance < this.proximal){
-                return true
-            }else{
-                return false
+            for(let i = 0; i < snake.snakeSegments.length; i++){
+                for(let j = 0; j < boid.boidSegments.length; j++ ){
+                    let distance =  Math.sqrt((Math.abs(snake.snakeSegments[i].x - boid.boidSegments[j].x)**2 + Math.abs(snake.snakeSegments[i].y - boid.boidSegments[j].y)**2))
+                    if (distance < this.proximal){
+                        return true
+                    } else {
+                        return false
+                    }
+                }
             }
         }
         
