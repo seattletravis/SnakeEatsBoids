@@ -161,6 +161,7 @@ window.addEventListener('load', function(){
             }
         }
 
+        // No done with this function - needs to return true or false
         inLineOfSight(boid0, boid1){
             let angleSelf = this.getAngleSelf(boid0)
             let angleTo = this.getAngleTo(boid0, boid1)
@@ -242,7 +243,11 @@ window.addEventListener('load', function(){
                 }
                 // check if boid near snake
                 if (this.checkInRangeOfSnake(this.snake, boid)){
-                    console.log("It's close now")
+                    // console.log("It's close now")
+                }
+                // check if snake is in front or to sides of boid
+                if (this.checkSeesSnake(this.snake, boid)){
+                    console.log("I see you")
                 }
 
 
@@ -327,10 +332,48 @@ window.addEventListener('load', function(){
                 }
             }
         }
-        checkSeeSnake(snake, boid){
+        //only check Boid Head Velocity
+        checkSeesSnake(snake, boid){
             if(!snake.snakeSegments || !boid.boidSegments){
                 return false
             }
+            for(let i = 0; i < snake.snakeSegments.length; i++){
+                const snakePiecePosition = new Victor(snake.snakeSegments[i].x, snake.snakeSegments[i].y)
+                let angleSelf = this.getAngleSelf(boid)
+                let angleTowardSnake = this.getAngleTo(boid, snakePiecePosition)
+                if(true) {}//WORKING HERE CONTINUE HERE
+
+            }
+        }
+
+        getAngleTo(boid0, boid1){
+            if(!boid0 || !boid1){
+                return
+            }else{
+                var vec1 = boid0.position.clone()
+                var vec2 = boid1.clone()
+                var angle = vec1.subtract(vec2).direction()
+                if (angle > 0) {
+                    angle = Math.PI - angle
+                } else {
+                    angle = Math.abs(Math.PI - angle) % (Math.PI * 2)
+                }
+                return angle
+            }
+        }
+
+        getAngleSelf(boid0){
+            if(!boid0){
+                return
+            }else{
+                var angle = boid0.velocity.clone().invertY().direction()
+                if (angle > 0) {
+                    angle = angle
+                } else {
+                    angle = (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
+                }
+            }
+            return angle
         }
 
     }
