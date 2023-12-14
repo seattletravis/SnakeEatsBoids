@@ -29,3 +29,5 @@ Boid changes direction over time to match average direction of nearby boids.
 Boid changes direction in order to be closer to other boids that are near by.
 
 ### Seperation:
+
+Boid changes direction if it is too close to another boid.
