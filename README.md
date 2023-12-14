@@ -24,6 +24,12 @@ AI Characteristics include:
 
 Boid changes direction over time to match average direction of nearby boids.
 
+First get the direction angle that the boid is facing.
+
+Then get the angle from from where the snake is and the other boid.
+
+
+
 ### Cohesion:
 
 Boid changes direction in order to be closer to other boids that are near by.
