@@ -22,6 +22,10 @@ AI Characteristics include:
 
 ### Alignment:
 
+Boid changes direction over time to match average direction of nearby boids.
+
 ### Cohesion:
+
+Boid changes direction in order to be closer to other boids that are near by.
 
 ### Seperation:
