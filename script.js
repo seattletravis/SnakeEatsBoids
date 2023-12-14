@@ -317,17 +317,19 @@ window.addEventListener('load', function(){
                 return false
             }
             for(let i = 0; i < snake.snakeSegments.length; i++){
-                for(let j = 0; j < boid.boidSegments.length; j++ ){
-                    let distance =  Math.sqrt((Math.abs(snake.snakeSegments[i].x - boid.boidSegments[j].x)**2 + Math.abs(snake.snakeSegments[i].y - boid.boidSegments[j].y)**2))
+                // for(let j = 0; j < boid.boidSegments.length; j++ ){
+                    let distance =  Math.sqrt((Math.abs(snake.snakeSegments[i].x - boid.boidSegments[0].x)**2 + Math.abs(snake.snakeSegments[i].y - boid.boidSegments[0].y)**2))
                     if (distance < this.proximal){
                         return true
                     } else {
                         return false
                     }
-                }
+                // }
             }
         }
-        
+        checkSeeSnake(snake, boid){
+
+        }
 
     }
 
