@@ -22,13 +22,15 @@ AI Characteristics include:
 
 ### Alignment:
 
+Boid changes direction over time to match average direction of nearby boids.
+
 #### Algorithms
 
-Boid changes direction over time to match average direction of nearby boids.
+We'll call the boid being affected 'boid0'
 
 First get the direction angle that the boid is facing.
 
-Then get the angle from from where the snake is and the other boid.
+Then 
 
 
 
