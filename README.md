@@ -22,6 +22,8 @@ AI Characteristics include:
 
 ### Alignment:
 
+#### Algorithms
+
 Boid changes direction over time to match average direction of nearby boids.
 
 First get the direction angle that the boid is facing.
