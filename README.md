@@ -33,8 +33,12 @@ Each other Boid in play will be dtermined if it will affect boid0 and be added t
 
 ##### Affection Criteria
 
-1. First get the direction angle that the boid is facing.
-2. 
+1. Get the direction angle that the boid0 is facing.
+2. Get the direction angle from boid0 to otherboid.
+3. Compare the 2 angles to see if otherboid is in front or to the sides of boid0. (use 3PI/4 for angle of affect).
+4. Get distance between boid0 and otherboid and check distance
+5. If boid is in sight and in range add it to list of affection.
+6. Return correction angle to be used to get vector velocity changes later. 
 
 
 
