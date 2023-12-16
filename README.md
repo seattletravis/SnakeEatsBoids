@@ -20,13 +20,17 @@ Put Boids that affect the boids incremental alignment movement in a list and ave
 
 AI Characteristics include:
 
+
 ### Alignment:
 
 Boid changes direction over time to match average direction of nearby boids.
 
+We'll call the boid being affected 'boid0'
+
+Each other Boid in play will be dtermined if it will affect boid0 and be added to "Affection" list.
+
 #### Algorithms
 
-We'll call the boid being affected 'boid0'
 
 First get the direction angle that the boid is facing.
 
