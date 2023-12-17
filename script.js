@@ -172,7 +172,7 @@ window.addEventListener('load', function(){
             this.starInterval = 100
             this.maxBoids = 1
             // this.boidsInPlay = 1 // refactor later to use maxBoids as limiter
-            this.proximal = 200
+            this.proximal = 150
             this.speed = 0 //initial boid speed
             this.red = 0
             this.blue = 255
