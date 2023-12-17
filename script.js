@@ -115,64 +115,6 @@ window.addEventListener('load', function(){
             return angle
         }
 
-        // getAngleTo(boid0, boid1){
-        //     if(!boid0 || !boid1){
-        //         return
-        //     }else{
-        //         var vec1 = boid0.position.clone()
-        //         var vec2 = boid1.position.clone()
-        //         var angle = vec1.subtract(vec2).direction()
-        //         if (angle > 0) {
-        //             angle = Math.PI - angle
-        //         } else {
-        //             angle = Math.abs(Math.PI - angle) % (Math.PI * 2)
-        //         }
-        //         return angle
-        //     }
-        // }
-
-
-        
-        // getDistanceTo(boid0, boid1){
-        //     if(!boid0 || !boid1){
-        //         return
-        //     }else{
-        //         var vec1 = boid0.position.clone()
-        //         var vec2 = boid1.position.clone()
-        //     }
-        //     return vec1.distance(vec2)
-        // }
-
-        // inRange(boid0, boid1){
-        //     if(!boid0 || !boid1){
-        //         return false
-        //     }else{
-        //         let vec1 = boid0.position.clone()
-        //         let vec2 = boid1.position.clone()
-        //         var distance = vec1.distance(vec2) 
-        //     }
-        //     if(distance < this.proximal){
-        //         return true
-        //     }else{
-        //         return false
-        //     }
-        // }
-
-        // Not done with this function - needs to return true or false
-        // inLineOfSight(boid0, boid1){
-        //     let angleSelf = this.getAngleSelf(boid0)
-        //     let angleTo = this.getAngleTo(boid0, boid1)
-        //     console.log(angleSelf, angleTo)
-        // }
-
-        // align(){
-            //Boid Alignment
-            // console.log(this.inRange(this.boids[0], this.boids[1]))
-            // console.log(this.getDistanceTo(this.boids[0], this.boids[1]))
-            // console.log(this.getAngleSelf(this.boids[0]))
-            // this.inLineOfSight(this.boids[0], this.boids[1])
-
-        // }
 
         update(){
             //Boundary Handling
@@ -245,7 +187,8 @@ window.addEventListener('load', function(){
                 }
                 // check if snake is in front or to sides of boid
                 if (this.checkBoidSeesSnake(this.snake, boid)){
-                    console.log("I see you")
+                    console.log("I see you, turn to: ", this.checkBoidSeesSnake(this.snake, boid))
+
                 }
 
 
@@ -334,23 +277,27 @@ window.addEventListener('load', function(){
         //Were gonna do some math here. Get smallest value of difference between angles returned from angle self and angle toward aka
         //min: diff1 = largeAngle - smallAngle and diff2 = smallAngle + 2*PI - largeAngle
         checkBoidSeesSnake(snake, boid){
-            if(!snake.snakeSegments || !boid.boidSegments){
+            if(!snake.snakeSegments || !boid.angleSelf){
                 return false
             }
             for(let i = 0; i < snake.snakeSegments.length; i++){
                 const snakePiecePosition = new Victor(snake.snakeSegments[i].x, snake.snakeSegments[i].y)
                 let angleTowardSnake = this.getAngleTo(boid, snakePiecePosition)
+                let difference = 0
+                let swerveTo = 1
                 if(boid.angleSelf <= angleTowardSnake){
                     let diff1 = angleTowardSnake - boid.angleSelf
                     let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
-                    var difference = diff1 < diff2 ? diff1 : diff2
+                    swerveTo = diff1 < diff2 ?  -1 : 1
+                    difference = diff1 < diff2 ? diff1 : diff2
                 }else{
                     let diff1 = boid.angleSelf - angleTowardSnake
                     let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
-                    var difference = diff1 < diff2 ? diff1 : diff2
+                    swerveTo = diff1 < diff2 ?  1 : -1
+                    difference = diff1 < diff2 ? diff1 : diff2
                 }
                 if (difference < 2.355 && this.checkInRangeOfSnake(snake, boid)){
-                    return true
+                    return swerveTo
                 }
 
             }
