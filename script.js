@@ -119,7 +119,7 @@ window.addEventListener('load', function(){
 
 
         update(){
-            //avoid snake
+            //avoid snake ----  WORKING HERE - ADD AVOID CORRECTION TO BOID TO AVOID SNAKE!!
 
             console.log(this.swerveSnake)
 
