@@ -102,6 +102,7 @@ window.addEventListener('load', function(){
             this.blue = this.game.blue
             var initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
+            this.angle = this.getAngleSelf(this)
             this.boidPieces = 5
             this.boidSegments = []
         }
@@ -146,36 +147,36 @@ window.addEventListener('load', function(){
         //     return vec1.distance(vec2)
         // }
 
-        inRange(boid0, boid1){
-            if(!boid0 || !boid1){
-                return false
-            }else{
-                let vec1 = boid0.position.clone()
-                let vec2 = boid1.position.clone()
-                var distance = vec1.distance(vec2) 
-            }
-            if(distance < this.proximal){
-                return true
-            }else{
-                return false
-            }
-        }
+        // inRange(boid0, boid1){
+        //     if(!boid0 || !boid1){
+        //         return false
+        //     }else{
+        //         let vec1 = boid0.position.clone()
+        //         let vec2 = boid1.position.clone()
+        //         var distance = vec1.distance(vec2) 
+        //     }
+        //     if(distance < this.proximal){
+        //         return true
+        //     }else{
+        //         return false
+        //     }
+        // }
 
-        // No done with this function - needs to return true or false
-        inLineOfSight(boid0, boid1){
-            let angleSelf = this.getAngleSelf(boid0)
-            let angleTo = this.getAngleTo(boid0, boid1)
-            console.log(angleSelf, angleTo)
-        }
+        // Not done with this function - needs to return true or false
+        // inLineOfSight(boid0, boid1){
+        //     let angleSelf = this.getAngleSelf(boid0)
+        //     let angleTo = this.getAngleTo(boid0, boid1)
+        //     console.log(angleSelf, angleTo)
+        // }
 
-        align(){
+        // align(){
             //Boid Alignment
             // console.log(this.inRange(this.boids[0], this.boids[1]))
             // console.log(this.getDistanceTo(this.boids[0], this.boids[1]))
             // console.log(this.getAngleSelf(this.boids[0]))
             // this.inLineOfSight(this.boids[0], this.boids[1])
 
-        }
+        // }
 
         update(){
             //Boundary Handling
@@ -353,7 +354,6 @@ window.addEventListener('load', function(){
                     let diff2 = angleTowardSnake + 6.28 - angleSelf
                     var difference = diff1 < diff2 ? diff1 : diff2
                 }
-                // var inRange = this.checkInRangeOfSnake(snake, boid)
                 if (difference < 2.355 && this.checkInRangeOfSnake(snake, boid)){
                     return true
                 }
