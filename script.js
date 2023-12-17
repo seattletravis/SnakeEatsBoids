@@ -221,7 +221,7 @@ window.addEventListener('load', function(){
             this.boidInterval = 1000
             this.starTimer = 0
             this.starInterval = 100
-            this.maxBoids = 2
+            this.maxBoids = 1
             this.proximal = 100
             this.speed = 1
             this.red = 0
@@ -332,7 +332,9 @@ window.addEventListener('load', function(){
                 }
             }
         }
-        //only check Boid Head Velocity
+        //only check Boid Head Velocity\
+        //Were gonna do some math here. Get smalles value of difference between angles returned from angle self and angle toward aka
+        //min: diff1 = largeAngle - smallAngle and diff2 = smallAngle + 2*PI - largeAngle
         checkSeesSnake(snake, boid){
             if(!snake.snakeSegments || !boid.boidSegments){
                 return false
@@ -341,10 +343,25 @@ window.addEventListener('load', function(){
                 const snakePiecePosition = new Victor(snake.snakeSegments[i].x, snake.snakeSegments[i].y)
                 let angleSelf = this.getAngleSelf(boid)
                 let angleTowardSnake = this.getAngleTo(boid, snakePiecePosition)
-                if(angleSelf -  < ) {}//WORKING HERE CONTINUE HERE
+
+                if(angleSelf <= angleTowardSnake){
+                    let diff1 = angleTowardSnake - angleSelf
+                    let diff2 = angleSelf + 6.28 - angleTowardSnake
+                    var difference = diff1 < diff2 ? diff1 : diff2
+                }else{
+                    let diff1 = angleSelf - angleTowardSnake
+                    let diff2 = angleTowardSnake + 6.28 - angleSelf
+                    var difference = diff1 < diff2 ? diff1 : diff2
+                }
+                var inRange = this.checkInRangeOfSnake(snake, boid)
+                if (difference < 2.355 && inRange){
+                    console.log(difference)
+                }
 
             }
+
         }
+        
 
         getAngleTo(boid0, boid1){
             if(!boid0 || !boid1){
