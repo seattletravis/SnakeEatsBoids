@@ -104,7 +104,7 @@ window.addEventListener('load', function(){
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.angleSelf = this.getAngleSelf()
             this.swerveValue = 0.1
-            this.swerveSnake = 0
+            this.swerveSnake = null
             this.boidPieces = 5
             this.boidSegments = []
         }
@@ -308,7 +308,7 @@ window.addEventListener('load', function(){
                 if (difference < 2.355 && this.checkInRangeOfSnake(snake, boid)){
                     boid.swerveSnake = swerveSnake
                 } else {
-                    this.swerveSnake = null
+                    boid.swerveSnake = null
                 }
 
             }
