@@ -117,12 +117,7 @@ window.addEventListener('load', function(){
             return angle
         }
 
-
         update(){
-            //avoid snake ----  WORKING HERE - ADD AVOID CORRECTION TO BOID TO AVOID SNAKE!!
-
-            console.log(this.swerveSnake)
-
             //Boundary Handling
             if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
             if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
@@ -131,6 +126,13 @@ window.addEventListener('load', function(){
             this.position.y += this.velocity.y
             this.position.x += this.velocity.x
             this.angleSelf = this.getAngleSelf()
+
+            //avoid snake ----  WORKING HERE - ADD AVOID CORRECTION TO BOID TO AVOID SNAKE!!
+            if(this.swerveSnake){
+                this.angleSelf += this.swerveSnake
+                this.velocity.x = Math.cos(this.angleSelf) * this.speed
+                this.velocity.y = -Math.sin(this.angleSelf) * this.speed
+            }
 
             //Boid Segment Handling
             this.boidSegments.unshift({x: this.position.x, y: this.position.y})
@@ -169,8 +171,9 @@ window.addEventListener('load', function(){
             this.starTimer = 0
             this.starInterval = 100
             this.maxBoids = 1
+            // this.boidsInPlay = 1 // refactor later to use maxBoids as limiter
             this.proximal = 100
-            this.speed = 1
+            this.speed = 0 //initial boid speed
             this.red = 0
             this.blue = 255
             this.green = 0
@@ -286,9 +289,9 @@ window.addEventListener('load', function(){
         //min: diff1 = largeAngle - smallAngle and diff2 = smallAngle + 2*PI - largeAngle
         //returns 1 for turn clockwise or -1 for turn counter clockwise or false for do nothing.
         checkBoidSeesSnake(snake, boid){
-            if(!snake.snakeSegments || !boid.angleSelf){
-                return
-            }
+            // if(!snake.snakeSegments || !boid.angleSelf){
+            //     return
+            // }
             for(let i = 0; i < snake.snakeSegments.length; i++){
                 const snakePiecePosition = new Victor(snake.snakeSegments[i].x, snake.snakeSegments[i].y)
                 let angleTowardSnake = this.getAngleTo(boid, snakePiecePosition)
