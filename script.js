@@ -107,22 +107,6 @@ window.addEventListener('load', function(){
             this.boidSegments = []
         }
         
-        getAngleTo(boid0, boid1){
-            if(!boid0 || !boid1){
-                return
-            }else{
-                var vec1 = boid0.position.clone()
-                var vec2 = boid1.position.clone()
-                var angle = vec1.subtract(vec2).direction()
-                if (angle > 0) {
-                    angle = Math.PI - angle
-                } else {
-                    angle = Math.abs(Math.PI - angle) % (Math.PI * 2)
-                }
-                return angle
-            }
-        }
-
         getAngleSelf(boid0){
             if(!boid0){
                 return
@@ -136,6 +120,24 @@ window.addEventListener('load', function(){
             }
             return angle
         }
+
+        // getAngleTo(boid0, boid1){
+        //     if(!boid0 || !boid1){
+        //         return
+        //     }else{
+        //         var vec1 = boid0.position.clone()
+        //         var vec2 = boid1.position.clone()
+        //         var angle = vec1.subtract(vec2).direction()
+        //         if (angle > 0) {
+        //             angle = Math.PI - angle
+        //         } else {
+        //             angle = Math.abs(Math.PI - angle) % (Math.PI * 2)
+        //         }
+        //         return angle
+        //     }
+        // }
+
+
         
         // getDistanceTo(boid0, boid1){
         //     if(!boid0 || !boid1){
@@ -333,8 +335,8 @@ window.addEventListener('load', function(){
                 }
             }
         }
-        //only check Boid Head Velocity\
-        //Were gonna do some math here. Get smalles value of difference between angles returned from angle self and angle toward aka
+        //only check Boid Head Velocity for efficiency gain
+        //Were gonna do some math here. Get smallest value of difference between angles returned from angle self and angle toward aka
         //min: diff1 = largeAngle - smallAngle and diff2 = smallAngle + 2*PI - largeAngle
         checkBoidSeesSnake(snake, boid){
             if(!snake.snakeSegments || !boid.boidSegments){
