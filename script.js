@@ -341,7 +341,7 @@ window.addEventListener('load', function(){
                 const snakePiecePosition = new Victor(snake.snakeSegments[i].x, snake.snakeSegments[i].y)
                 let angleSelf = this.getAngleSelf(boid)
                 let angleTowardSnake = this.getAngleTo(boid, snakePiecePosition)
-                if(true) {}//WORKING HERE CONTINUE HERE
+                if(angleSelf -  < ) {}//WORKING HERE CONTINUE HERE
 
             }
         }
