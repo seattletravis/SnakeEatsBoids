@@ -246,7 +246,7 @@ window.addEventListener('load', function(){
                     // console.log("It's close now")
                 }
                 // check if snake is in front or to sides of boid
-                if (this.checkSeesSnake(this.snake, boid)){
+                if (this.checkBoidSeesSnake(this.snake, boid)){
                     console.log("I see you")
                 }
 
@@ -335,7 +335,7 @@ window.addEventListener('load', function(){
         //only check Boid Head Velocity\
         //Were gonna do some math here. Get smalles value of difference between angles returned from angle self and angle toward aka
         //min: diff1 = largeAngle - smallAngle and diff2 = smallAngle + 2*PI - largeAngle
-        checkSeesSnake(snake, boid){
+        checkBoidSeesSnake(snake, boid){
             if(!snake.snakeSegments || !boid.boidSegments){
                 return false
             }
@@ -353,9 +353,9 @@ window.addEventListener('load', function(){
                     let diff2 = angleTowardSnake + 6.28 - angleSelf
                     var difference = diff1 < diff2 ? diff1 : diff2
                 }
-                var inRange = this.checkInRangeOfSnake(snake, boid)
-                if (difference < 2.355 && inRange){
-                    console.log(difference)
+                // var inRange = this.checkInRangeOfSnake(snake, boid)
+                if (difference < 2.355 && this.checkInRangeOfSnake(snake, boid)){
+                    return true
                 }
 
             }
