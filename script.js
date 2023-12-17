@@ -102,21 +102,15 @@ window.addEventListener('load', function(){
             this.blue = this.game.blue
             var initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
-            this.angle = this.getAngleSelf(this)
+            this.angleSelf = this.getAngleSelf()
             this.boidPieces = 5
             this.boidSegments = []
         }
         
-        getAngleSelf(boid0){
-            if(!boid0){
-                return
-            }else{
-                var angle = boid0.velocity.clone().invertY().direction()
-                if (angle > 0) {
-                    angle = angle
-                } else {
-                    angle = (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
-                }
+        getAngleSelf(){
+            let angle = this.velocity.clone().invertY().direction()
+            if (angle < 0) {
+                angle = (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
             }
             return angle
         }
@@ -188,6 +182,7 @@ window.addEventListener('load', function(){
             if (this.position.x > canvas.width - 30) this.velocity.x = -Math.abs(this.velocity.x)
             this.position.y += this.velocity.y
             this.position.x += this.velocity.x
+            this.angleSelf = this.getAngleSelf()
             //Boid Segment Handling
             this.boidSegments.unshift({x: this.position.x, y: this.position.y})
             if (this.boidSegments.length > this.boidPieces) {
@@ -344,16 +339,14 @@ window.addEventListener('load', function(){
             }
             for(let i = 0; i < snake.snakeSegments.length; i++){
                 const snakePiecePosition = new Victor(snake.snakeSegments[i].x, snake.snakeSegments[i].y)
-                let angleSelf = this.getAngleSelf(boid)
                 let angleTowardSnake = this.getAngleTo(boid, snakePiecePosition)
-
-                if(angleSelf <= angleTowardSnake){
-                    let diff1 = angleTowardSnake - angleSelf
-                    let diff2 = angleSelf + 6.28 - angleTowardSnake
+                if(boid.angleSelf <= angleTowardSnake){
+                    let diff1 = angleTowardSnake - boid.angleSelf
+                    let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
                     var difference = diff1 < diff2 ? diff1 : diff2
                 }else{
-                    let diff1 = angleSelf - angleTowardSnake
-                    let diff2 = angleTowardSnake + 6.28 - angleSelf
+                    let diff1 = boid.angleSelf - angleTowardSnake
+                    let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
                     var difference = diff1 < diff2 ? diff1 : diff2
                 }
                 if (difference < 2.355 && this.checkInRangeOfSnake(snake, boid)){
