@@ -103,6 +103,8 @@ window.addEventListener('load', function(){
             var initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.angleSelf = this.getAngleSelf()
+            this.swerveValue = 0.1
+            this.swerveSnake = 0
             this.boidPieces = 5
             this.boidSegments = []
         }
@@ -117,6 +119,10 @@ window.addEventListener('load', function(){
 
 
         update(){
+            //avoid snake
+
+            console.log(this.swerveSnake)
+
             //Boundary Handling
             if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
             if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
@@ -125,6 +131,7 @@ window.addEventListener('load', function(){
             this.position.y += this.velocity.y
             this.position.x += this.velocity.x
             this.angleSelf = this.getAngleSelf()
+
             //Boid Segment Handling
             this.boidSegments.unshift({x: this.position.x, y: this.position.y})
             if (this.boidSegments.length > this.boidPieces) {
@@ -186,10 +193,11 @@ window.addEventListener('load', function(){
                     // console.log("It's close now")
                 }
                 // check if snake is in front or to sides of boid
-                if (this.checkBoidSeesSnake(this.snake, boid)){
-                    console.log("I see you, turn to: ", this.checkBoidSeesSnake(this.snake, boid))
+                // if (this.checkBoidSeesSnake(this.snake, boid)){
+                //     console.log("I see you, turn to: ", this.checkBoidSeesSnake(this.snake, boid))
 
-                }
+                // }
+                this.checkBoidSeesSnake(this.snake, boid)
 
 
             })
@@ -276,28 +284,31 @@ window.addEventListener('load', function(){
         //only check Boid Head Velocity for efficiency gain
         //Were gonna do some math here. Get smallest value of difference between angles returned from angle self and angle toward aka
         //min: diff1 = largeAngle - smallAngle and diff2 = smallAngle + 2*PI - largeAngle
+        //returns 1 for turn clockwise or -1 for turn counter clockwise or false for do nothing.
         checkBoidSeesSnake(snake, boid){
             if(!snake.snakeSegments || !boid.angleSelf){
-                return false
+                return
             }
             for(let i = 0; i < snake.snakeSegments.length; i++){
                 const snakePiecePosition = new Victor(snake.snakeSegments[i].x, snake.snakeSegments[i].y)
                 let angleTowardSnake = this.getAngleTo(boid, snakePiecePosition)
                 let difference = 0
-                let swerveTo = 1
+                let swerveSnake = 0
                 if(boid.angleSelf <= angleTowardSnake){
                     let diff1 = angleTowardSnake - boid.angleSelf
                     let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
-                    swerveTo = diff1 < diff2 ?  -1 : 1
+                    swerveSnake = diff1 < diff2 ?  -1 * boid.swerveValue : 1 * boid.swerveValue
                     difference = diff1 < diff2 ? diff1 : diff2
                 }else{
                     let diff1 = boid.angleSelf - angleTowardSnake
                     let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
-                    swerveTo = diff1 < diff2 ?  1 : -1
+                    swerveSnake = diff1 < diff2 ?  1 * boid.swerveValue : -1 * boid.swerveValue
                     difference = diff1 < diff2 ? diff1 : diff2
                 }
                 if (difference < 2.355 && this.checkInRangeOfSnake(snake, boid)){
-                    return swerveTo
+                    boid.swerveSnake = swerveSnake
+                } else {
+                    this.swerveSnake = null
                 }
 
             }
