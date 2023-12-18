@@ -4,8 +4,6 @@ window.addEventListener('load', function(){
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
     
-
-    
     class InputHandler {
         constructor(game){
             this.game = game
@@ -117,8 +115,6 @@ window.addEventListener('load', function(){
             return angle
         }
 
-        // swerveSnake
-
         update(){
             //Boundary Handling
             if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
@@ -129,27 +125,11 @@ window.addEventListener('load', function(){
             this.position.x += this.velocity.x
             this.angleSelf = this.getAngleSelf()
 
-
-            
-
-
-            // if(this.swerveSnakePiece){
-            //     this.angleSelf += this.swerveSnakePiece
-            //     this.velocity.x = Math.cos(this.angleSelf) * this.speed
-            //     this.velocity.y = -Math.sin(this.angleSelf) * this.speed
-            // }
-
-
             //Boid Segment Handling
             this.boidSegments.unshift({x: this.position.x, y: this.position.y})
             if (this.boidSegments.length > this.boidPieces) {
                 this.boidSegments.pop()
             }
-
-
-            // this.align()
-
-
         }
 
         draw(context){
@@ -297,37 +277,7 @@ window.addEventListener('load', function(){
                     return false
                 }
             // }
-        }
-        //only check Boid Head Velocity for efficiency gain
-        //Were gonna do some math here. Get smallest value of difference between angles returned from angle self and angle toward aka
-        //min: diff1 = largeAngle - smallAngle and diff2 = smallAngle + 2*PI - largeAngle
-        //returns 1 for turn clockwise or -1 for turn counter clockwise or false for do nothing.
-        // checkBoidSeesSnake(snake, boid){
-        //     for(let i = 0; i < snake.snakeSegments.length; i++){
-        //         const snakePiecePosition = new Victor(snake.snakeSegments[i].x, snake.snakeSegments[i].y)
-        //         let angleTowardSnake = this.getAngleTo(boid, snakePiecePosition)
-        //         let difference = 0
-        //         let swerveSnakePiece = 0
-        //         if(boid.angleSelf <= angleTowardSnake){
-        //             let diff1 = angleTowardSnake - boid.angleSelf
-        //             let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
-        //             swerveSnakePiece = diff1 < diff2 ?  -1 * boid.swerveValue : 1 * boid.swerveValue
-        //             difference = diff1 < diff2 ? diff1 : diff2
-        //         }else{
-        //             let diff1 = boid.angleSelf - angleTowardSnake
-        //             let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
-        //             swerveSnakePiece = diff1 < diff2 ?  1 * boid.swerveValue : -1 * boid.swerveValue
-        //             difference = diff1 < diff2 ? diff1 : diff2
-        //         }
-        //         if (difference < 2.355 && this.checkInRangeOfSnake(snake, boid)){
-        //             boid.swerveSnakePiece = swerveSnakePiece
-
-        //         } else {
-        //             boid.swerveSnakePiece = null
-        //         }
-        //     }
-        // }
-        
+        }      
         //only check Boid Head Velocity for efficiency gain
         //Were gonna do some math here. Get smallest value of difference between angles returned from angle self and angle toward aka
         //min: diff1 = largeAngle - smallAngle and diff2 = smallAngle + 2*PI - largeAngle
