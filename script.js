@@ -198,32 +198,14 @@ window.addEventListener('load', function(){
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
                 }
-                // check if boid near snake
-                // if (this.checkInRangeOfSnakePiece(this.snake, boid)){
-                // }
-
-
 
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
                     const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
                     this.checkBoidSeesSnake(snakePiecePosition, boid)
-
-                    // if(boid.swerveSnakePiece){
                         boid.angleSelf += boid.swerveSnakePiece
                         boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed
                         boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
-                    // }
-
                 }
-                
-                // this.checkBoidSeesSnake(this.snake, boid)
-
-                // if(boid.swerveSnakePiece){
-                //     boid.angleSelf += boid.swerveSnakePiece
-                //     boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed
-                //     boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
-                // }
-
 
             })
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
