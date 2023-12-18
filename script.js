@@ -159,7 +159,7 @@ window.addEventListener('load', function(){
             this.boidsInPlay = 1
             this.maxBoids = 50 
             this.stopAddingBoids = false
-            this.proximal = 150
+            this.proximal = 100
             this.speed = 0 //initial boid speed
             this.red = 0
             this.blue = 255
@@ -338,12 +338,6 @@ window.addEventListener('load', function(){
         }
 
     }
-
-
-
-
-
-
 
 
     const game = new Game(canvas.width, canvas.height)
