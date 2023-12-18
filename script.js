@@ -240,8 +240,8 @@ window.addEventListener('load', function(){
                             this.blue = 255
                             this.green = 255
                         }else{
-                            this.red += 5
-                            this.blue -= 5
+                            this.red += 15
+                            this.blue -= 15
                         }
                         if(this.boidsInPlay >= this.maxBoids){
                             this.stopAddingBoids = true
