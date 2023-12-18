@@ -30,7 +30,7 @@ window.addEventListener('load', function(){
     class Snake {
         constructor(game){
             this.game = game
-            this.radius = 8
+            this.radius = 4 
             this.position = new Victor(20, 100)
             this.speedY = 0
             this.speedX = 0
@@ -170,8 +170,9 @@ window.addEventListener('load', function(){
             this.boidInterval = 1000
             this.starTimer = 0
             this.starInterval = 100
-            this.maxBoids = 1
-            // this.boidsInPlay = 1 // refactor later to use maxBoids as limiter
+            this.boidsInPlay = 1
+            this.maxBoids = 50 
+            this.stopBoids = false
             this.proximal = 150
             this.speed = 0 //initial boid speed
             this.red = 0
@@ -211,7 +212,7 @@ window.addEventListener('load', function(){
 
             })
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
-            if (this.boidTimer > this.boidInterval && this.boids.length < this.maxBoids && !this.gameOver) {
+            if (this.boidTimer > this.boidInterval && this.boids.length < this.boidsInPlay && !this.gameOver) {
                 this.addBoid(this)
                 this.boidTimer = 0
             } else {
@@ -265,8 +266,17 @@ window.addEventListener('load', function(){
                             this.red += 5
                             this.blue -= 5
                         }
-                        this.maxBoids += 1
+                        if(this.boidsInPlay >= this.maxBoids){
+                            this.stopBoids = true
+                        }
+                        if (this.stopBoids){
+                            this.boidsInPlay = 0
+                        }else{
+                            this.boidsInPlay += 1
+                        }
+                        
                         this.snake.snakePieces += 2
+                        this.snake.radius += 0.25
                         if (this.speed < this.maxSpeed){
                             this.speed += 0.125
                         }
