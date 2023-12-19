@@ -105,7 +105,7 @@ window.addEventListener('load', function(){
             this.swerveSnakePiece = null
             this.boidPieces = 5
             this.boidSegments = []
-            this.pointValue = 10
+            this.pointValue = this.game.pointValue
         }
         
         getAngleSelf(){
@@ -171,6 +171,8 @@ window.addEventListener('load', function(){
             this.stars = []
             this.gameOver = false
             this.score = 0
+            this.pointValue = 10
+
         }
         update(deltaTime){
             this.snake.update()
@@ -181,7 +183,7 @@ window.addEventListener('load', function(){
                 //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
-                    this.changeScore(boid)
+
                 }
 
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
@@ -228,12 +230,13 @@ window.addEventListener('load', function(){
             })
         }
 
-        changeScore(boid){
+        addPoints(boid){
             this.score += boid.pointValue
-            console.log(this.score)
+            boid.pointValue += 10
+            this.boids.forEach(boid => console.log(boid.pointValue))
 
         }
-        changeColor(boid){
+        changeBoidColor(boid){
             if (boid.red > 255){
                 boid.red = 255
                 boid.blue = 255
@@ -262,16 +265,9 @@ window.addEventListener('load', function(){
                     let checkDistance = snake.radius + boid.radius - 2
                     if (distance < checkDistance) {
                         boid.markedForDeletion = true
-                        this.changeColor(this)
-                        this.changeScore(this)
-                        // if (this.red > 255){
-                        //     this.red = 255
-                        //     this.blue = 255
-                        //     this.green = 255
-                        // }else{
-                        //     this.red += 15
-                        //     this.blue -= 15
-                        // }
+                        this.changeBoidColor(this)
+                        this.addPoints(this)
+
                         if(this.boidsInPlay >= this.maxBoids){
                             this.stopAddingBoids = true
                         }
