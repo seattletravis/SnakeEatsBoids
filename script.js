@@ -105,6 +105,7 @@ window.addEventListener('load', function(){
             this.swerveSnakePiece = null
             this.boidPieces = 5
             this.boidSegments = []
+            this.pointValue = 10
         }
         
         getAngleSelf(){
