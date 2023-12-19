@@ -170,14 +170,18 @@ window.addEventListener('load', function(){
             this.boids = []
             this.stars = []
             this.gameOver = false
+            this.score = 0
         }
         update(deltaTime){
             this.snake.update()
+
+            //apply individual boid updates here. Main Boid Update Loop
             this.boids.forEach(boid => {
                 boid.update()
                 //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
+                    this.changeScore(boid)
                 }
 
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
@@ -189,13 +193,19 @@ window.addEventListener('load', function(){
                 }
 
             })
+
+            //remove boids that are marked for deletion.
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
+
+            //add boids every second until boidsInPlay number is met.
             if (this.boidTimer > this.boidInterval && this.boids.length < this.boidsInPlay && !this.gameOver) {
                 this.addBoid(this)
                 this.boidTimer = 0
             } else {
                 this.boidTimer += deltaTime
             }
+
+            //add background stars
             this.stars.forEach(star => {
                 star.update()
             } )
@@ -218,6 +228,22 @@ window.addEventListener('load', function(){
             })
         }
 
+        changeScore(boid){
+            this.score += boid.pointValue
+            console.log(this.score)
+
+        }
+        changeColor(boid){
+            if (boid.red > 255){
+                boid.red = 255
+                boid.blue = 255
+                boid.green = 255
+            }else{
+                boid.red += 15
+                boid.blue -= 15
+            }
+        }
+
         addBoid(){
             this.boids.push(new Boid(this))
         }
@@ -236,14 +262,16 @@ window.addEventListener('load', function(){
                     let checkDistance = snake.radius + boid.radius - 2
                     if (distance < checkDistance) {
                         boid.markedForDeletion = true
-                        if (this.red > 255){
-                            this.red = 255
-                            this.blue = 255
-                            this.green = 255
-                        }else{
-                            this.red += 15
-                            this.blue -= 15
-                        }
+                        this.changeColor(this)
+                        this.changeScore(this)
+                        // if (this.red > 255){
+                        //     this.red = 255
+                        //     this.blue = 255
+                        //     this.green = 255
+                        // }else{
+                        //     this.red += 15
+                        //     this.blue -= 15
+                        // }
                         if(this.boidsInPlay >= this.maxBoids){
                             this.stopAddingBoids = true
                         }
