@@ -153,12 +153,14 @@ window.addEventListener('load', function(){
             this.fontSize = 25
             this.fontFamily = 'Helvetica'
             this.color = 'yellow'
+            this.fragScore = this.game.score
+
         }
         draw(context){
             context.fillStyle = this.color
             context.font = this.fontSize + 'px ' + this.fontFamily
-            
             context.fillText('Score: ' + this.game.score, 20, 40)
+
 
         }
     }
@@ -248,6 +250,7 @@ window.addEventListener('load', function(){
             })
         }
 
+
         addPoints(boid){
             this.score += boid.pointValue
             this.pointValue += 10
@@ -284,6 +287,9 @@ window.addEventListener('load', function(){
                         boid.markedForDeletion = true
                         this.changeBoidColor(this)
                         this.addPoints(boid)
+
+
+
 
                         if(this.boidsInPlay >= this.maxBoids){
                             this.stopAddingBoids = true
