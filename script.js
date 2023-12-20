@@ -239,8 +239,16 @@ window.addEventListener('load', function(){
             this.snake.update()
 
             //particle update
-            this.particles.forEach(particle => {particle.update()})
+            this.particles.forEach(particle => {
+                particle.update()
+                if(particle.opacity <= 0){
+                    particle.markedForDeletion = true
+                }
+                console.log(this.particles)
+            })
+
             this.particles = this.particles.filter(particle => !particle.markedForDeletion)
+
             //apply individual boid updates here. Main Boid Update Loop
             this.boids.forEach(boid => {
                 boid.update()
@@ -249,6 +257,8 @@ window.addEventListener('load', function(){
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
                 }
+
+                
 
                 //check if boid sees any segment of snake and then add swerve angle then update boid velocity vector
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
@@ -294,7 +304,9 @@ window.addEventListener('load', function(){
                 boid.draw(context)
             })
         }
-
+        // remove(particle){
+        //     if(particle.opacity <= 0){particle.markedForDeletion = true}
+        // }
 
         addPoints(boid){
             this.score += boid.pointValue
