@@ -63,6 +63,32 @@ window.addEventListener('load', function(){
         }
     }
 
+    class Particle {
+        constructor(game, x, y, radius, red, green, blue){
+            this.game = game
+            this.x = x
+            this.y = y
+            this.radius = radius
+            this.red = red
+            this.green = green
+            this.blue = blue
+            this.opacity = 0
+            this.markedForDeletion = false
+        }
+        update(){
+            for(let i = 0; i < 100; i++){
+                this.radius += 1
+                this.opacity += 5
+            }
+        }
+
+        draw(context){
+            context.beginPath()
+            context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
+            context.fill()
+        }
+    }
+
     class Snake {
         constructor(game){
             this.game = game
@@ -199,6 +225,7 @@ window.addEventListener('load', function(){
             this.keys = []
             this.boids = []
             this.stars = []
+            this.particles = []
             this.gameOver = false
             this.score = 0
             this.pointValue = 10
@@ -206,6 +233,9 @@ window.addEventListener('load', function(){
         }
         update(deltaTime){
             this.snake.update()
+            //particle update
+            this.particles.forEach(particle => {particle.update()})
+            this.particles = this.particles.filter(particle => !particle.markedForDeletion)
 
             //apply individual boid updates here. Main Boid Update Loop
             this.boids.forEach(boid => {
@@ -255,6 +285,7 @@ window.addEventListener('load', function(){
                 star.draw(context)
             })
             this.snake.draw(context)
+            this.particles.forEach(particle => particle.draw(context))
             this.boids.forEach(boid => {
                 boid.draw(context)
             })
