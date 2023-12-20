@@ -25,6 +25,44 @@ window.addEventListener('load', function(){
         }
     }
 
+    class Star {
+        constructor(game){
+            this.game = game
+            this.width = Math.random() * 2
+            this.height = this.width
+            this.x = this.game.width
+            this.y = Math.random() * (this.game.height * 1 - this.height)
+            this.speedX = Math.random() * -1 - 0.25
+            this.markedForDeletion = false
+        }
+        update(){
+            this.x += this.speedX
+            if(this.x + this.width < 0) this.markedForDeletion = true
+        }
+        draw(context){
+            context.fillStyle = 'white'
+            context.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+
+    class UI{
+        constructor(game){
+            this.game = game
+            this.fontSize = 25
+            this.fontFamily = 'Helvetica'
+            this.color = 'yellow'
+            this.fragScore = this.game.score
+
+        }
+        draw(context){
+            context.fillStyle = this.color
+            context.font = this.fontSize + 'px ' + this.fontFamily
+            context.fillText('Score: ' + this.game.score, 20, 40)
+
+
+        }
+    }
+
     class Snake {
         constructor(game){
             this.game = game
@@ -72,25 +110,7 @@ window.addEventListener('load', function(){
         }
     }
 
-    class Star {
-        constructor(game){
-            this.game = game
-            this.width = Math.random() * 2
-            this.height = this.width
-            this.x = this.game.width
-            this.y = Math.random() * (this.game.height * 1 - this.height)
-            this.speedX = Math.random() * -1 - 0.25
-            this.markedForDeletion = false
-        }
-        update(){
-            this.x += this.speedX
-            if(this.x + this.width < 0) this.markedForDeletion = true
-        }
-        draw(context){
-            context.fillStyle = 'white'
-            context.fillRect(this.x, this.y, this.width, this.height)
-        }
-    }
+
 
 
     class Boid {
@@ -112,6 +132,7 @@ window.addEventListener('load', function(){
             this.boidPieces = 5
             this.boidSegments = []
             this.pointValue = this.game.pointValue
+            this.markedForDeletion = false
         }
         
         getAngleSelf(){
@@ -153,23 +174,7 @@ window.addEventListener('load', function(){
         }
     }
 
-    class UI{
-        constructor(game){
-            this.game = game
-            this.fontSize = 25
-            this.fontFamily = 'Helvetica'
-            this.color = 'yellow'
-            this.fragScore = this.game.score
 
-        }
-        draw(context){
-            context.fillStyle = this.color
-            context.font = this.fontSize + 'px ' + this.fontFamily
-            context.fillText('Score: ' + this.game.score, 20, 40)
-
-
-        }
-    }
 
     class Game {
         constructor(width, height){
@@ -205,6 +210,7 @@ window.addEventListener('load', function(){
             //apply individual boid updates here. Main Boid Update Loop
             this.boids.forEach(boid => {
                 boid.update()
+
                 //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
@@ -220,7 +226,6 @@ window.addEventListener('load', function(){
                 }
             })
 
-            //remove boids that are marked for deletion.
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
 
             //add boids every second until boidsInPlay number is met.
@@ -292,9 +297,6 @@ window.addEventListener('load', function(){
                         boid.markedForDeletion = true
                         this.changeBoidColor(this)
                         this.addPoints(boid)
-
-
-
 
                         if(this.boidsInPlay >= this.maxBoids){
                             this.stopAddingBoids = true
@@ -382,7 +384,6 @@ window.addEventListener('load', function(){
             }
             return angle
         }
-
     }
 
 
