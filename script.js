@@ -147,12 +147,29 @@ window.addEventListener('load', function(){
         }
     }
 
+    class UI{
+        constructor(game){
+            this.game = game
+            this.fontSize = 25
+            this.fontFamily = 'Helvetica'
+            this.color = 'yellow'
+        }
+        draw(context){
+            context.fillStyle = this.color
+            context.font = this.fontSize + 'px ' + this.fontFamily
+            
+            context.fillText('Score: ' + this.game.score, 20, 40)
+
+        }
+    }
+
     class Game {
         constructor(width, height){
             this.width = width
             this.height = height
             this.snake = new Snake(this)
             this.input = new InputHandler(this)
+            this.ui = new UI(this)
             this.boidTimer = 0
             this.boidInterval = 1000
             this.starTimer = 0
@@ -221,6 +238,7 @@ window.addEventListener('load', function(){
         }
 
         draw(context){
+            this.ui.draw(context)
             this.stars.forEach(star => {
                 star.draw(context)
             })
