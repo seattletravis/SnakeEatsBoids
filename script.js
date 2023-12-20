@@ -250,8 +250,7 @@ window.addEventListener('load', function(){
 
         addPoints(boid){
             this.score += boid.pointValue
-            boid.pointValue += 10
-            this.boids.forEach(boid => console.log(boid.pointValue))
+            this.pointValue += 10
 
         }
         changeBoidColor(boid){
@@ -284,7 +283,7 @@ window.addEventListener('load', function(){
                     if (distance < checkDistance) {
                         boid.markedForDeletion = true
                         this.changeBoidColor(this)
-                        this.addPoints(this)
+                        this.addPoints(boid)
 
                         if(this.boidsInPlay >= this.maxBoids){
                             this.stopAddingBoids = true
