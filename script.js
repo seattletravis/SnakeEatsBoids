@@ -98,7 +98,7 @@ window.addEventListener('load', function(){
             this.red = this.game.red
             this.green = this.game.green
             this.blue = this.game.blue
-            var initialDirection = Math.random() * Math.PI * 2
+            let initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.angleSelf = this.getAngleSelf()
             this.swerveValue = 0.1
@@ -127,7 +127,7 @@ window.addEventListener('load', function(){
             this.angleSelf = this.getAngleSelf()
 
             //Boid Segment Handling
-            this.boidSegments.unshift({x: this.position.x, y: this.position.y})
+            this.boidSegments.unshift({x: this.position.x, y: this.position.y, radius: this.radius})
             if (this.boidSegments.length > this.boidPieces) {
                 this.boidSegments.pop()
             }
@@ -135,13 +135,13 @@ window.addEventListener('load', function(){
 
         draw(context){
             let opacity = 1;
-            let radius = this.radius
+            // let radius = this.boidSegments.radius
             this.boidSegments.forEach((segment) => {
                 opacity -= 0.1
-                radius  = Math.abs(radius - 1)
+                segment.radius = Math.abs(segment.radius - 1)
                 context.fillStyle = `rgba(${this.red},${this.green},${255 - this.red},${opacity})`
                 context.beginPath()
-                context.arc(segment.x, segment.y, radius, 0, 2 * Math.PI, true)
+                context.arc(segment.x, segment.y, segment.radius, 0, 2 * Math.PI, true)
                 context.fill()
             })
         }
@@ -201,8 +201,9 @@ window.addEventListener('load', function(){
                 boid.update()
                 //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
+                    boid.boidSegments.radius = 100
+                    console.log(boid.boidSegments)
                     boid.markedForDeletion = true
-
                 }
 
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
@@ -313,10 +314,6 @@ window.addEventListener('load', function(){
 
         //only check Boid Head
         checkInRangeOfSnakePiece(snakePiece, boid){
-            // if(!snake.snakeSegments || !boid.boidSegments){
-            //     return false
-            // }
-            // for(let i = 0; i < snake.snakeSegments.length; i++){
                 let distance =  Math.sqrt((Math.abs(snakePiece.x - boid.boidSegments[0].x)**2 + Math.abs(snakePiece.y - boid.boidSegments[0].y)**2))
                 
                 if (distance < this.proximal){
@@ -326,10 +323,7 @@ window.addEventListener('load', function(){
                 }
             // }
         }      
-        //only check Boid Head Velocity for efficiency gain
-        //Were gonna do some math here. Get smallest value of difference between angles returned from angle self and angle toward aka
-        //min: diff1 = largeAngle - smallAngle and diff2 = smallAngle + 2*PI - largeAngle
-        //returns 1 for turn clockwise or -1 for turn counter clockwise or false for do nothing.
+
         checkBoidSeesSnake(snakePiece, boid){
             let angleTowardSnake = this.getAngleTo(boid, snakePiece)
             let difference = 0
