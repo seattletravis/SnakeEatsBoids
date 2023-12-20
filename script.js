@@ -72,21 +72,25 @@ window.addEventListener('load', function(){
             this.red = red
             this.green = green
             this.blue = blue
-            this.opacity = 0
+            this.opacity = 1
+            this.particles = []
             this.markedForDeletion = false
         }
         update(){
-            for(let i = 0; i < 100; i++){
-                this.radius += 1
-                this.opacity += 5
-            }
+            this.radius += 1
+            this.opacity -= 0.1
+            
         }
 
         draw(context){
+
+            context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
             context.beginPath()
             context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
             context.fill()
+
         }
+        
     }
 
     class Snake {
@@ -233,10 +237,10 @@ window.addEventListener('load', function(){
         }
         update(deltaTime){
             this.snake.update()
+
             //particle update
             this.particles.forEach(particle => {particle.update()})
             this.particles = this.particles.filter(particle => !particle.markedForDeletion)
-
             //apply individual boid updates here. Main Boid Update Loop
             this.boids.forEach(boid => {
                 boid.update()
@@ -325,6 +329,7 @@ window.addEventListener('load', function(){
                     let distance = Math.sqrt((Math.abs(snake.snakeSegments[i].x - boid.boidSegments[j].x)**2 + Math.abs(snake.snakeSegments[i].y - boid.boidSegments[j].y)**2))
                     let checkDistance = snake.radius + boid.radius - 2
                     if (distance < checkDistance) {
+                        this.particles.push(new Particle(this, boid.boidSegments[0].x, boid.boidSegments[0].y, boid.boidSegments[0].radius, boid.red, boid.green, boid.blue))
                         boid.markedForDeletion = true
                         this.changeBoidColor(this)
                         this.addPoints(boid)
