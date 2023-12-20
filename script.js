@@ -43,18 +43,24 @@ window.addEventListener('load', function(){
             else if (this.game.keys.includes('ArrowLeft') && this.speedX === 0) {this.speedX = -this.snakeSpeed; this.speedY = 0}
             else if (this.game.keys.includes('ArrowRight') && this.speedX === 0) {this.speedX = this.snakeSpeed; this.speedY = 0} 
             else if (this.game.keys.includes(' ')) {this.speedX = 0; this.speedY = 0}
+            if(this.position.x > game.width) {this.position.x = 0}
+            else if (this.position.x < 0) {this.position.x = game.width}
+            if(this.position.y > game.height) {this.position.y = 0}
+            else if (this.position.y < 0) {this.position.y = game.height}
+            
             this.position.y += this.speedY
             this.position.x += this.speedX
             this.snakeSegments.unshift({x: this.position.x, y: this.position.y})
             if (this.snakeSegments.length > this.snakePieces) {
                 this.snakeSegments.pop()
             }
+            
         }
 
         draw(context){
             let radius = this.radius
             for(let i = this.snakeSegments.length - 1; i >= 0; i--){
-                if (Math.floor(i / 8) % 2 === 0){
+                if (Math.floor(i / 12) % 2 === 0){
                     context.fillStyle = 'red'
                 } else {
                     context.fillStyle = 'green'
@@ -201,8 +207,6 @@ window.addEventListener('load', function(){
                 boid.update()
                 //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
-                    boid.boidSegments.radius = 100
-                    console.log(boid.boidSegments)
                     boid.markedForDeletion = true
                 }
 
@@ -263,8 +267,8 @@ window.addEventListener('load', function(){
                 boid.blue = 255
                 boid.green = 255
             }else{
-                boid.red += 15
-                boid.blue -= 15
+                boid.red += 12
+                boid.blue -= 12
             }
         }
 
@@ -301,7 +305,7 @@ window.addEventListener('load', function(){
                             this.boidsInPlay += 1
                         }
                         
-                        this.snake.snakePieces += 2
+                        this.snake.snakePieces += 1
                         this.snake.radius += 0.25
                         if (this.speed < this.maxSpeed){
                             this.speed += 0.125
