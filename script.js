@@ -52,14 +52,11 @@ window.addEventListener('load', function(){
             this.fontFamily = 'Helvetica'
             this.color = 'yellow'
             this.fragScore = this.game.score
-
         }
         draw(context){
             context.fillStyle = this.color
             context.font = this.fontSize + 'px ' + this.fontFamily
             context.fillText('Score: ' + this.game.score, 20, 40)
-
-
         }
     }
 
@@ -77,20 +74,16 @@ window.addEventListener('load', function(){
             this.markedForDeletion = false
         }
         update(){
-            this.radius += 1
-            this.opacity -= 0.1
-            
+            this.radius += 3
+            this.opacity -= 0.075      
         }
 
         draw(context){
-
             context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
             context.beginPath()
             context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
             context.fill()
-
         }
-        
     }
 
     class Snake {
@@ -121,8 +114,7 @@ window.addEventListener('load', function(){
             this.snakeSegments.unshift({x: this.position.x, y: this.position.y})
             if (this.snakeSegments.length > this.snakePieces) {
                 this.snakeSegments.pop()
-            }
-            
+            }  
         }
 
         draw(context){
@@ -237,29 +229,21 @@ window.addEventListener('load', function(){
         }
         update(deltaTime){
             this.snake.update()
-
-            //particle update
+            //particle update, remove particle if opacity is 0
             this.particles.forEach(particle => {
                 particle.update()
                 if(particle.opacity <= 0){
                     particle.markedForDeletion = true
                 }
-                console.log(this.particles)
             })
-
             this.particles = this.particles.filter(particle => !particle.markedForDeletion)
-
             //apply individual boid updates here. Main Boid Update Loop
             this.boids.forEach(boid => {
                 boid.update()
-
                 //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
                 }
-
-                
-
                 //check if boid sees any segment of snake and then add swerve angle then update boid velocity vector
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
                     const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
@@ -304,15 +288,13 @@ window.addEventListener('load', function(){
                 boid.draw(context)
             })
         }
-        // remove(particle){
-        //     if(particle.opacity <= 0){particle.markedForDeletion = true}
-        // }
 
         addPoints(boid){
             this.score += boid.pointValue
             this.pointValue += 10
 
         }
+
         changeBoidColor(boid){
             if (boid.red > 255){
                 boid.red = 255
@@ -402,7 +384,6 @@ window.addEventListener('load', function(){
             
         }
 
-
         getAngleTo(boid0, snakeSegment){
             if(!boid0 || !snakeSegment){
                 return
@@ -433,7 +414,6 @@ window.addEventListener('load', function(){
             return angle
         }
     }
-
 
     const game = new Game(canvas.width, canvas.height)
     let lastTime = 0
