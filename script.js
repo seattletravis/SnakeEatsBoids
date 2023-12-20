@@ -306,7 +306,7 @@ window.addEventListener('load', function(){
                         }
                         
                         this.snake.snakePieces += 3
-                        this.snake.radius += 1/this.snake.radius
+                        this.snake.radius += 1.5/this.snake.radius
                         if (this.speed < this.maxSpeed){
                             this.speed += 0.125
                         }
