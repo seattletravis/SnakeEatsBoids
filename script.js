@@ -155,6 +155,7 @@ window.addEventListener('load', function(){
             this.boidSegments = []
             this.pointValue = this.game.pointValue
             this.markedForDeletion = false
+            this.boundaryBorderOn = true
         }
         
         getAngleSelf(){
@@ -166,17 +167,21 @@ window.addEventListener('load', function(){
         }
 
         update(){
+            if (this.boundaryBorderOn){
             //Boundary Handling Turn Back KEEP THIS CODE
-            // if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
-            // if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
-            // if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
-            // if (this.position.x > canvas.width - 30) this.velocity.x = -Math.abs(this.velocity.x)
+                if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
+                if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
+                if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
+                if (this.position.x > canvas.width - 30) this.velocity.x = -Math.abs(this.velocity.x)
+            }else{
+                //Boundary Handling Pass Through
+                if(this.position.x > game.width) {this.position.x = 0}
+                else if (this.position.x < 0) {this.position.x = game.width}
+                if(this.position.y > game.height) {this.position.y = 0}
+                else if (this.position.y < 0) {this.position.y = game.height}
+            }
 
-            //Boundary Handling Pass Through
-            if(this.position.x > game.width) {this.position.x = 0}
-            else if (this.position.x < 0) {this.position.x = game.width}
-            if(this.position.y > game.height) {this.position.y = 0}
-            else if (this.position.y < 0) {this.position.y = game.height}
+
 
 
 
