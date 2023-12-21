@@ -166,7 +166,7 @@ window.addEventListener('load', function(){
         }
 
         update(){
-            //Boundary Handling Turn Back
+            //Boundary Handling Turn Back KEEP THIS CODE
             // if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
             // if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
             // if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
