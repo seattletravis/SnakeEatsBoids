@@ -94,7 +94,7 @@ window.addEventListener('load', function(){
             this.speedY = 0
             this.speedX = 0
             this.snakeSpeed = 2
-            this.snakePieces = 2
+            this.snakePieces = 7
             this.snakeSegments = []
         }
         
@@ -166,11 +166,20 @@ window.addEventListener('load', function(){
         }
 
         update(){
-            //Boundary Handling
-            if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
-            if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
-            if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
-            if (this.position.x > canvas.width - 30) this.velocity.x = -Math.abs(this.velocity.x)
+            //Boundary Handling Turn Back
+            // if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
+            // if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
+            // if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
+            // if (this.position.x > canvas.width - 30) this.velocity.x = -Math.abs(this.velocity.x)
+
+            //Boundary Handling Pass Through
+            if(this.position.x > game.width) {this.position.x = 0}
+            else if (this.position.x < 0) {this.position.x = game.width}
+            if(this.position.y > game.height) {this.position.y = 0}
+            else if (this.position.y < 0) {this.position.y = game.height}
+
+
+
             this.position.y += this.velocity.y
             this.position.x += this.velocity.x
             this.angleSelf = this.getAngleSelf()
@@ -244,6 +253,12 @@ window.addEventListener('load', function(){
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
                 }
+                
+                
+                
+                
+                
+                
                 //check if boid sees any segment of snake and then add swerve angle then update boid velocity vector
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
                     const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
