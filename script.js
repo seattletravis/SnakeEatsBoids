@@ -348,41 +348,77 @@ window.addEventListener('load', function(){
             }
         }
 
-        //only check Boid Head
-        checkInRangeOfSnakePiece(snakePiece, boid){
-                let distance =  Math.sqrt((Math.abs(snakePiece.x - boid.boidSegments[0].x)**2 + Math.abs(snakePiece.y - boid.boidSegments[0].y)**2))
-                
-                if (distance < this.proximal){
-                    return true
-                } else {
-                    return false
-                }
-            // }
-        }      
+    //only check Boid Head
+    // checkInRangeOfSnakePiece(snakePiece, boid){
+    //     let distance =  Math.sqrt((Math.abs(snakePiece.x - boid.boidSegments[0].x)**2 + Math.abs(snakePiece.y - boid.boidSegments[0].y)**2))
+    //     if (distance < this.proximal){
+    //         return true
+    //     } else {
+    //         return false
+    //     }
+    // }      
 
-        checkBoidSeesSnake(snakePiece, boid){
-            let angleTowardSnake = this.getAngleTo(boid, snakePiece)
-            let difference = 0
-            let swerveSnakePiece = 0
-            if(boid.angleSelf <= angleTowardSnake){
-                let diff1 = angleTowardSnake - boid.angleSelf
-                let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
-                swerveSnakePiece = diff1 < diff2 ?  -1 * boid.swerveValue : 1 * boid.swerveValue
-                difference = diff1 < diff2 ? diff1 : diff2
-            }else{
-                let diff1 = boid.angleSelf - angleTowardSnake
-                let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
-                swerveSnakePiece = diff1 < diff2 ?  1 * boid.swerveValue : -1 * boid.swerveValue
-                difference = diff1 < diff2 ? diff1 : diff2
-            }
-            if (difference < 2.355 && this.checkInRangeOfSnakePiece(snakePiece, boid)){
-                boid.swerveSnakePiece = swerveSnakePiece
-
-            } else {
-                boid.swerveSnakePiece = null
-            }
-            
+    //
+    checkBoidSeesSnake(snakePiece, boid){
+        let angleTowardSnake = this.getAngleTo(boid, snakePiece)
+        let difference = 0
+        let swerveSnakePiece = 0
+        if(boid.angleSelf <= angleTowardSnake){
+            let diff1 = angleTowardSnake - boid.angleSelf
+            let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
+            swerveSnakePiece = diff1 < diff2 ?  -1 * boid.swerveValue : 1 * boid.swerveValue
+            difference = diff1 < diff2 ? diff1 : diff2
+        }else{
+            let diff1 = boid.angleSelf - angleTowardSnake
+            let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
+            swerveSnakePiece = diff1 < diff2 ?  1 * boid.swerveValue : -1 * boid.swerveValue
+            difference = diff1 < diff2 ? diff1 : diff2
         }
+        let distance =  Math.sqrt((Math.abs(snakePiece.x - boid.boidSegments[0].x)**2 + Math.abs(snakePiece.y - boid.boidSegments[0].y)**2))
+        let inRange = distance < this.proximal ? true : false
+
+        if (difference < 2.355 && inRange){
+            boid.swerveSnakePiece = swerveSnakePiece
+
+        } else {
+            boid.swerveSnakePiece = null
+        }
+    }
+
+
+        // //only check Boid Head
+        // checkInRangeOfSnakePiece(snakePiece, boid){
+        //         let distance =  Math.sqrt((Math.abs(snakePiece.x - boid.boidSegments[0].x)**2 + Math.abs(snakePiece.y - boid.boidSegments[0].y)**2))
+                
+        //         if (distance < this.proximal){
+        //             return true
+        //         } else {
+        //             return false
+        //         }
+        // }      
+
+        // checkBoidSeesSnake(snakePiece, boid){
+        //     let angleTowardSnake = this.getAngleTo(boid, snakePiece)
+        //     let difference = 0
+        //     let swerveSnakePiece = 0
+        //     if(boid.angleSelf <= angleTowardSnake){
+        //         let diff1 = angleTowardSnake - boid.angleSelf
+        //         let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
+        //         swerveSnakePiece = diff1 < diff2 ?  -1 * boid.swerveValue : 1 * boid.swerveValue
+        //         difference = diff1 < diff2 ? diff1 : diff2
+        //     }else{
+        //         let diff1 = boid.angleSelf - angleTowardSnake
+        //         let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
+        //         swerveSnakePiece = diff1 < diff2 ?  1 * boid.swerveValue : -1 * boid.swerveValue
+        //         difference = diff1 < diff2 ? diff1 : diff2
+        //     }
+        //     if (difference < 2.355 && this.checkInRangeOfSnakePiece(snakePiece, boid)){
+        //         boid.swerveSnakePiece = swerveSnakePiece
+
+        //     } else {
+        //         boid.swerveSnakePiece = null
+        //     }
+        // }
 
         getAngleTo(boid0, snakeSegment){
             if(!boid0 || !snakeSegment){
