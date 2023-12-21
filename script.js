@@ -61,7 +61,7 @@ window.addEventListener('load', function(){
     }
 
     class Particle {
-        constructor(game, x, y, radius, red, green, blue){
+        constructor(game, x, y, radius, red, green, blue, pointValue){
             this.game = game
             this.x = x
             this.y = y
@@ -69,6 +69,7 @@ window.addEventListener('load', function(){
             this.red = red
             this.green = green
             this.blue = blue
+            this.pointValue = pointValue
             this.opacity = 1
             this.particles = []
             this.markedForDeletion = false
@@ -83,6 +84,9 @@ window.addEventListener('load', function(){
             context.beginPath()
             context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
             context.fill()
+            context.fillStyle = `rgba(125, 255, 125, ${this.opacity})`
+            context.fillText(this.pointValue, this.x, this.y)
+            context.fill
         }
     }
 
@@ -339,7 +343,7 @@ window.addEventListener('load', function(){
                     let distance = Math.sqrt((Math.abs(snake.snakeSegments[i].x - boid.boidSegments[j].x)**2 + Math.abs(snake.snakeSegments[i].y - boid.boidSegments[j].y)**2))
                     let checkDistance = snake.radius + boid.radius - 2
                     if (distance < checkDistance) {
-                        this.particles.push(new Particle(this, boid.boidSegments[0].x, boid.boidSegments[0].y, boid.boidSegments[0].radius, boid.red, boid.green, boid.blue))
+                        this.particles.push(new Particle(this, boid.boidSegments[0].x, boid.boidSegments[0].y, boid.boidSegments[0].radius, boid.red, boid.green, boid.blue, boid.pointValue))
                         boid.markedForDeletion = true
                         this.changeBoidColor(this)
                         this.addPoints(boid)
