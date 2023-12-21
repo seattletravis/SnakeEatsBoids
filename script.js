@@ -155,7 +155,7 @@ window.addEventListener('load', function(){
             this.boidSegments = []
             this.pointValue = this.game.pointValue
             this.markedForDeletion = false
-            this.boundaryBorderOn = true
+            this.boundaryBorderOn = false
         }
         
         getAngleSelf(){
@@ -167,8 +167,8 @@ window.addEventListener('load', function(){
         }
 
         update(){
+            //Boundary Handling - false -> pass through : true -> bounce back
             if (this.boundaryBorderOn){
-            //Boundary Handling Turn Back KEEP THIS CODE
                 if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y)
                 if (this.position.y > canvas.height - 30) this.velocity.y = -Math.abs(this.velocity.y)
                 if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
@@ -180,10 +180,6 @@ window.addEventListener('load', function(){
                 if(this.position.y > game.height) {this.position.y = 0}
                 else if (this.position.y < 0) {this.position.y = game.height}
             }
-
-
-
-
 
             this.position.y += this.velocity.y
             this.position.x += this.velocity.x
