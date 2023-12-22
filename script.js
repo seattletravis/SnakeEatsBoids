@@ -161,9 +161,7 @@ window.addEventListener('load', function(){
         
         getAngleSelf(){
             let angle = this.velocity.clone().invertY().direction()
-            if (angle < 0) {
-                angle = (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
-            }
+            angle = angle < 0 ? (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI) : angle
             return angle
         }
 
@@ -356,8 +354,13 @@ window.addEventListener('load', function(){
             }
         }
         
+    
+
     avoidSnake(snakePiece, boid){
-        let angleTowardSnake = this.getAngleTo(boid, snakePiece)
+        const vec1 = boid.position.clone()
+        const vec2 = snakePiece.clone()
+        let angleTowardSnake = vec1.subtract(vec2).direction()
+        angleTowardSnake = angleTowardSnake < 0 ? Math.PI - angleTowardSnake : Math.abs(Math.PI - angleTowardSnake) % (Math.PI * 2)
         let difference = 0
         let swerveSnakePiece = 0
         if(boid.angleSelf <= angleTowardSnake){
@@ -379,31 +382,23 @@ window.addEventListener('load', function(){
         boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
     }
 
-        getAngleTo(boid, snakePiece){
-            const vec1 = boid.position.clone()
-            const vec2 = snakePiece.clone()
-            let angle = vec1.subtract(vec2).direction()
-            if (angle > 0) {
-                angle = Math.PI - angle
-            } else {
-                angle = Math.abs(Math.PI - angle) % (Math.PI * 2)
-            }
-            return angle             
-        }
+        // getAngleTo(boid, snakePiece){
+        //     const vec1 = boid.position.clone()
+        //     const vec2 = snakePiece.clone()
+        //     let angle = vec1.subtract(vec2).direction()
+        //     angle = angle < 0 ? Math.PI - angle : Math.abs(Math.PI - angle) % (Math.PI * 2)
+        //     return angle             
+        // }
 
-        getAngleSelf(boid0){
-            if(!boid0){
-                return
-            }else{
-                var angle = boid0.velocity.clone().invertY().direction()
-                if (angle > 0) {
-                    angle = angle
-                } else {
-                    angle = (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
-                }
-            }
-            return angle
-        }
+        // getAngleSelf(boid0){
+        //     var angle = boid0.velocity.clone().invertY().direction()
+        //     if (angle > 0) {
+        //         angle = angle
+        //     } else {
+        //         angle = (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
+        //     }
+        //     return angle
+        // }
     }
 
     const game = new Game(canvas.width, canvas.height)
