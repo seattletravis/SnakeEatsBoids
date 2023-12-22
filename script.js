@@ -223,11 +223,11 @@ window.addEventListener('load', function(){
             this.boidInterval = 1000
             this.starTimer = 0
             this.starInterval = 100
-            this.boidsInPlay = 1
+            this.boidsInPlay = 10
             this.maxBoids = 50 
             this.stopAddingBoids = false
             this.proximal = 100
-            this.speed = 0 //initial boid speed
+            this.speed = 2 //initial boid speed
             this.red = 0
             this.blue = 255
             this.green = 0
@@ -252,15 +252,14 @@ window.addEventListener('load', function(){
             })
             this.particles = this.particles.filter(particle => !particle.markedForDeletion)
             //apply individual boid updates here. Main Boid Update Loop
+
+
             this.boids.forEach(boid => {
                 boid.update()
                 //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
                     boid.markedForDeletion = true
                 }
-                
-                
-                
                 
                 
                 
@@ -367,8 +366,7 @@ window.addEventListener('load', function(){
                 }
             }
         }
-
-
+        
     checkBoidSeesSnake(snakePiece, boid){
         let angleTowardSnake = this.getAngleTo(boid, snakePiece)
         let difference = 0
@@ -395,21 +393,16 @@ window.addEventListener('load', function(){
         }
     }
 
-
-        getAngleTo(boid0, snakeSegment){
-            if(!boid0 || !snakeSegment){
-                return
-            }else{
-                const vec1 = boid0.position.clone()
-                const vec2 = snakeSegment.clone()
-                let angle = vec1.subtract(vec2).direction()
-                if (angle > 0) {
-                    angle = Math.PI - angle
-                } else {
-                    angle = Math.abs(Math.PI - angle) % (Math.PI * 2)
-                }
-                return angle
+        getAngleTo(boid, snakePiece){
+            const vec1 = boid.position.clone()
+            const vec2 = snakePiece.clone()
+            let angle = vec1.subtract(vec2).direction()
+            if (angle > 0) {
+                angle = Math.PI - angle
+            } else {
+                angle = Math.abs(Math.PI - angle) % (Math.PI * 2)
             }
+            return angle             
         }
 
         getAngleSelf(boid0){
