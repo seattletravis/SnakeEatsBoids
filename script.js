@@ -136,9 +136,6 @@ window.addEventListener('load', function(){
         }
     }
 
-
-
-
     class Boid {
         constructor(game){
             this.game = game
@@ -210,8 +207,6 @@ window.addEventListener('load', function(){
         }
     }
 
-
-
     class Game {
         constructor(width, height){
             this.width = width
@@ -263,10 +258,7 @@ window.addEventListener('load', function(){
                 //check if boid sees any segment of snake and then add swerve angle then update boid velocity vector
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
                     const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
-                    this.checkBoidSeesSnake(snakePiecePosition, boid)
-                    // boid.angleSelf += boid.swerveSnakePiece
-                    // boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed
-                    // boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
+                    this.avoidSnake(snakePiecePosition, boid)
                 }
             })
 
@@ -364,7 +356,7 @@ window.addEventListener('load', function(){
             }
         }
         
-    checkBoidSeesSnake(snakePiece, boid){
+    avoidSnake(snakePiece, boid){
         let angleTowardSnake = this.getAngleTo(boid, snakePiece)
         let difference = 0
         let swerveSnakePiece = 0
