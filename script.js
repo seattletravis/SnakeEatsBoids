@@ -258,6 +258,9 @@ window.addEventListener('load', function(){
                     const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
                     this.avoidSnake(snakePiecePosition, boid)
                 }
+
+                this.boids.forEach(head => console.log(head))
+
             })
 
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
@@ -354,7 +357,11 @@ window.addEventListener('load', function(){
             }
         }
         
-    
+    // seperation(boidHead, boid){
+    //     const vec1 = boid.position.clone()
+    //     const vec2 = boidHead.position.clone()
+
+    // }
 
     avoidSnake(snakePiece, boid){
         const vec1 = boid.position.clone()
