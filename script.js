@@ -150,7 +150,8 @@ window.addEventListener('load', function(){
             let initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.angleSelf = this.getAngleSelf()
-            this.swerveValue = 0.00005
+            this.swerveValue = 0.0001
+            this.seperationValue = 0.1
             this.swerveSnakePiece = null
             this.boidPieces = 5
             this.boidSegments = []
@@ -173,7 +174,7 @@ window.addEventListener('load', function(){
                 if (this.position.x < 30) this.velocity.x = Math.abs(this.velocity.x)
                 if (this.position.x > canvas.width - 30) this.velocity.x = -Math.abs(this.velocity.x)
             }else{
-                //Boundary Handling Pass Through
+                //Boundary Handling - Pass Through
                 if(this.position.x > game.width) {this.position.x = 0}
                 else if (this.position.x < 0) {this.position.x = game.width}
                 if(this.position.y > game.height) {this.position.y = 0}
@@ -193,7 +194,6 @@ window.addEventListener('load', function(){
 
         draw(context){
             let opacity = 1;
-            // let radius = this.boidSegments.radius
             this.boidSegments.forEach((segment) => {
                 opacity -= 0.1
                 segment.radius = Math.abs(segment.radius - 1)
@@ -259,7 +259,18 @@ window.addEventListener('load', function(){
                     this.avoidSnake(snakePiecePosition, boid)
                 }
 
-                this.boids.forEach(head => console.log(head))
+
+                // WORKING HERE!!
+                
+                // this.boids.forEach(otherBoid => {
+                //     if (otherBoid.boidSegments[0] === undefined){
+                //         console.log('x and y not there')
+                //     } else {
+                //         // console.log(otherBoid.boidSegments[0].x)
+                //         const boidHead = new Victor(otherBoid.boidSegments[0].x, otherBoid.boidSegments[0].y)
+                //         this.avoidSnake(boidHead, boid)
+                //     }
+                // })
 
             })
 
@@ -357,11 +368,6 @@ window.addEventListener('load', function(){
             }
         }
         
-    // seperation(boidHead, boid){
-    //     const vec1 = boid.position.clone()
-    //     const vec2 = boidHead.position.clone()
-
-    // }
 
     avoidSnake(snakePiece, boid){
         const vec1 = boid.position.clone()
