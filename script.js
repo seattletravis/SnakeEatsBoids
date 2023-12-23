@@ -220,11 +220,11 @@ window.addEventListener('load', function(){
             this.maxBoids = 50 
             this.stopAddingBoids = false
             this.snakeSwerveValue = 0.01
-            this.boidSwerveValue = 1
+            this.boidSwerveValue = 0.1
             this.snakeProxy = 150
             this.boidProxy = 75
             this.snakeSightAngle = 2.355
-            this.boidSightAngle = 2.355
+            this.boidSightAngle = 1.57
             this.speed = 2 //initial boid speed
             this.red = 0
             this.blue = 255
@@ -266,7 +266,7 @@ window.addEventListener('load', function(){
                 }
 
 
-                // CALL AVOIDSNAKE FUNCTION FOR SEPERATION BEHAVIOR - NEED TO REFACTOR
+                // CALL AVOIDSNAKE FUNCTION FOR AVOID EACH OTHER BEHAVIOR - NEED TO REFACTOR
                 
                 this.boids.forEach(otherBoid => {
                     if (otherBoid.boidSegments[0] === undefined){
@@ -385,12 +385,12 @@ window.addEventListener('load', function(){
         if(boid.angleSelf <= angleTowardSnake){
             let diff1 = angleTowardSnake - boid.angleSelf
             let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
-            swerveSnakePiece = diff1 < diff2 ?  -1 * boid.swerveValue : 1 * boid.swerveValue
+            swerveSnakePiece = diff1 < diff2 ?  -1 * swerveValue : 1 * swerveValue
             difference = diff1 < diff2 ? diff1 : diff2
         }else{
             let diff1 = boid.angleSelf - angleTowardSnake
             let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
-            swerveSnakePiece = diff1 < diff2 ?  1 * boid.swerveValue : -1 * boid.swerveValue
+            swerveSnakePiece = diff1 < diff2 ?  1 * swerveValue : -1 * swerveValue
             difference = diff1 < diff2 ? diff1 : diff2
         }
         let distance =  Math.sqrt((Math.abs(snakePiece.x - boid.boidSegments[0].x)**2 + Math.abs(snakePiece.y - boid.boidSegments[0].y)**2))
