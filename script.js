@@ -140,7 +140,6 @@ window.addEventListener('load', function(){
     class Boid {
         constructor(game){
             this.game = game
-            this.proximal = 50
             this.boids = this.game.boids
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
             this.radius = 10
@@ -151,8 +150,6 @@ window.addEventListener('load', function(){
             let initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.angleSelf = this.getAngleSelf()
-            this.swerveValue = 0.01
-            this.swerveSnakePiece = null
             this.boidPieces = 5
             this.boidSegments = []
             this.pointValue = this.game.pointValue
@@ -213,10 +210,10 @@ window.addEventListener('load', function(){
             this.input = new InputHandler(this)
             this.ui = new UI(this)
             this.boidTimer = 0
-            this.boidInterval = 1000
+            this.boidInterval = 100
             this.starTimer = 0
             this.starInterval = 100
-            this.boidsInPlay = 100
+            this.boidsInPlay = 200
             this.maxBoids = 50 
             this.stopAddingBoids = false
             this.snakeSwerveValue = 0.01
@@ -258,26 +255,22 @@ window.addEventListener('load', function(){
                     boid.markedForDeletion = true
                 }  
                 
-                //check if boid sees any segment of snake and then add swerve angle then update boid velocity vector
                 // CALL avoid FUNCTION FOR AVOID SNAKE BEHAVIOR - NEED TO REFACTOR FUNCTION
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
                     const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
                     this.avoid(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
                 }
 
-
-                // CALL avoid FUNCTION FOR AVOID EACH OTHER BEHAVIOR - NEED TO REFACTOR
-                
+                // BEHAVIOR CALLS FOR AVOID EACH OTHER BEHAVIOR - NEED TO REFACTOR
                 this.boids.forEach(otherBoid => {
-                    if (otherBoid.boidSegments[0] === undefined){
-                        console.log('x and y not there')
-                    } else {
-                        // console.log(otherBoid.boidSegments[0].x)
+                    if (otherBoid.boidSegments[0] != undefined){
                         const boidHead = new Victor(otherBoid.boidSegments[0].x, otherBoid.boidSegments[0].y)
+                        //AVOID CALL
                         this.avoid(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
+                        //ALIGN CALL
+                        this.align(otherBoid.velocity, boid.velocity)                    
                     }
-                })
-
+                })  
             })
 
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
@@ -374,6 +367,8 @@ window.addEventListener('load', function(){
             }
         }
         
+    align(otherBoid, boid){
+    }
 
     avoid(otherBody, boid, proximal, swerveValue, sightAngle){
         const vec1 = boid.position.clone()
