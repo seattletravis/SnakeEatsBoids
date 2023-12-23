@@ -150,8 +150,8 @@ window.addEventListener('load', function(){
             let initialDirection = Math.random() * Math.PI * 2
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.angleSelf = this.getAngleSelf()
-            this.swerveValue = 0.0001
-            this.seperationValue = 0.1
+            this.swerveValue = 0.01
+            // this.seperationValue = 0.1
             this.swerveSnakePiece = null
             this.boidPieces = 5
             this.boidSegments = []
@@ -216,10 +216,15 @@ window.addEventListener('load', function(){
             this.boidInterval = 1000
             this.starTimer = 0
             this.starInterval = 100
-            this.boidsInPlay = 10
+            this.boidsInPlay = 100
             this.maxBoids = 50 
             this.stopAddingBoids = false
-            this.proximal = 100
+            this.snakeSwerveValue = 0.01
+            this.boidSwerveValue = 0.5
+            this.snakeProxy = 150
+            this.boidProxy = 100
+            this.snakeSightAngle = 2.355
+            this.boidSightAngle = 2.355
             this.speed = 2 //initial boid speed
             this.red = 0
             this.blue = 255
@@ -256,21 +261,21 @@ window.addEventListener('load', function(){
                 //check if boid sees any segment of snake and then add swerve angle then update boid velocity vector
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
                     const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
-                    this.avoidSnake(snakePiecePosition, boid)
+                    this.avoidSnake(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
                 }
 
 
                 // WORKING HERE!!
                 
-                // this.boids.forEach(otherBoid => {
-                //     if (otherBoid.boidSegments[0] === undefined){
-                //         console.log('x and y not there')
-                //     } else {
-                //         // console.log(otherBoid.boidSegments[0].x)
-                //         const boidHead = new Victor(otherBoid.boidSegments[0].x, otherBoid.boidSegments[0].y)
-                //         this.avoidSnake(boidHead, boid)
-                //     }
-                // })
+                this.boids.forEach(otherBoid => {
+                    if (otherBoid.boidSegments[0] === undefined){
+                        console.log('x and y not there')
+                    } else {
+                        // console.log(otherBoid.boidSegments[0].x)
+                        const boidHead = new Victor(otherBoid.boidSegments[0].x, otherBoid.boidSegments[0].y)
+                        this.avoidSnake(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
+                    }
+                })
 
             })
 
@@ -369,7 +374,7 @@ window.addEventListener('load', function(){
         }
         
 
-    avoidSnake(snakePiece, boid){
+    avoidSnake(snakePiece, boid, proximal, swerveValue, sightAngle){
         const vec1 = boid.position.clone()
         const vec2 = snakePiece.clone()
         let angleTowardSnake = vec1.subtract(vec2).direction()
@@ -388,8 +393,8 @@ window.addEventListener('load', function(){
             difference = diff1 < diff2 ? diff1 : diff2
         }
         let distance =  Math.sqrt((Math.abs(snakePiece.x - boid.boidSegments[0].x)**2 + Math.abs(snakePiece.y - boid.boidSegments[0].y)**2))
-        let inRange = distance < this.proximal ? true : false
-        boid.swerveSnakePiece = difference < 2.355 && inRange ? boid.swerveSnakePiece + swerveSnakePiece : null
+        let inRange = distance < proximal ? true : false
+        boid.swerveSnakePiece = difference < sightAngle && inRange ? boid.swerveSnakePiece + swerveSnakePiece : null
         boid.angleSelf += boid.swerveSnakePiece
         boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed
         boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
