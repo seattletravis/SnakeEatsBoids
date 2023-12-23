@@ -220,9 +220,9 @@ window.addEventListener('load', function(){
             this.maxBoids = 50 
             this.stopAddingBoids = false
             this.snakeSwerveValue = 0.01
-            this.boidSwerveValue = 0.5
+            this.boidSwerveValue = 1
             this.snakeProxy = 150
-            this.boidProxy = 100
+            this.boidProxy = 75
             this.snakeSightAngle = 2.355
             this.boidSightAngle = 2.355
             this.speed = 2 //initial boid speed
@@ -259,13 +259,14 @@ window.addEventListener('load', function(){
                 }  
                 
                 //check if boid sees any segment of snake and then add swerve angle then update boid velocity vector
+                // CALL AVOIDSNAKE FUNCTION FOR AVOID SNAKE BEHAVIOR - NEED TO REFACTOR FUNCTION
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
                     const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
                     this.avoidSnake(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
                 }
 
 
-                // WORKING HERE!!
+                // CALL AVOIDSNAKE FUNCTION FOR SEPERATION BEHAVIOR - NEED TO REFACTOR
                 
                 this.boids.forEach(otherBoid => {
                     if (otherBoid.boidSegments[0] === undefined){
