@@ -57,6 +57,7 @@ window.addEventListener('load', function(){
             context.fillStyle = this.color
             context.font = this.fontSize + 'px ' + this.fontFamily
             context.fillText('Score: ' + this.game.score, 20, 40)
+            
         }
     }
 
@@ -151,7 +152,6 @@ window.addEventListener('load', function(){
             this.velocity = new Victor(this.speed * Math.cos(initialDirection),this.speed * Math.sin(initialDirection))
             this.angleSelf = this.getAngleSelf()
             this.swerveValue = 0.01
-            // this.seperationValue = 0.1
             this.swerveSnakePiece = null
             this.boidPieces = 5
             this.boidSegments = []
@@ -259,14 +259,14 @@ window.addEventListener('load', function(){
                 }  
                 
                 //check if boid sees any segment of snake and then add swerve angle then update boid velocity vector
-                // CALL AVOIDSNAKE FUNCTION FOR AVOID SNAKE BEHAVIOR - NEED TO REFACTOR FUNCTION
+                // CALL avoid FUNCTION FOR AVOID SNAKE BEHAVIOR - NEED TO REFACTOR FUNCTION
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
                     const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
-                    this.avoidSnake(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
+                    this.avoid(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
                 }
 
 
-                // CALL AVOIDSNAKE FUNCTION FOR AVOID EACH OTHER BEHAVIOR - NEED TO REFACTOR
+                // CALL avoid FUNCTION FOR AVOID EACH OTHER BEHAVIOR - NEED TO REFACTOR
                 
                 this.boids.forEach(otherBoid => {
                     if (otherBoid.boidSegments[0] === undefined){
@@ -274,7 +274,7 @@ window.addEventListener('load', function(){
                     } else {
                         // console.log(otherBoid.boidSegments[0].x)
                         const boidHead = new Victor(otherBoid.boidSegments[0].x, otherBoid.boidSegments[0].y)
-                        this.avoidSnake(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
+                        this.avoid(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
                     }
                 })
 
@@ -375,9 +375,9 @@ window.addEventListener('load', function(){
         }
         
 
-    avoidSnake(snakePiece, boid, proximal, swerveValue, sightAngle){
+    avoid(otherBody, boid, proximal, swerveValue, sightAngle){
         const vec1 = boid.position.clone()
-        const vec2 = snakePiece.clone()
+        const vec2 = otherBody.clone()
         let angleTowardSnake = vec1.subtract(vec2).direction()
         angleTowardSnake = angleTowardSnake < 0 ? Math.PI - angleTowardSnake : Math.abs(Math.PI - angleTowardSnake) % (Math.PI * 2)
         let difference = 0
@@ -393,7 +393,7 @@ window.addEventListener('load', function(){
             swerveSnakePiece = diff1 < diff2 ?  1 * swerveValue : -1 * swerveValue
             difference = diff1 < diff2 ? diff1 : diff2
         }
-        let distance =  Math.sqrt((Math.abs(snakePiece.x - boid.boidSegments[0].x)**2 + Math.abs(snakePiece.y - boid.boidSegments[0].y)**2))
+        let distance =  Math.sqrt((Math.abs(otherBody.x - boid.boidSegments[0].x)**2 + Math.abs(otherBody.y - boid.boidSegments[0].y)**2))
         let inRange = distance < proximal ? true : false
         boid.swerveSnakePiece = difference < sightAngle && inRange ? boid.swerveSnakePiece + swerveSnakePiece : null
         boid.angleSelf += boid.swerveSnakePiece
