@@ -40,10 +40,10 @@ Each other Boid in play will be dtermined if it will affect boid0 and be added t
 5. If boid is in sight and in range add it to list of affection.
 6. Return correction angle to be used to get vector velocity changes later. 
 
+### Avoid
 
 
-
-### Cohesion:
+### Align
 
 Boid changes direction in order to be closer to other boids that are near by.
 
