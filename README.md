@@ -45,6 +45,8 @@ Each other Boid in play will be dtermined if it will affect boid0 and be added t
 
 ### Align
 
+avoid method for snake boid interaction is reused for boid boid interactrion. several coeeficients are changed such as distance to target, and angle of sight to target.
+
 Boid changes direction in order to be closer to other boids that are near by.
 
 ### Seperation:
