@@ -52,3 +52,5 @@ Boid changes direction in order to be closer to other boids that are near by.
 ### Seperation:
 
 Boid changes direction if it is too close to another boid.
+
+## Personal Blog Posts for this Project
