@@ -16,7 +16,7 @@ As always this is a Travis Lamberte Original Implementation. I'm pulling out all
 
 3. Boid is !self is not itself. 
 
-Put Boids that affect the boids incremental alignment movement in a list and average the direction and position. These can be used for alignment, cohesion, and seperation. 
+Put Boids that affect the boids incremental alignment movement in a list and average the direction and position. These can be used for alignment, cohesion, and seperation (change seperation to avoid). 
 
 AI Characteristics include:
 
