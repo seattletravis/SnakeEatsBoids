@@ -55,6 +55,8 @@ focus on 2 ways, namely; save all affected boids to a list then use them in the 
 
 ### Cohesion
 
+Cohesion may be similar enough to Avoid to resuse the Avoid function to accomplish this behavior.
+
 ### Seperation:
 
 Craig Reynolds calls this Speration however in this implementation we will be calling this Avoid specifically.
