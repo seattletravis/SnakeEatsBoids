@@ -50,6 +50,7 @@ Boid changes direction in order to be closer to other boids that are near by.
 
 ### Align
 
+Align calculation is fundamentally different than the avoid calucaltion because it takes into account an average of all boids 'in sight' of the affected boid.
 
 ### Seperation:
 
