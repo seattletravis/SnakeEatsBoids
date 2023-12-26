@@ -55,6 +55,6 @@ focus on 2 ways, namely; save all affected boids to a list then use them in the 
 
 ### Seperation:
 
-Boid changes direction if it is too close to another boid.
+Craig Reynolds calls this Speration however in this implementation we will be calling this Avoid specifically.
 
 ## Personal Blog Posts for this Project
