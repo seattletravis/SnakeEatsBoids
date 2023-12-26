@@ -42,6 +42,7 @@ Each other Boid in play will be dtermined if it will affect boid0 and be added t
 
 ### Avoid
 
+Avoid takes in boid direction and gets boid to other object direction and calcualtes a 'swerve value' to swerve away from the object to avoid.
 
 ### Align
 
