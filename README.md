@@ -50,7 +50,8 @@ Boid changes direction in order to be closer to other boids that are near by.
 
 ### Align
 
-Align calculation is fundamentally different than the avoid calucaltion because it takes into account an average of all boids 'in sight' of the affected boid.
+Align calculation is fundamentally different than the avoid calucaltion because it takes into account an average of all boids 'in sight' of the affected boid. The average can be done many different ways but we'll 
+focus on 2 ways, namely; save all affected boids to a list then use them in the calculation or calculate average in place. 
 
 ### Seperation:
 
