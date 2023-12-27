@@ -66,11 +66,14 @@ Craig Reynolds calls this Speration however in this implementation we will be ca
 
 Lets add some powerups! Power ups will include but not be limited to,
 
+Gigantuan - increase length and width of snake
+
 
 
 ## Personal Blog Posts for this Project
 
 12/27/2023 - I watched a very cool youtube video on evolution simuation, [Link Here](https://www.youtube.com/watch?v=xBQ3knSi0Uo&t=1331s)
+This has me thinking I could add some functionality to include powerups. 
 
 
 
