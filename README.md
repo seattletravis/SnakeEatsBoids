@@ -69,3 +69,8 @@ Lets add some powerups! Power ups will include but not be limited to,
 
 
 ## Personal Blog Posts for this Project
+
+12/27/2023 - I watched a very cool youtube video on evolution simuation, [Link Here](https://www.youtube.com/watch?v=xBQ3knSi0Uo&t=1331s)
+
+
+
