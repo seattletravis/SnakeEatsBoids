@@ -1,6 +1,6 @@
 # Welcome to SnakeEatsBoids
 
-This web application is my own implementation of the Snake Game but with AI driven food.
+This web application is my implementation of the Snake Game but with AI driven food.
 
 The Food in this implementation will be given Boid AI Characteristics based on Craig Reynolds research, you can view his paper here.
 
@@ -62,3 +62,8 @@ Cohesion may be similar enough to Avoid to resuse the Avoid function to accompli
 Craig Reynolds calls this Speration however in this implementation we will be calling this Avoid specifically.
 
 ## Personal Blog Posts for this Project
+
+#### Future additions to Snake Eats Boids.
+
+Lets add some powerups! Power ups will include but not be limited to,
+
