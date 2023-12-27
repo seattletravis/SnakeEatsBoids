@@ -61,9 +61,11 @@ Cohesion may be similar enough to Avoid to resuse the Avoid function to accompli
 
 Craig Reynolds calls this Speration however in this implementation we will be calling this Avoid specifically.
 
-## Personal Blog Posts for this Project
 
-#### Future additions to Snake Eats Boids.
+## Future additions to Snake Eats Boids.
 
 Lets add some powerups! Power ups will include but not be limited to,
 
+
+
+## Personal Blog Posts for this Project
