@@ -67,8 +67,15 @@ Craig Reynolds calls this Speration however in this implementation we will be ca
 Lets add some powerups! Power ups will include but not be limited to,
 
 Gigantuan - increase length and width of snake, (implemention notes: change affects snake object's this.radius, and this.snakeSegements)
+
+Turboid Speed - increase snake speed, (implementation notes: change affects snake objects, this.speed attribute)
+
 Time Dialation - decrease boids in play speed, (implementation notes: loop over boids list and reduce speed value)
+
 Gun Ship - add lasers that project from snake head and shoot at boids and when they hit boids the boids get fragged! (implemention notes: requires a lot of code)
+
+
+
 
 ## Personal Blog Posts for this Project
 
