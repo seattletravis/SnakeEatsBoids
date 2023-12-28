@@ -183,7 +183,7 @@ window.addEventListener('load', function(){
             this.angleSelf = this.getAngleSelf()
 
 
-            
+
             //Boid Segment Handling
             this.boidSegments.unshift({x: this.position.x, y: this.position.y, radius: this.radius})
             if (this.boidSegments.length > this.boidPieces) {
@@ -216,7 +216,7 @@ window.addEventListener('load', function(){
             this.starTimer = 0
             this.starInterval = 100
             this.boidsInPlay = 2
-            this.maxBoids = 50 
+            this.maxBoids = 100 
             this.stopAddingBoids = false
             this.snakeSwerveValue = 0.001
             this.boidSwerveValue = 0.1
@@ -224,7 +224,7 @@ window.addEventListener('load', function(){
             this.boidProxy = 75
             this.snakeSightAngle = 2.355
             this.boidSightAngle = 1.57
-            this.speed = 1 //initial boid speed
+            this.speed = .5 //initial boid speed
             this.red = 0
             this.blue = 255
             this.green = 0
@@ -268,14 +268,14 @@ window.addEventListener('load', function(){
                 }
 
                 this.sightedBoids = []
-                // BEHAVIOR CALLS FOR AVOID EACH OTHER BEHAVIOR - NEED TO REFACTOR
+                // BEHAVIOR CALLS FOR AVOID EACH OTHER BEHAVIOR
                 this.boids.forEach(otherBoid => {
                     if (otherBoid.boidSegments[0] != undefined){
                         const boidHead = new Victor(otherBoid.boidSegments[0].x, otherBoid.boidSegments[0].y)
                         //Get List of boids that will be affect boid0 alignment
                         this.getSightedBoids(otherBoid, boid)
                         //AVOID CALL
-                        // this.avoid(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
+                        this.avoidSnake(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
                         //ALIGN CALL
                         // this.align(otherBoid.velocity, boid.velocity)                    
                     }
@@ -380,13 +380,13 @@ window.addEventListener('load', function(){
         getSightedBoids(otherBoid, boid, proximal, sightAngle){
             let distanceTo = this.getDistanceTo(otherBoid, boid)
             if (distanceTo === 0 || distanceTo > proximal) {
-                return null
+                return
             }
-            let angleSelf = this.getAngleSelf(boid)
+            // let angleSelf = this.getAngleSelf(boid)
             let angleto = this.getAngleTo(otherBoid, boid)
             let angleDifference = this.getAngleDifference(otherBoid, boid)
-            // console.log(angleSelf, angleto, distanceTo)
-            // if(distanceTo != 0 && distanceTo < proximal && )
+            console.log(angleDifference)
+
 
 
 
@@ -427,17 +427,19 @@ window.addEventListener('load', function(){
 
         getAngleDifference(boid1, boid0){
             let angleTo = this.getAngleTo(boid0, boid1)
-            // if(boid0.angleSelf <= angleTo){
-            //     let diff1 = angleTo - boid0.angleSelf
-            //     let diff2 = boid0.angleSelf + 6.28 - angleTo
-            //     swerveSnakePiece = diff1 < diff2 ?  -1 * swerveValue : 1 * swerveValue
-            //     difference = diff1 < diff2 ? diff1 : diff2
-            // }else{
-            //     let diff1 = boid0.angleSelf - angleTo
-            //     let diff2 = angleTo + 6.28 - boid0.angleSelf
-            //     swerveSnakePiece = diff1 < diff2 ?  1 * swerveValue : -1 * swerveValue
-            //     difference = diff1 < diff2 ? diff1 : diff2
-            // }
+            let difference = 0
+            if(boid0.angleSelf <= angleTo){
+                let diff1 = angleTo - boid0.angleSelf
+                let diff2 = boid0.angleSelf + 6.28 - angleTo
+                // let magnitude = diff1 < diff2 ?  -1 : 1
+                difference = diff1 < diff2 ? -diff1 : diff2
+            }else{
+                let diff1 = boid0.angleSelf - angleTo
+                let diff2 = angleTo + 6.28 - boid0.angleSelf
+                // let magnitude = diff1 < diff2 ?  1 : -1
+                difference = diff1 < diff2 ? diff1 : -diff2
+            }
+            return difference
         }
 
         getAngleTo(body0, body1){
@@ -448,11 +450,11 @@ window.addEventListener('load', function(){
             return angle             
         }
 
-        getAngleSelf(boid0){
-            var angle = boid0.velocity.clone().invertY().direction()
-            angle = angle > 0 ? angle : (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
-            return angle
-        }
+        // getAngleSelf(boid0){
+        //     var angle = boid0.velocity.clone().invertY().direction()
+        //     angle = angle > 0 ? angle : (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
+        //     return angle
+        // }
 
         getDistanceTo(body0, body1){
             const vec1 = body0.position.clone()
