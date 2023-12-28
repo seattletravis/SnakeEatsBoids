@@ -142,7 +142,7 @@ window.addEventListener('load', function(){
             this.game = game
             this.boids = this.game.boids
             this.position = new Victor(Math.random() * (canvas.width - 30) + 15,Math.random() * (canvas.height - 30) + 15)
-            this.radius = 10
+            this.radius = 6
             this.speed = this.game.speed
             this.red = this.game.red
             this.green = this.game.green
@@ -216,13 +216,14 @@ window.addEventListener('load', function(){
             this.boidInterval = 100
             this.starTimer = 0
             this.starInterval = 100
-            this.boidsInPlay = 4
+            this.boidsInPlay = 40
             this.maxBoids = 100 
             this.stopAddingBoids = false
             this.snakeSwerveValue = 0.001
             this.boidSwerveValue = 0.1
             this.snakeProxy = 125
-            this.boidProxy = 75
+            this.boidAvoidProxy = 75
+            this.boidAlignProxy = 150
             this.snakeSightAngle = 2.355
             this.boidSightAngle = 1.57
             this.speed = .5 //initial boid speed
@@ -264,7 +265,7 @@ window.addEventListener('load', function(){
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
                     if (i % 3 == 0) {
                         const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
-                        this.avoidSnake(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
+                        this.avoid(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
                     }
                 }
 
@@ -276,11 +277,12 @@ window.addEventListener('load', function(){
                         //Get List of boids that will be affect boid0 alignment
                         this.getSightedBoids(otherBoid, boid, this.boidProxy, this.boidSightAngle)
                         //AVOID CALL
-                        this.avoidSnake(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
+                        this.avoid(boidHead, boid, this.boidAvoidProxy, this.boidSwerveValue, this.boidSightAngle)
                         //ALIGN CALL
                         // this.align(otherBoid.velocity, boid.velocity)                    
                     }
                 })  
+                // console.log(this.sightedBoids)
             })
 
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
@@ -330,8 +332,8 @@ window.addEventListener('load', function(){
                 boid.blue = 255
                 boid.green = 255
             }else{
-                boid.red += 12
-                boid.blue -= 12
+                boid.red += 6
+                boid.blue -= 6
             }
         }
 
@@ -364,6 +366,8 @@ window.addEventListener('load', function(){
                             this.boidsInPlay = 0
                         }else{
                             this.boidsInPlay += 1
+                            this.snakeProxy += 0.5
+                            this.snakeSwerveValue += 0.0000001
                         }
                         
                         this.snake.snakePieces += 3
@@ -385,8 +389,9 @@ window.addEventListener('load', function(){
             }
             let angleDifference = this.getAngleDifference(otherBoid, boid)
             if (Math.abs(angleDifference) < sightAngle){
-                console.log("I see you!")
+                this.sightedBoids.push(otherBoid)
             }
+            
 
 
 
@@ -397,7 +402,7 @@ window.addEventListener('load', function(){
 
         }
 
-        avoidSnake(otherBody, boid, proximal, swerveValue, sightAngle){
+        avoid(otherBody, boid, proximal, swerveValue, sightAngle){
             let distance =  Math.sqrt((Math.abs(otherBody.x - boid.boidSegments[0].x)**2 + Math.abs(otherBody.y - boid.boidSegments[0].y)**2))
             if (distance > proximal || distance === NaN){ 
                 boid.swerveSnakePiece = null
