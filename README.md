@@ -72,7 +72,7 @@ Gun Ship - add lasers that project from snake head and shoot at boids and when t
 
 ## Personal Blog Posts for this Project
 
-12/27/2023 - I watched a very cool youtube video on evolution simuation, [Link Here](https://www.youtube.com/watch?v=xBQ3knSi0Uo&t=1331s)
+12/27/2023 - I watched a very cool youtube video on evolution simuation, [Bibites Link Here](https://www.youtube.com/watch?v=xBQ3knSi0Uo&t=1331s)
 This has me thinking I could add some functionality to include powerups. 
 
 
