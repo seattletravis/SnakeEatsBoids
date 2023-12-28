@@ -213,10 +213,10 @@ window.addEventListener('load', function(){
             this.boidInterval = 100
             this.starTimer = 0
             this.starInterval = 100
-            this.boidsInPlay = 200
+            this.boidsInPlay = 2
             this.maxBoids = 50 
             this.stopAddingBoids = false
-            this.snakeSwerveValue = 0.01
+            this.snakeSwerveValue = 0.00001
             this.boidSwerveValue = 0.1
             this.snakeProxy = 150
             this.boidProxy = 75
@@ -229,6 +229,7 @@ window.addEventListener('load', function(){
             this.maxSpeed = 3
             this.keys = []
             this.boids = []
+            this.sightedBoids = []
             this.stars = []
             this.particles = []
             this.gameOver = false
@@ -249,6 +250,7 @@ window.addEventListener('load', function(){
             //apply individual boid updates here. Main Boid Update Loop
 
             this.boids.forEach(boid => {
+
                 boid.update()
                 //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
@@ -261,14 +263,17 @@ window.addEventListener('load', function(){
                     this.avoid(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
                 }
 
+                this.sightedBoids = []
                 // BEHAVIOR CALLS FOR AVOID EACH OTHER BEHAVIOR - NEED TO REFACTOR
                 this.boids.forEach(otherBoid => {
                     if (otherBoid.boidSegments[0] != undefined){
                         const boidHead = new Victor(otherBoid.boidSegments[0].x, otherBoid.boidSegments[0].y)
+                        //Get List of boids that will be affect boid0 alignment
+                        this.getSightedBoids(otherBoid, boid)
                         //AVOID CALL
-                        this.avoid(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
+                        // this.avoid(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
                         //ALIGN CALL
-                        this.align(otherBoid.velocity, boid.velocity)                    
+                        // this.align(otherBoid.velocity, boid.velocity)                    
                     }
                 })  
             })
@@ -367,52 +372,65 @@ window.addEventListener('load', function(){
             }
         }
         
-    align(otherBoid, boid){
-    }
-
-    avoid(otherBody, boid, proximal, swerveValue, sightAngle){
-        const vec1 = boid.position.clone()
-        const vec2 = otherBody.clone()
-        let angleTowardSnake = vec1.subtract(vec2).direction()
-        angleTowardSnake = angleTowardSnake < 0 ? Math.PI - angleTowardSnake : Math.abs(Math.PI - angleTowardSnake) % (Math.PI * 2)
-        let difference = 0
-        let swerveSnakePiece = 0
-        if(boid.angleSelf <= angleTowardSnake){
-            let diff1 = angleTowardSnake - boid.angleSelf
-            let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
-            swerveSnakePiece = diff1 < diff2 ?  -1 * swerveValue : 1 * swerveValue
-            difference = diff1 < diff2 ? diff1 : diff2
-        }else{
-            let diff1 = boid.angleSelf - angleTowardSnake
-            let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
-            swerveSnakePiece = diff1 < diff2 ?  1 * swerveValue : -1 * swerveValue
-            difference = diff1 < diff2 ? diff1 : diff2
+        //  WORKING HERE !!! ALIGNMENT FUNCTION, GET AVERAGE OF ALL BOIDS CLOSE BY AND ADJUST DIRECTION OF BOID
+        getSightedBoids(otherBoid, boid){
+            let angleSelf = this.getAngleSelf(boid)
+            let angleto = this.getAngleTo(otherBoid, boid)
+            let distanceTo = this.getDistanceTo(otherBoid, boid)
+            console.log(angleSelf, angleto, distanceTo)
         }
-        let distance =  Math.sqrt((Math.abs(otherBody.x - boid.boidSegments[0].x)**2 + Math.abs(otherBody.y - boid.boidSegments[0].y)**2))
-        let inRange = distance < proximal ? true : false
-        boid.swerveSnakePiece = difference < sightAngle && inRange ? boid.swerveSnakePiece + swerveSnakePiece : null
-        boid.angleSelf += boid.swerveSnakePiece
-        boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed
-        boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
-    }
 
-        // getAngleTo(boid, snakePiece){
-        //     const vec1 = boid.position.clone()
-        //     const vec2 = snakePiece.clone()
-        //     let angle = vec1.subtract(vec2).direction()
-        //     angle = angle < 0 ? Math.PI - angle : Math.abs(Math.PI - angle) % (Math.PI * 2)
-        //     return angle             
-        // }
+        align(otherBoid, boid){
 
-        // getAngleSelf(boid0){
-        //     var angle = boid0.velocity.clone().invertY().direction()
-        //     if (angle > 0) {
-        //         angle = angle
-        //     } else {
-        //         angle = (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
-        //     }
-        //     return angle
-        // }
+        }
+
+        avoid(otherBody, boid, proximal, swerveValue, sightAngle){
+            const vec1 = boid.position.clone()
+            const vec2 = otherBody.clone()
+            let angleTowardSnake = vec1.subtract(vec2).direction()
+            angleTowardSnake = angleTowardSnake < 0 ? Math.PI - angleTowardSnake : Math.abs(Math.PI - angleTowardSnake) % (Math.PI * 2)
+            let difference = 0
+            let swerveSnakePiece = 0
+            if(boid.angleSelf <= angleTowardSnake){
+                let diff1 = angleTowardSnake - boid.angleSelf
+                let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
+                swerveSnakePiece = diff1 < diff2 ?  -1 * swerveValue : 1 * swerveValue
+                difference = diff1 < diff2 ? diff1 : diff2
+            }else{
+                let diff1 = boid.angleSelf - angleTowardSnake
+                let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
+                swerveSnakePiece = diff1 < diff2 ?  1 * swerveValue : -1 * swerveValue
+                difference = diff1 < diff2 ? diff1 : diff2
+            }
+            let distance =  Math.sqrt((Math.abs(otherBody.x - boid.boidSegments[0].x)**2 + Math.abs(otherBody.y - boid.boidSegments[0].y)**2))
+            // let distance = this.getDistanceTo(otherBody, boid.boidSegments[0])
+            let inRange = distance < proximal ? true : false
+            boid.swerveSnakePiece = difference < sightAngle && inRange ? boid.swerveSnakePiece + swerveSnakePiece : null
+            boid.angleSelf += boid.swerveSnakePiece
+            boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed
+            boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
+        }
+
+        getAngleTo(body0, body1){
+            const vec1 = body0.position.clone()
+            const vec2 = body1.position.clone()
+            let angle = vec1.subtract(vec2).direction()
+            angle = angle < 0 ? Math.PI - angle : Math.abs(Math.PI - angle) % (Math.PI * 2)
+            return angle             
+        }
+
+        getDistanceTo(body0, body1){
+            const vec1 = body0.position.clone()
+            const vec2 = body1.position.clone()
+            let distance = vec1.distance(vec2)
+            return distance  
+        }
+
+        getAngleSelf(boid0){
+            var angle = boid0.velocity.clone().invertY().direction()
+            angle = angle > 0 ? angle : (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
+            return angle
+        }
     }
 
     const game = new Game(canvas.width, canvas.height)
