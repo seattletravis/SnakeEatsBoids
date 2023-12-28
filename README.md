@@ -64,7 +64,7 @@ Craig Reynolds calls this Speration however in this implementation we will be ca
 
 ## Future additions to Snake Eats Boids.
 
-Lets add some powerups! Power ups will include but not be limited to,
+Lets add some powerups! Power ups will include but not be limited to, powerups will be initiated with a banner message accross screen declaring mode on, and then a countdown message in the UI window designating how much time is left on the powerup. 
 
 **Gigantuan** - increase length and width of snake, (implemention notes: change affects snake object's this.radius, and this.snakeSegements)
 
