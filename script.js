@@ -378,7 +378,8 @@ window.addEventListener('load', function(){
             let angleto = this.getAngleTo(otherBoid, boid)
             let distanceTo = this.getDistanceTo(otherBoid, boid)
             // console.log(angleSelf, angleto, distanceTo)
-            
+            // if(distanceTo != 0 && distanceTo < proximal && )
+
 
 
         }
@@ -406,12 +407,25 @@ window.addEventListener('load', function(){
                 difference = diff1 < diff2 ? diff1 : diff2
             }
             let distance =  Math.sqrt((Math.abs(otherBody.x - boid.boidSegments[0].x)**2 + Math.abs(otherBody.y - boid.boidSegments[0].y)**2))
-            // let distance = this.getDistanceTo(otherBody, boid.boidSegments[0])
             let inRange = distance < proximal ? true : false
             boid.swerveSnakePiece = difference < sightAngle && inRange ? boid.swerveSnakePiece + swerveSnakePiece : null
             boid.angleSelf += boid.swerveSnakePiece
             boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed
             boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
+        }
+
+        getAngleDifference(boid0, boid1){
+            // if(boid0.angleSelf <= angleTowardSnake){
+            //     let diff1 = angleTowardSnake - boid.angleSelf
+            //     let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
+            //     swerveSnakePiece = diff1 < diff2 ?  -1 * swerveValue : 1 * swerveValue
+            //     difference = diff1 < diff2 ? diff1 : diff2
+            // }else{
+            //     let diff1 = boid.angleSelf - angleTowardSnake
+            //     let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
+            //     swerveSnakePiece = diff1 < diff2 ?  1 * swerveValue : -1 * swerveValue
+            //     difference = diff1 < diff2 ? diff1 : diff2
+            // }
         }
 
         getAngleTo(body0, body1){
@@ -422,17 +436,17 @@ window.addEventListener('load', function(){
             return angle             
         }
 
+        getAngleSelf(boid0){
+            var angle = boid0.velocity.clone().invertY().direction()
+            angle = angle > 0 ? angle : (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
+            return angle
+        }
+
         getDistanceTo(body0, body1){
             const vec1 = body0.position.clone()
             const vec2 = body1.position.clone()
             let distance = vec1.distance(vec2)
             return distance  
-        }
-
-        getAngleSelf(boid0){
-            var angle = boid0.velocity.clone().invertY().direction()
-            angle = angle > 0 ? angle : (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
-            return angle
         }
     }
 
