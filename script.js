@@ -99,7 +99,7 @@ window.addEventListener('load', function(){
             this.speedY = 0
             this.speedX = 0
             this.snakeSpeed = 2
-            this.snakePieces = 7
+            this.snakePieces = 70
             this.snakeSegments = []
         }
         
@@ -182,6 +182,8 @@ window.addEventListener('load', function(){
             this.position.x += this.velocity.x
             this.angleSelf = this.getAngleSelf()
 
+
+            
             //Boid Segment Handling
             this.boidSegments.unshift({x: this.position.x, y: this.position.y, radius: this.radius})
             if (this.boidSegments.length > this.boidPieces) {
@@ -216,13 +218,13 @@ window.addEventListener('load', function(){
             this.boidsInPlay = 2
             this.maxBoids = 50 
             this.stopAddingBoids = false
-            this.snakeSwerveValue = 0.00001
+            this.snakeSwerveValue = 0.001
             this.boidSwerveValue = 0.1
-            this.snakeProxy = 150
+            this.snakeProxy = 125
             this.boidProxy = 75
             this.snakeSightAngle = 2.355
             this.boidSightAngle = 1.57
-            this.speed = 2 //initial boid speed
+            this.speed = 1 //initial boid speed
             this.red = 0
             this.blue = 255
             this.green = 0
@@ -376,9 +378,13 @@ window.addEventListener('load', function(){
         
         //  WORKING HERE !!! ALIGNMENT FUNCTION, GET AVERAGE OF ALL BOIDS CLOSE BY AND ADJUST DIRECTION OF BOID
         getSightedBoids(otherBoid, boid, proximal, sightAngle){
+            let distanceTo = this.getDistanceTo(otherBoid, boid)
+            if (distanceTo === 0 || distanceTo > proximal) {
+                return null
+            }
             let angleSelf = this.getAngleSelf(boid)
             let angleto = this.getAngleTo(otherBoid, boid)
-            let distanceTo = this.getDistanceTo(otherBoid, boid)
+            let angleDifference = this.getAngleDifference(otherBoid, boid)
             // console.log(angleSelf, angleto, distanceTo)
             // if(distanceTo != 0 && distanceTo < proximal && )
 
@@ -391,6 +397,11 @@ window.addEventListener('load', function(){
         }
 
         avoidSnake(otherBody, boid, proximal, swerveValue, sightAngle){
+            let distance =  Math.sqrt((Math.abs(otherBody.x - boid.boidSegments[0].x)**2 + Math.abs(otherBody.y - boid.boidSegments[0].y)**2))
+            if (distance > proximal){ 
+                boid.swerveSnakePiece = null
+                return
+            }
             const vec1 = boid.position.clone()
             const vec2 = otherBody.clone()
             let angleTowardSnake = vec1.subtract(vec2).direction()
@@ -408,23 +419,22 @@ window.addEventListener('load', function(){
                 swerveSnakePiece = diff1 < diff2 ?  1 * swerveValue : -1 * swerveValue
                 difference = diff1 < diff2 ? diff1 : diff2
             }
-            let distance =  Math.sqrt((Math.abs(otherBody.x - boid.boidSegments[0].x)**2 + Math.abs(otherBody.y - boid.boidSegments[0].y)**2))
-            let inRange = distance < proximal ? true : false
-            boid.swerveSnakePiece = difference < sightAngle && inRange ? boid.swerveSnakePiece + swerveSnakePiece : null
+            boid.swerveSnakePiece = difference < sightAngle ? boid.swerveSnakePiece + swerveSnakePiece : null
             boid.angleSelf += boid.swerveSnakePiece
             boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed
             boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
         }
 
-        getAngleDifference(boid0, boid1){
-            // if(boid0.angleSelf <= angleTowardSnake){
-            //     let diff1 = angleTowardSnake - boid.angleSelf
-            //     let diff2 = boid.angleSelf + 6.28 - angleTowardSnake
+        getAngleDifference(boid1, boid0){
+            let angleTo = this.getAngleTo(boid0, boid1)
+            // if(boid0.angleSelf <= angleTo){
+            //     let diff1 = angleTo - boid0.angleSelf
+            //     let diff2 = boid0.angleSelf + 6.28 - angleTo
             //     swerveSnakePiece = diff1 < diff2 ?  -1 * swerveValue : 1 * swerveValue
             //     difference = diff1 < diff2 ? diff1 : diff2
             // }else{
-            //     let diff1 = boid.angleSelf - angleTowardSnake
-            //     let diff2 = angleTowardSnake + 6.28 - boid.angleSelf
+            //     let diff1 = boid0.angleSelf - angleTo
+            //     let diff2 = angleTo + 6.28 - boid0.angleSelf
             //     swerveSnakePiece = diff1 < diff2 ?  1 * swerveValue : -1 * swerveValue
             //     difference = diff1 < diff2 ? diff1 : diff2
             // }
