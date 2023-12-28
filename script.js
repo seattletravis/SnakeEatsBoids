@@ -259,8 +259,10 @@ window.addEventListener('load', function(){
                 
                 // CALL avoid FUNCTION FOR AVOID SNAKE BEHAVIOR - NEED TO REFACTOR FUNCTION
                 for(let i = 0; i < this.snake.snakeSegments.length; i++){
-                    const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
-                    this.avoid(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
+                    if (i % 3 == 0) {
+                        const snakePiecePosition = new Victor(this.snake.snakeSegments[i].x, this.snake.snakeSegments[i].y)
+                        this.avoidSnake(snakePiecePosition, boid, this.snakeProxy, this.snakeSwerveValue, this.snakeSightAngle)
+                    }
                 }
 
                 this.sightedBoids = []
@@ -388,7 +390,7 @@ window.addEventListener('load', function(){
 
         }
 
-        avoid(otherBody, boid, proximal, swerveValue, sightAngle){
+        avoidSnake(otherBody, boid, proximal, swerveValue, sightAngle){
             const vec1 = boid.position.clone()
             const vec2 = otherBody.clone()
             let angleTowardSnake = vec1.subtract(vec2).direction()
