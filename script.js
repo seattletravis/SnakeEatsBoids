@@ -373,11 +373,14 @@ window.addEventListener('load', function(){
         }
         
         //  WORKING HERE !!! ALIGNMENT FUNCTION, GET AVERAGE OF ALL BOIDS CLOSE BY AND ADJUST DIRECTION OF BOID
-        getSightedBoids(otherBoid, boid){
+        getSightedBoids(otherBoid, boid, proximal, sightAngle){
             let angleSelf = this.getAngleSelf(boid)
             let angleto = this.getAngleTo(otherBoid, boid)
             let distanceTo = this.getDistanceTo(otherBoid, boid)
-            console.log(angleSelf, angleto, distanceTo)
+            // console.log(angleSelf, angleto, distanceTo)
+            
+
+
         }
 
         align(otherBoid, boid){
