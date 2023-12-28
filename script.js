@@ -213,11 +213,11 @@ window.addEventListener('load', function(){
             this.input = new InputHandler(this)
             this.ui = new UI(this)
             this.boidTimer = 0
-            this.boidInterval = 100
+            this.boidInterval = 500
             this.starTimer = 0
             this.starInterval = 100
-            this.boidsInPlay = 40
-            this.maxBoids = 100 
+            this.boidsInPlay = 30
+            this.maxBoids = 80 
             this.stopAddingBoids = false
             this.snakeSwerveValue = 0.001
             this.boidSwerveValue = 0.1
@@ -254,7 +254,6 @@ window.addEventListener('load', function(){
             //apply individual boid updates here. Main Boid Update Loop
 
             this.boids.forEach(boid => {
-
                 boid.update()
                 //check if boid hits snake
                 if (this.checkCollision(this.snake, boid)){
@@ -275,14 +274,20 @@ window.addEventListener('load', function(){
                     if (otherBoid.boidSegments[0] != undefined){
                         const boidHead = new Victor(otherBoid.boidSegments[0].x, otherBoid.boidSegments[0].y)
                         //Get List of boids that will be affect boid0 alignment
-                        this.getSightedBoids(otherBoid, boid, this.boidProxy, this.boidSightAngle)
+                        this.getSightedBoids(otherBoid, boid, this.boidAlignProxy, this.boidSightAngle)
                         //AVOID CALL
                         this.avoid(boidHead, boid, this.boidAvoidProxy, this.boidSwerveValue, this.boidSightAngle)
                         //ALIGN CALL
                         // this.align(otherBoid.velocity, boid.velocity)                    
                     }
                 })  
-                // console.log(this.sightedBoids)
+                if(this.sightedBoids.length > 0){
+                    this.sightedBoids.forEach(boid => {
+    
+                    })
+                    // console.log(this.sightedBoids)
+                    
+                }
             })
 
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
@@ -332,8 +337,8 @@ window.addEventListener('load', function(){
                 boid.blue = 255
                 boid.green = 255
             }else{
-                boid.red += 6
-                boid.blue -= 6
+                boid.red += 8
+                boid.blue -= 8
             }
         }
 
@@ -429,6 +434,12 @@ window.addEventListener('load', function(){
             boid.angleSelf += boid.swerveSnakePiece
             boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed
             boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed
+        }
+
+        getAverageAngle(boids){
+            boids.forEach(boid => {
+
+            })
         }
 
         getAngleDifference(boid1, boid0){
