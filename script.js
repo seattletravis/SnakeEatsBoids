@@ -155,6 +155,7 @@ window.addEventListener('load', function(){
             this.pointValue = this.game.pointValue
             this.markedForDeletion = false
             this.boundaryBorderOn = false
+            this.swerveSnakePiece = null
         }
         
         getAngleSelf(){
@@ -215,7 +216,7 @@ window.addEventListener('load', function(){
             this.boidInterval = 100
             this.starTimer = 0
             this.starInterval = 100
-            this.boidsInPlay = 2
+            this.boidsInPlay = 4
             this.maxBoids = 100 
             this.stopAddingBoids = false
             this.snakeSwerveValue = 0.001
@@ -273,7 +274,7 @@ window.addEventListener('load', function(){
                     if (otherBoid.boidSegments[0] != undefined){
                         const boidHead = new Victor(otherBoid.boidSegments[0].x, otherBoid.boidSegments[0].y)
                         //Get List of boids that will be affect boid0 alignment
-                        this.getSightedBoids(otherBoid, boid)
+                        this.getSightedBoids(otherBoid, boid, this.boidProxy, this.boidSightAngle)
                         //AVOID CALL
                         this.avoidSnake(boidHead, boid, this.boidProxy, this.boidSwerveValue, this.boidSightAngle)
                         //ALIGN CALL
@@ -382,10 +383,10 @@ window.addEventListener('load', function(){
             if (distanceTo === 0 || distanceTo > proximal) {
                 return
             }
-            // let angleSelf = this.getAngleSelf(boid)
-            let angleto = this.getAngleTo(otherBoid, boid)
             let angleDifference = this.getAngleDifference(otherBoid, boid)
-            console.log(angleDifference)
+            if (Math.abs(angleDifference) < sightAngle){
+                console.log("I see you!")
+            }
 
 
 
@@ -398,7 +399,7 @@ window.addEventListener('load', function(){
 
         avoidSnake(otherBody, boid, proximal, swerveValue, sightAngle){
             let distance =  Math.sqrt((Math.abs(otherBody.x - boid.boidSegments[0].x)**2 + Math.abs(otherBody.y - boid.boidSegments[0].y)**2))
-            if (distance > proximal){ 
+            if (distance > proximal || distance === NaN){ 
                 boid.swerveSnakePiece = null
                 return
             }
