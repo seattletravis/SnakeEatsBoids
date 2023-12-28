@@ -94,13 +94,14 @@ window.addEventListener('load', function(){
     class Snake {
         constructor(game){
             this.game = game
-            this.radius = 4 
+            this.radius = 3 
             this.position = new Victor(20, 100)
             this.speedY = 0
             this.speedX = 0
             this.snakeSpeed = 2
-            this.snakePieces = 70
+            this.snakePieces = 30
             this.snakeSegments = []
+            this.snakeColorPattern = 12
         }
         
         update(){
@@ -113,7 +114,7 @@ window.addEventListener('load', function(){
             else if (this.position.x < 0) {this.position.x = game.width}
             if(this.position.y > game.height) {this.position.y = 0}
             else if (this.position.y < 0) {this.position.y = game.height}
-            
+
             this.position.y += this.speedY
             this.position.x += this.speedX
             this.snakeSegments.unshift({x: this.position.x, y: this.position.y})
@@ -125,7 +126,7 @@ window.addEventListener('load', function(){
         draw(context){
             let radius = this.radius
             for(let i = this.snakeSegments.length - 1; i >= 0; i--){
-                if (Math.floor(i / 12) % 2 === 0){
+                if (Math.floor(i / this.snakeColorPattern) % 2 === 0){
                     context.fillStyle = 'red'
                 } else {
                     context.fillStyle = 'green'
@@ -239,6 +240,9 @@ window.addEventListener('load', function(){
             this.gameOver = false
             this.score = 0
             this.pointValue = 10
+            this.gargantuanMode = false
+            this.powerTimer = 0
+            this.powerInterval = 5000
 
         }
         update(deltaTime){
@@ -292,6 +296,8 @@ window.addEventListener('load', function(){
 
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
 
+            //Manage Powerup Mode - Gargantuan
+            this.gargantuan()
             //add boids every second until boidsInPlay number is met.
             if (this.boidTimer > this.boidInterval && this.boids.length < this.boidsInPlay && !this.gameOver) {
                 this.addBoid(this)
@@ -479,6 +485,30 @@ window.addEventListener('load', function(){
             let distance = vec1.distance(vec2)
             return distance  
         }
+
+        //POWERUPS
+        gargantuan(deltaTime){
+            if(this.gargantuanMode === false){ 
+                return 
+            }
+            console.log(this.gargantuanMode)
+            let tempRadius = 6
+            let tempPieces = 30
+            if(this.powerTimer > this.powerInterval){
+                this.snake.radius = tempRadius
+                this.snakePieces = tempPieces
+                this.gargantuanMode = false
+                this.powerTimer = 0
+                console.log(this.gargantuanMode)
+            } else {
+                this.snake.radius = 100
+                this.snake.snakePieces = 1000
+                this.powerTimer += deltaTime
+                console.log(this.powerTimer)
+
+            }
+        }
+
     }
 
     const game = new Game(canvas.width, canvas.height)
