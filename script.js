@@ -64,23 +64,29 @@ window.addEventListener('load', function(){
     class PowerUp{
         constructor(game){
             this.game = game
-            this.radius = 20
+            this.radius = 8
             this.x = game.width / 2
             this.y = game.height / 2
             this.red = 255
             this.green = 255
             this.blue = 255
             this.opacity = 0.5
+            this.opacityAnimator = 0.01
             this.color = 'white'
             this.markedForDeletion = false
         }
 
         update(){
-
+            if(this.opacity < .5){
+                this.opacityAnimator = 0.01
+            }else if(this.opacity > 1){
+                this.opacityAnimator = -0.01
+            }
+            this.opacity += this.opacityAnimator
         }
 
         draw(context){
-            context.fillStyle = this.color
+            context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
             context.beginPath()
             context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
             context.fill()
@@ -276,6 +282,11 @@ window.addEventListener('load', function(){
         }
         update(deltaTime){
             this.snake.update()
+            //powerups update - for opacity animation
+            this.powerups.forEach(powerup => {
+                powerup.update()
+            })
+
             //particle update, remove particle if opacity is 0
             this.particles.forEach(particle => {
                 particle.update()
@@ -329,7 +340,6 @@ window.addEventListener('load', function(){
             if (this.powerups.length < this.maxPowerups){
                 this.addPowerUp()
             }
-            console.log(this.powerups)
             this.gargantuan(deltaTime)
             //add boids every second until boidsInPlay number is met.
             if (this.boidTimer > this.boidInterval && this.boids.length < this.boidsInPlay && !this.gameOver) {
