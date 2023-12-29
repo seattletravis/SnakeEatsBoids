@@ -64,16 +64,17 @@ window.addEventListener('load', function(){
     class PowerUp{
         constructor(game){
             this.game = game
-            this.radius = 8
+            this.radius = 9
             this.x = game.width / 2
             this.y = game.height / 2
-            this.red = 255
+            this.red = 70
             this.green = 255
-            this.blue = 255
+            this.blue = 180
             this.opacity = 0.5
             this.opacityAnimator = 0.01
             this.color = 'white'
             this.markedForDeletion = false
+            this.timeRemaining = 15
         }
 
         update(){
@@ -83,13 +84,27 @@ window.addEventListener('load', function(){
                 this.opacityAnimator = -0.01
             }
             this.opacity += this.opacityAnimator
+
+            if(this.timeRemaining > 0){
+                this.timeRemaining -= .01
+            }else(
+                this.markedForDeletion = true
+
+            )
+            
         }
 
         draw(context){
+            let displayTime = Math.floor(this.timeRemaining)
+            let xAdjust = displayTime < 10 ? 4 : 8.5
             context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
             context.beginPath()
             context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
             context.fill()
+            context.fillStyle = `rgba(255, 0, 0, 1)`
+            context.font = 'bold 14px Arial'
+            context.fillText(displayTime, this.x - xAdjust, this.y + 5)
+            context.fill
         }
 
     }
@@ -268,7 +283,7 @@ window.addEventListener('load', function(){
             this.keys = []
             this.boids = []
             this.powerups = []
-            this.maxPowerups = 1
+            this.powerUpsInPlay = 1
             this.sightedBoids = []
             this.stars = []
             this.particles = []
@@ -286,6 +301,7 @@ window.addEventListener('load', function(){
             this.powerups.forEach(powerup => {
                 powerup.update()
             })
+            this.powerups = this.powerups.filter(powerups => !powerups.markedForDeletion)
 
             //particle update, remove particle if opacity is 0
             this.particles.forEach(particle => {
@@ -337,8 +353,9 @@ window.addEventListener('load', function(){
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
 
             //Manage Powerup Mode - Gargantuan
-            if (this.powerups.length < this.maxPowerups){
+            if (this.powerups.length < this.powerUpsInPlay){
                 this.addPowerUp()
+                this.powerUpsInPlay -= 1
             }
             this.gargantuan(deltaTime)
             //add boids every second until boidsInPlay number is met.
