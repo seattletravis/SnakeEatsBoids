@@ -78,7 +78,7 @@ window.addEventListener('load', function(){
         }
 
         update(){
-            if(this.opacity < .5){
+            if(this.opacity < 0.4){
                 this.opacityAnimator = 0.01
             }else if(this.opacity > 1){
                 this.opacityAnimator = -0.01
@@ -101,7 +101,7 @@ window.addEventListener('load', function(){
             context.beginPath()
             context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
             context.fill()
-            context.fillStyle = `rgba(255, 0, 0, 1)`
+            context.fillStyle = `rgba(0, 0, 0, 1)`
             context.font = 'bold 14px Arial'
             context.fillText(displayTime, this.x - xAdjust, this.y + 5)
             context.fill
@@ -262,7 +262,7 @@ window.addEventListener('load', function(){
             this.input = new InputHandler(this)
             this.ui = new UI(this)
             this.boidTimer = 0
-            this.boidInterval = 500
+            this.boidInterval = 150
             this.starTimer = 0
             this.starInterval = 100
             this.boidsInPlay = 30
