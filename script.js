@@ -61,6 +61,30 @@ window.addEventListener('load', function(){
         }
     }
 
+    class PowerUp{
+        constructor(game){
+            this.game = game
+            this.x = window.innerWidth / 2
+            this.y = window.innerHeight / 2
+            this.red = 255
+            this.green = 255
+            this.blue = 255
+            this.markedForDeletion = false
+        }
+
+        update(){
+
+        }
+
+        draw(context){
+            context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
+            context.beginPath()
+            context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
+            context.fill()
+        }
+
+    }
+
     class Particle {
         constructor(game, x, y, radius, red, green, blue, pointValue){
             this.game = game
@@ -297,7 +321,7 @@ window.addEventListener('load', function(){
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
 
             //Manage Powerup Mode - Gargantuan
-            this.gargantuan()
+            this.gargantuan(deltaTime)
             //add boids every second until boidsInPlay number is met.
             if (this.boidTimer > this.boidInterval && this.boids.length < this.boidsInPlay && !this.gameOver) {
                 this.addBoid(this)
@@ -473,12 +497,6 @@ window.addEventListener('load', function(){
             return angle             
         }
 
-        // getAngleSelf(boid0){
-        //     var angle = boid0.velocity.clone().invertY().direction()
-        //     angle = angle > 0 ? angle : (Math.PI + (Math.PI - Math.abs(angle))) % (2 * Math.PI)
-        //     return angle
-        // }
-
         getDistanceTo(body0, body1){
             const vec1 = body0.position.clone()
             const vec2 = body1.position.clone()
@@ -491,23 +509,34 @@ window.addEventListener('load', function(){
             if(this.gargantuanMode === false){ 
                 return 
             }
-            console.log(this.gargantuanMode)
-            let tempRadius = 6
-            let tempPieces = 30
             if(this.powerTimer > this.powerInterval){
-                this.snake.radius = tempRadius
-                this.snakePieces = tempPieces
+                this.snake.radius -= 100
                 this.gargantuanMode = false
-                this.powerTimer = 0
-                console.log(this.gargantuanMode)
-            } else {
-                this.snake.radius = 100
-                this.snake.snakePieces = 1000
+                return
+            }else if(this.powerTimer <= 0) {
+                this.snake.radius += 50
                 this.powerTimer += deltaTime
-                console.log(this.powerTimer)
-
+            }else{
+                this.powerTimer += deltaTime
             }
         }
+
+        //POWERUPS - Speed Boost
+        // gargantuan(deltaTime){
+        //     if(this.gargantuanMode === false){ 
+        //         return 
+        //     }
+        //     if(this.powerTimer > this.powerInterval){
+        //         this.speed -= 100
+        //         this.gargantuanMode = false
+        //         return
+        //     }else if(this.powerTimer <= 0) {
+        //         this.snake. += 50
+        //         this.powerTimer += deltaTime
+        //     }else{
+        //         this.powerTimer += deltaTime
+        //     }
+        // }
 
     }
 
