@@ -64,11 +64,14 @@ window.addEventListener('load', function(){
     class PowerUp{
         constructor(game){
             this.game = game
-            this.x = window.innerWidth / 2
-            this.y = window.innerHeight / 2
+            this.radius = 20
+            this.x = game.width / 2
+            this.y = game.height / 2
             this.red = 255
             this.green = 255
             this.blue = 255
+            this.opacity = 0.5
+            this.color = 'white'
             this.markedForDeletion = false
         }
 
@@ -77,7 +80,7 @@ window.addEventListener('load', function(){
         }
 
         draw(context){
-            context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
+            context.fillStyle = this.color
             context.beginPath()
             context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
             context.fill()
@@ -258,6 +261,8 @@ window.addEventListener('load', function(){
             this.maxSpeed = 3
             this.keys = []
             this.boids = []
+            this.powerups = []
+            this.maxPowerups = 1
             this.sightedBoids = []
             this.stars = []
             this.particles = []
@@ -321,6 +326,10 @@ window.addEventListener('load', function(){
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
 
             //Manage Powerup Mode - Gargantuan
+            if (this.powerups.length < this.maxPowerups){
+                this.addPowerUp()
+            }
+            console.log(this.powerups)
             this.gargantuan(deltaTime)
             //add boids every second until boidsInPlay number is met.
             if (this.boidTimer > this.boidInterval && this.boids.length < this.boidsInPlay && !this.gameOver) {
@@ -348,6 +357,9 @@ window.addEventListener('load', function(){
             this.stars.forEach(star => {
                 star.draw(context)
             })
+            this.powerups.forEach(powerup => {
+                powerup.draw(context)
+            })
             this.snake.draw(context)
             this.particles.forEach(particle => particle.draw(context))
             this.boids.forEach(boid => {
@@ -374,6 +386,10 @@ window.addEventListener('load', function(){
 
         addBoid(){
             this.boids.push(new Boid(this))
+        }
+
+        addPowerUp(){
+            this.powerups.push(new PowerUp(this))
         }
 
         addStar(){
