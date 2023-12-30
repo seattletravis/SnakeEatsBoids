@@ -160,7 +160,7 @@ window.addEventListener('load', function(){
             this.snakeColorPattern = 12
             this.radiusIncreasePerFrag = 1/this.radius
             this.snakeTimer = 0
-            this.snakeInterval = 5000 
+            this.snakeInterval = 2000 
         }
         
         update(){
@@ -476,7 +476,7 @@ window.addEventListener('load', function(){
                         if (this.stopAddingBoids){
                             this.boidsInPlay = 0
                         }else{
-                            this.boidsInPlay += 2
+                            this.boidsInPlay += 1
                             this.snakeProxy += 0.5
                             this.snakeSwerveValue += 0.0000001
                         }
