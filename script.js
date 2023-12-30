@@ -131,7 +131,7 @@ window.addEventListener('load', function(){
             this.markedForDeletion = false
         }
         update(){
-            this.radius += 3
+            this.radius += 5
             this.opacity -= 0.075      
         }
 
