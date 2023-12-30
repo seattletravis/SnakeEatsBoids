@@ -141,7 +141,8 @@ window.addEventListener('load', function(){
             context.arc(this.x, this.y, this.radius, 0, 2*Math.PI, false)
             context.fill()
             context.fillStyle = `rgba(230, 245, 39, ${this.opacity})`
-            context.fillText(this.pointValue, this.x - 15, this.y + 6)
+            context.font = 'bold 25px comicsans'
+            context.fillText(this.pointValue, this.x - 10, this.y + 6)
             context.fill
         }
     }
