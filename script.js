@@ -468,6 +468,7 @@ window.addEventListener('load', function(){
                         boid.markedForDeletion = true
                         this.changeBoidColor(this)
                         this.addPoints(boid)
+                        this.snake.snakeTimer = 0
 
                         if(this.boidsInPlay >= this.maxBoids){
                             this.stopAddingBoids = true
