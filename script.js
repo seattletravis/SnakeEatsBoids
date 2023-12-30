@@ -159,6 +159,8 @@ window.addEventListener('load', function(){
             this.snakeSegments = []
             this.snakeColorPattern = 12
             this.radiusIncreasePerFrag = 1/this.radius
+            this.snakeTimer = 0
+            this.snakeInterval = 5000 
         }
         
         update(){
@@ -386,6 +388,14 @@ window.addEventListener('load', function(){
                 this.starTimer = 0
             } else {
                 this.starTimer += deltaTime
+            }
+
+            //shink snake if snake doesnt eat
+            if(this.snake.snakeTimer > this.snake.snakeInterval && this.snake.radius > 3 && !this.gameOver){
+                    this.snake.radius -= 0.5
+                    this.snake.snakeTimer = 0
+            }else{
+                this.snake.snakeTimer += deltaTime
             }
         }
 
