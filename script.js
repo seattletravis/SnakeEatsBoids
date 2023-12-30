@@ -58,6 +58,13 @@ window.addEventListener('load', function(){
             context.font = this.fontSize + 'px ' + this.fontFamily
             context.fillText('Score: ' + this.game.score, 20, 40)
             
+            if (this.game.gargantuanMode){
+                let timeLeft = 15 - Math.floor(this.game.powerTimer / 1000)
+                context.fillStyle = this.color
+                context.font = this.fontSize + 'px ' + this.fontFamily
+                context.fillText('Power Up: ' + timeLeft, game.width - 200, 40)
+            }
+            
         }
     }
 
@@ -580,8 +587,8 @@ window.addEventListener('load', function(){
         }
 
         //POWERUPS - Speed Boost
-        // gargantuan(deltaTime){
-        //     if(this.gargantuanMode === false){ 
+        // speedBoost(deltaTime){
+        //     if(this.speedBoostMode === false){ 
         //         return 
         //     }
         //     if(this.powerTimer > this.powerInterval){
