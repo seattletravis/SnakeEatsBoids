@@ -232,8 +232,6 @@ window.addEventListener('load', function(){
             this.position.x += this.velocity.x
             this.angleSelf = this.getAngleSelf()
 
-
-
             //Boid Segment Handling
             this.boidSegments.unshift({x: this.position.x, y: this.position.y, radius: this.radius})
             if (this.boidSegments.length > this.boidPieces) {
@@ -300,6 +298,9 @@ window.addEventListener('load', function(){
             //powerups update - for opacity animation
             this.powerups.forEach(powerup => {
                 powerup.update()
+                if (this.checkPowerUpCollision(this.snake, powerup)){
+                    powerup.markedForDeletion = true
+                }
             })
             this.powerups = this.powerups.filter(powerups => !powerups.markedForDeletion)
 
@@ -421,6 +422,19 @@ window.addEventListener('load', function(){
 
         addStar(){
             this.stars.push(new Star(this))
+        }
+
+        checkPowerUpCollision(snake, powerup){
+            for(let i = 0; i < snake.snakeSegments.length; i++){
+                let distance = Math.sqrt((Math.abs(snake.snakeSegments[i].x - powerup.x)**2 + Math.abs(snake.snakeSegments[i].y - powerup.y)**2))
+                let checkDistance = snake.radius + powerup.radius - 2
+                if (distance < checkDistance) {
+                    // this.particles.push(new Particle(this, boid.boidSegments[0].x, boid.boidSegments[0].y, boid.boidSegments[0].radius, boid.red, boid.green, boid.blue, boid.pointValue))
+                    powerup.markedForDeletion = true
+
+                    return
+                }
+            }
         }
 
         checkCollision(snake, boid){
