@@ -151,13 +151,14 @@ window.addEventListener('load', function(){
         constructor(game){
             this.game = game
             this.radius = 3 
-            this.position = new Victor(20, 100)
+            this.position = new Victor(400, 400)
             this.speedY = 0
             this.speedX = 0
             this.snakeSpeed = 2
             this.snakePieces = 30
             this.snakeSegments = []
             this.snakeColorPattern = 12
+            this.radiusIncreasePerFrag = 1/this.radius
         }
         
         update(){
@@ -435,12 +436,10 @@ window.addEventListener('load', function(){
         checkPowerUpCollision(snake, powerup){
             for(let i = 0; i < snake.snakeSegments.length; i++){
                 let distance = Math.sqrt((Math.abs(snake.snakeSegments[i].x - powerup.x)**2 + Math.abs(snake.snakeSegments[i].y - powerup.y)**2))
-                let checkDistance = snake.radius + powerup.radius - 2
+                let checkDistance = snake.radius + powerup.radius + 2
                 if (distance < checkDistance) {
-                    // this.particles.push(new Particle(this, boid.boidSegments[0].x, boid.boidSegments[0].y, boid.boidSegments[0].radius, boid.red, boid.green, boid.blue, boid.pointValue))
                     powerup.markedForDeletion = true
                     this.gargantuanMode = true
-
                     return
                 }
             }
@@ -466,13 +465,15 @@ window.addEventListener('load', function(){
                         if (this.stopAddingBoids){
                             this.boidsInPlay = 0
                         }else{
-                            this.boidsInPlay += 1
+                            this.boidsInPlay += 2
                             this.snakeProxy += 0.5
                             this.snakeSwerveValue += 0.0000001
                         }
                         
                         this.snake.snakePieces += 3
-                        this.snake.radius += 1.5/this.snake.radius
+                        this.snake.radius += this.snake.radiusIncreasePerFrag
+
+                        // this.snake.radius += 1.5/this.snake.radius
                         if (this.speed < this.maxSpeed){
                             this.speed += 0.125
                         }
