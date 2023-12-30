@@ -290,7 +290,7 @@ window.addEventListener('load', function(){
             this.pointValue = 10
             this.gargantuanMode = false
             this.powerTimer = 0
-            this.powerInterval = 5000
+            this.powerInterval = 15000
 
         }
         update(deltaTime){
@@ -431,6 +431,7 @@ window.addEventListener('load', function(){
                 if (distance < checkDistance) {
                     // this.particles.push(new Particle(this, boid.boidSegments[0].x, boid.boidSegments[0].y, boid.boidSegments[0].radius, boid.red, boid.green, boid.blue, boid.pointValue))
                     powerup.markedForDeletion = true
+                    this.gargantuanMode = true
 
                     return
                 }
@@ -571,7 +572,7 @@ window.addEventListener('load', function(){
                 this.gargantuanMode = false
                 return
             }else if(this.powerTimer <= 0) {
-                this.snake.radius += 50
+                this.snake.radius += 100
                 this.powerTimer += deltaTime
             }else{
                 this.powerTimer += deltaTime
