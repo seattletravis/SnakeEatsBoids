@@ -91,12 +91,10 @@ window.addEventListener('load', function(){
                 this.opacityAnimator = -0.01
             }
             this.opacity += this.opacityAnimator
-
             if(this.timeRemaining > 0){
                 this.timeRemaining -= .01
             }else(
                 this.markedForDeletion = true
-
             )
             
         }
