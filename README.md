@@ -1,5 +1,7 @@
 # Welcome to SnakeEatsBoids
 
+[PLAY ONLINE HERE](https://designzesty.com)
+
 This web application is my implementation of the Snake Game but with AI driven food.
 
 The Food in this implementation will be given Boid AI Characteristics based on Craig Reynolds research, you can view his paper here.
