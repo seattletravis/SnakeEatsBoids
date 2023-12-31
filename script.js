@@ -52,10 +52,24 @@ window.addEventListener('load', function(){
             this.fontFamily = 'Helvetica'
             this.color = 'yellow'
             this.fragScore = this.game.score
+            this.opacity = 1
+            this.red = 255
+            this.green = 255
+            this.blue = 150
+            this.bannerTimer = 0
+            this.bannerInterval = 3000
         }
 
-        update(){
-
+        update(deltaTime){
+            if(this.game.gargantuanMode){
+                if(this.bannerTimer > this.bannerInterval){
+                    this.opacity -= 0.01
+                }else{
+                    this.bannerTimer += deltaTime
+                    
+                }
+                console.log(this.opacity)
+            }
         }
 
         draw(context){
@@ -71,6 +85,7 @@ window.addEventListener('load', function(){
             }
 
             if (this.game.gargantuanMode){
+                // this.opacity -= .1
                 context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Gargantuan Mode Enabled! ', game.width / 2 - 250, 40)
@@ -315,6 +330,7 @@ window.addEventListener('load', function(){
 
         }
         update(deltaTime){
+            this.ui.update(deltaTime)
             this.snake.update()
             //powerups update - for opacity animation
             this.powerups.forEach(powerup => {
@@ -609,6 +625,13 @@ window.addEventListener('load', function(){
             }else{
                 this.powerTimer += deltaTime
             }
+            // if(this.ui.bannerTimer > this.ui.bannerInterval){
+            //     this.ui.opacity = 1
+            // }else{
+            //     this.ui.bannerTimer += deltaTime
+            //     this.ui.opacity -= 0.0000000000000001
+            // }
+
         }
 
         //POWERUPS - Speed Boost
