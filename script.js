@@ -68,7 +68,6 @@ window.addEventListener('load', function(){
                     this.bannerTimer += deltaTime
                     
                 }
-                console.log(this.opacity)
             }
         }
 
