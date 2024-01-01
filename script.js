@@ -108,6 +108,8 @@ window.addEventListener('load', function(){
             this.color = 'white'
             this.markedForDeletion = false
             this.timeRemaining = 15
+            this.powerTimer = 0
+            this.powerInterval = 15000
         }
 
         update(){
@@ -323,9 +325,10 @@ window.addEventListener('load', function(){
             this.gameOver = false
             this.score = 0
             this.pointValue = 10
-            this.gargantuanMode = false
-            this.powerTimer = 0
-            this.powerInterval = 15000
+            this.gargantuanMode = {on: false, timer: 0, interval: 15000}
+            this.speedMode = false
+            // this.powerTimer = 0
+            // this.powerInterval = 15000
 
         }
         update(deltaTime){
@@ -611,7 +614,7 @@ window.addEventListener('load', function(){
 
         //POWERUPS
         gargantuan(deltaTime){
-            if(this.gargantuanMode === false){ 
+            if(this.gargantuanMode.on === false){ 
                 return 
             }
             if(this.powerTimer > this.powerInterval){
@@ -624,12 +627,6 @@ window.addEventListener('load', function(){
             }else{
                 this.powerTimer += deltaTime
             }
-            // if(this.ui.bannerTimer > this.ui.bannerInterval){
-            //     this.ui.opacity = 1
-            // }else{
-            //     this.ui.bannerTimer += deltaTime
-            //     this.ui.opacity -= 0.0000000000000001
-            // }
 
         }
 
