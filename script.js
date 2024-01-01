@@ -61,7 +61,7 @@ window.addEventListener('load', function(){
         }
 
         update(deltaTime){
-            if(this.game.gargantuanMode){
+            if(this.game.gargantuanMode.on){
                 if(this.bannerTimer > this.bannerInterval){
                     this.opacity -= 0.01
                 }else{
@@ -76,14 +76,14 @@ window.addEventListener('load', function(){
             context.font = this.fontSize + 'px ' + this.fontFamily
             context.fillText('Score: ' + this.game.score, 20, 40)
             
-            if (this.game.gargantuanMode){
+            if (this.game.gargantuanMode.on){
                 let timeLeft = 15 - Math.floor(this.game.powerTimer / 1000)
                 context.fillStyle = this.color
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Power Up: ' + timeLeft, game.width - 200, 40)
             }
 
-            if (this.game.gargantuanMode){
+            if (this.game.gargantuanMode.on){
                 // this.opacity -= .1
                 context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
                 context.font = this.fontSize + 'px ' + this.fontFamily
@@ -479,7 +479,7 @@ window.addEventListener('load', function(){
                 let checkDistance = snake.radius + powerup.radius + 2
                 if (distance < checkDistance) {
                     powerup.markedForDeletion = true
-                    this.gargantuanMode = true
+                    this.gargantuanMode.on = true
                     return
                 }
             }
@@ -614,18 +614,19 @@ window.addEventListener('load', function(){
 
         //POWERUPS
         gargantuan(deltaTime){
+            // console.log(this.gargantuanMode.on)
             if(this.gargantuanMode.on === false){ 
                 return 
             }
-            if(this.powerTimer > this.powerInterval){
+            if(this.gargantuanMode.timer > this.gargantuanMode.interval){
                 this.snake.radius -= 100
-                this.gargantuanMode = false
+                this.gargantuanMode.on = false
                 return
-            }else if(this.powerTimer <= 0) {
+            }else if(this.gargantuanMode.timer <= 0) {
                 this.snake.radius += 100
-                this.powerTimer += deltaTime
+                this.gargantuanMode.timer += deltaTime
             }else{
-                this.powerTimer += deltaTime
+                this.gargantuanMode.timer += deltaTime
             }
 
         }
