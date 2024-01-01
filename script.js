@@ -82,7 +82,6 @@ window.addEventListener('load', function(){
                 context.fillText('Power Up: ' + timeLeft, game.width - 200, 40)
             }
             if (this.game.gargantuanMode.on){
-                // this.opacity -= .1
                 context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Gargantuan Mode Enabled! ', game.width / 2 - 250, 40)
