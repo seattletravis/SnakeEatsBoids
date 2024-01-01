@@ -72,19 +72,20 @@ window.addEventListener('load', function(){
         }
 
         draw(context){
-            context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
+            context.fillStyle = `rgba(${this.red},${this.green},${this.blue}, 1)`
             context.font = this.fontSize + 'px ' + this.fontFamily
-            context.fillText('Score: ' + this.game.score, 20, 40)          
+            context.fillText('Score: ' + this.game.score, 20, 40)   
+            // console.log(this.game.powerups.length)       
             if (this.game.gargantuanMode.on){
                 let timeLeft = 15 - Math.floor(this.game.gargantuanMode.timer / 1000)
-                context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
+                context.fillStyle = `rgba(${this.red},${this.green},${this.blue}, 1)`
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Power Up: ' + timeLeft, game.width - 200, 40)
             }
 
             if (this.game.speedMode.on){
                 let timeLeft = 15 - Math.floor(this.game.gargantuanMode.timer / 1000)
-                context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
+                context.fillStyle = `rgba(${this.red},${this.green},${this.blue}, 1)`
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Power Up: ' + timeLeft, game.width - 200, 80)
             }
@@ -100,6 +101,10 @@ window.addEventListener('load', function(){
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Speed Mode Enabled! ', game.width / 2 - 250, 80)
             }                 
+        }
+
+        displayTimeLeft(){
+
         }
     }
 
@@ -325,7 +330,7 @@ window.addEventListener('load', function(){
             this.maxSpeed = 3
             this.keys = []
             this.boids = []
-            this.powerups = []
+            this.powerUpsOnScreen = []
             this.powerUpsInPlay = 1
             this.sightedBoids = []
             this.stars = []
@@ -341,13 +346,13 @@ window.addEventListener('load', function(){
             this.ui.update(deltaTime)
             this.snake.update()
             //powerups update - for opacity animation
-            this.powerups.forEach(powerup => {
+            this.powerUpsOnScreen.forEach(powerup => {
                 powerup.update()
                 if (this.checkPowerUpCollision(this.snake, powerup)){
                     powerup.markedForDeletion = true
                 }
             })
-            this.powerups = this.powerups.filter(powerups => !powerups.markedForDeletion)
+            this.powerUpsOnScreen = this.powerUpsOnScreen.filter(powerups => !powerups.markedForDeletion)
 
             //particle update, remove particle if opacity is 0
             this.particles.forEach(particle => {
@@ -399,7 +404,7 @@ window.addEventListener('load', function(){
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
 
             //Manage Powerup Mode - Gargantuan
-            if (this.powerups.length < this.powerUpsInPlay){
+            if (this.powerUpsOnScreen.length < this.powerUpsInPlay){
                 this.addPowerUp()
                 this.powerUpsInPlay -= 1
             }
@@ -440,7 +445,7 @@ window.addEventListener('load', function(){
             this.stars.forEach(star => {
                 star.draw(context)
             })
-            this.powerups.forEach(powerup => {
+            this.powerUpsOnScreen.forEach(powerup => {
                 powerup.draw(context)
             })
             this.snake.draw(context)
@@ -472,7 +477,7 @@ window.addEventListener('load', function(){
         }
 
         addPowerUp(){
-            this.powerups.push(new PowerUp(this))
+            this.powerUpsOnScreen.push(new PowerUp(this))
         }
 
         addStar(){
