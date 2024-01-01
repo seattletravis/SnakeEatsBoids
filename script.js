@@ -74,23 +74,19 @@ window.addEventListener('load', function(){
         draw(context){
             context.fillStyle = this.color
             context.font = this.fontSize + 'px ' + this.fontFamily
-            context.fillText('Score: ' + this.game.score, 20, 40)
-            
+            context.fillText('Score: ' + this.game.score, 20, 40)          
             if (this.game.gargantuanMode.on){
                 let timeLeft = 15 - Math.floor(this.game.powerTimer / 1000)
                 context.fillStyle = this.color
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Power Up: ' + timeLeft, game.width - 200, 40)
             }
-
             if (this.game.gargantuanMode.on){
                 // this.opacity -= .1
                 context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Gargantuan Mode Enabled! ', game.width / 2 - 250, 40)
-            }
-
-            
+            }           
         }
     }
 
@@ -327,8 +323,6 @@ window.addEventListener('load', function(){
             this.pointValue = 10
             this.gargantuanMode = {on: false, timer: 0, interval: 15000}
             this.speedMode = false
-            // this.powerTimer = 0
-            // this.powerInterval = 15000
 
         }
         update(deltaTime){
