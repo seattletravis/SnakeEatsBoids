@@ -72,20 +72,34 @@ window.addEventListener('load', function(){
         }
 
         draw(context){
-            context.fillStyle = this.color
+            context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
             context.font = this.fontSize + 'px ' + this.fontFamily
             context.fillText('Score: ' + this.game.score, 20, 40)          
             if (this.game.gargantuanMode.on){
                 let timeLeft = 15 - Math.floor(this.game.gargantuanMode.timer / 1000)
-                context.fillStyle = this.color
+                context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Power Up: ' + timeLeft, game.width - 200, 40)
             }
+
+            if (this.game.speedMode.on){
+                let timeLeft = 15 - Math.floor(this.game.gargantuanMode.timer / 1000)
+                context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
+                context.font = this.fontSize + 'px ' + this.fontFamily
+                context.fillText('Power Up: ' + timeLeft, game.width - 200, 80)
+            }
+
             if (this.game.gargantuanMode.on){
                 context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Gargantuan Mode Enabled! ', game.width / 2 - 250, 40)
-            }           
+            }  
+
+            if (this.game.speedMode.on){
+                context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`
+                context.font = this.fontSize + 'px ' + this.fontFamily
+                context.fillText('Speed Mode Enabled! ', game.width / 2 - 250, 80)
+            }                 
         }
     }
 
@@ -320,7 +334,7 @@ window.addEventListener('load', function(){
             this.score = 0
             this.pointValue = 10
             this.gargantuanMode = {on: false, timer: 0, interval: 15000}
-            this.speedMode = false
+            this.speedMode = {on: true, timer: 0, interval: 15000}
 
         }
         update(deltaTime){
