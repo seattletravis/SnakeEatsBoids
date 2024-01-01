@@ -109,11 +109,12 @@ window.addEventListener('load', function(){
     }
 
     class PowerUp{
-        constructor(game){
+        constructor(game, x, y, type){
             this.game = game
             this.radius = 9
-            this.x = game.width / 2
-            this.y = game.height / 2
+            this.x = x
+            this.y = y
+            this.type = type
             this.red = 70
             this.green = 255
             this.blue = 180
@@ -331,6 +332,7 @@ window.addEventListener('load', function(){
             this.keys = []
             this.boids = []
             this.powerUpsOnScreen = []
+            this.powerUpsOn = []
             this.powerUpsInPlay = 1
             this.sightedBoids = []
             this.stars = []
@@ -339,7 +341,7 @@ window.addEventListener('load', function(){
             this.score = 0
             this.pointValue = 10
             this.gargantuanMode = {on: false, timer: 0, interval: 15000}
-            this.speedMode = {on: true, timer: 0, interval: 15000}
+            this.speedMode = {on: false, timer: 0, interval: 15000}
 
         }
         update(deltaTime){
@@ -430,7 +432,7 @@ window.addEventListener('load', function(){
             }
 
             //shink snake if snake doesnt eat
-            if(this.snake.snakeTimer > this.snake.snakeInterval && this.snake.radius > 3 && !this.gameOver){
+            if(this.snake.snakeTimer > this.snake.snakeInterval && this.snake.radius > 3 && !this.gargantuanMode.on && !this.gameOver){
                     this.snake.radius -= 0.5
                     this.snake.snakeTimer = 0
             }else{
@@ -477,7 +479,7 @@ window.addEventListener('load', function(){
         }
 
         addPowerUp(){
-            this.powerUpsOnScreen.push(new PowerUp(this))
+            this.powerUpsOnScreen.push(new PowerUp(this, 200, 200))
         }
 
         addStar(){
@@ -625,7 +627,6 @@ window.addEventListener('load', function(){
 
         //POWERUPS
         gargantuan(deltaTime){
-            // console.log(this.gargantuanMode.on)
             if(this.gargantuanMode.on === false){ 
                 return 
             }
@@ -639,7 +640,6 @@ window.addEventListener('load', function(){
             }else{
                 this.gargantuanMode.timer += deltaTime
             }
-
         }
 
         //POWERUPS - Speed Boost
