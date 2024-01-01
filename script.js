@@ -76,7 +76,7 @@ window.addEventListener('load', function(){
             context.font = this.fontSize + 'px ' + this.fontFamily
             context.fillText('Score: ' + this.game.score, 20, 40)          
             if (this.game.gargantuanMode.on){
-                let timeLeft = 15 - Math.floor(this.game.powerTimer / 1000)
+                let timeLeft = 15 - Math.floor(this.game.gargantuanMode.timer / 1000)
                 context.fillStyle = this.color
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Power Up: ' + timeLeft, game.width - 200, 40)
@@ -134,7 +134,6 @@ window.addEventListener('load', function(){
             context.fillText(displayTime, this.x - xAdjust, this.y + 5)
             context.fill
         }
-
     }
 
     class Particle {
