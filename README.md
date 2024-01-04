@@ -31,7 +31,7 @@ We'll call the boid being affected 'boid0'
 
 Each other Boid in play will be dtermined if it will affect boid0 and be added to "Affection" list if it satisfies the criteria.
 
-#### Algorithms
+#### Algorithms - In Process
 
 ##### Affection Criteria
 
@@ -42,7 +42,7 @@ Each other Boid in play will be dtermined if it will affect boid0 and be added t
 5. If boid is in sight and in range add it to list of affection.
 6. Return correction angle to be used to get vector velocity changes later. 
 
-### Avoid
+### Avoid - Completed
 
 Avoid takes in boid direction and gets boid to other object direction and calcualtes a 'swerve value' to swerve away from the object to avoid.
 
