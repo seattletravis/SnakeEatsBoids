@@ -70,9 +70,11 @@ Lets add some powerups! Power ups will include but not be limited to, powerups w
 
 **Gigantuan** - increase length and width of snake, (implemention notes: change affects snake object's this.radius, and this.snakeSegements)
 
-completed on 1/4/2023
+Completed: 1/4/2023
 
 **Turboid Speed** - increase snake speed, (implementation notes: change affects snake objects, this.speed attribute)
+
+In Process: 1/4/2023
 
 **Time Dialation** - decrease boids in play speed, (implementation notes: loop over boids list and reduce speed value)
 
