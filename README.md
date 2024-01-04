@@ -84,5 +84,7 @@ Lets add some powerups! Power ups will include but not be limited to, powerups w
 12/27/2023 - I watched a very cool youtube video on evolution simuation, [Bibites Link Here](https://www.youtube.com/watch?v=xBQ3knSi0Uo&t=1331s)
 This has me thinking I could add some functionality to include powerups. 
 
+1/4/2024 - I've been taking Coursera classes lately, and haven't been writing much code for the boids. However I did see an video on Particle Life. It's some really cool and interesting programming. I don't know if I'll be able to add it into SnakeBoidAI though. 
+
 
 
