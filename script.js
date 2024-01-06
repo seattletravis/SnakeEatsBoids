@@ -341,6 +341,9 @@ window.addEventListener('load', function(){
             this.pointValue = 10
             this.gargantuanMode = {on: false, timer: 0, interval: 15000}
             this.speedMode = {on: false, timer: 0, interval: 15000}
+            this.shrinkFactorSegments = 2
+            this.shrinkFactorRadius = 0.5
+
 
         }
         update(deltaTime){
@@ -432,8 +435,14 @@ window.addEventListener('load', function(){
 
             //shink snake if snake doesnt eat
             if(this.snake.snakeTimer > this.snake.snakeInterval && this.snake.radius > 3 && !this.gargantuanMode.on && !this.gameOver){
-                    this.snake.radius -= 0.5
-                    this.snake.snakeTimer = 0
+                this.snake.radius -= this.shrinkFactorRadius
+                this.snake.snakeTimer = 0
+            }else if(this.snake.snakeTimer > this.snake.snakeInterval && this.snake.radius <= 3 && !this.gargantuanMode.on && !this.gameOver){
+                this.snake.snakePieces -= this.shrinkFactorSegments
+                for(let i = 0; i<=this.shrinkFactorSegments; i++){this.snake.snakeSegments.pop()}
+                this.snake.snakeTimer = 0
+            }else if(this.snake.snakeTimer > this.snake.snakeInterval && this.snake.radius <= 3 && this.snake.snakePieces <= 0 && !this.gargantuanMode.on && !this.gameOver){
+                this.gameOver = true
             }else{
                 this.snake.snakeTimer += deltaTime
             }
