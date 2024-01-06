@@ -446,8 +446,6 @@ window.addEventListener('load', function(){
             }else{
                 this.snake.snakeTimer += deltaTime
             }
-
-
         }
 
         draw(context){
@@ -477,8 +475,8 @@ window.addEventListener('load', function(){
                 boid.blue = 255
                 boid.green = 255
             }else{
-                boid.red += 8
-                boid.blue -= 8
+                boid.red += 6
+                boid.blue -= 6
             }
         }
 
