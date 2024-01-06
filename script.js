@@ -66,7 +66,6 @@ window.addEventListener('load', function(){
                     this.opacity -= 0.01
                 }else{
                     this.bannerTimer += deltaTime
-                    
                 }
             }
         }
