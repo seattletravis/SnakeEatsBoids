@@ -332,7 +332,7 @@ window.addEventListener('load', function(){
             this.boids = []
             this.powerUpsOnScreen = []
             this.powerUpsOn = []
-            this.powerUpsInPlay = 1
+            this.powerUpsInPlay = 2
             this.sightedBoids = []
             this.stars = []
             this.particles = []
@@ -410,7 +410,6 @@ window.addEventListener('load', function(){
             //Manage Powerup Mode - Gargantuan
             if (this.powerUpsOnScreen.length < this.powerUpsInPlay){
                 this.addPowerUp()
-                this.powerUpsInPlay -= 1
             }
             this.gargantuan(deltaTime)
             //add boids every second until boidsInPlay number is met.
@@ -485,7 +484,7 @@ window.addEventListener('load', function(){
         }
 
         addPowerUp(){
-            this.powerUpsOnScreen.push(new PowerUp(this, 200, 200))
+            this.powerUpsOnScreen.push(new PowerUp(this))
         }
 
         addStar(){
@@ -499,6 +498,7 @@ window.addEventListener('load', function(){
                 if (distance < checkDistance) {
                     powerup.markedForDeletion = true
                     this.gargantuanMode.on = true
+                    this.powerUpsInPlay -= 1
                     return
                 }
             }
