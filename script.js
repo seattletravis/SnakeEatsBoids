@@ -108,11 +108,11 @@ window.addEventListener('load', function(){
     }
 
     class PowerUp{
-        constructor(game, x, y, type){
+        constructor(game, y, type){
             this.game = game
             this.radius = 9
-            this.x = x
-            this.y = y
+            this.x = (Math.random() * game.width * 0.6) + (game.width * 0.2)
+            this.y = (Math.random() * game.height * 0.6) + (game.height * 0.2)
             this.type = type
             this.red = 70
             this.green = 255
