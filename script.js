@@ -397,21 +397,8 @@ window.addEventListener('load', function(){
                     }
                 })  
                 //Get average Vectors x, and y respectively for sightedBoids AND
-                //swerve Boid into alignment.
-
+                //swerve Boid into alignment Call Align Function.
                 this.align(this.sightedBoids, boid, this.boidSwerveValue)
-                // if(this.sightedBoids.length > 0){
-                //     let sumX = 0
-                //     let sumY = 0
-                //     this.sightedBoids.forEach(boid => {
-                //         sumX += boid.velocity.x
-                //         sumY += boid.velocity.y
-                //     })
-                //     let averageX = sumX / this.sightedBoids.length
-                //     let averageY = sumY / this.sightedBoids.length
-                //     boid.velocity.x += averageX * this.boidSwerveValue
-                //     boid.velocity.y += averageY * this.boidSwerveValue
-                // }
             })
 
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
