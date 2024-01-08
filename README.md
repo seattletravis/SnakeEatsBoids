@@ -83,12 +83,13 @@ In Process: 1/4/2023
 
 
 
-## Personal Blog Posts for this Project
+## Developer Log:
 
 12/27/2023 - I watched a very cool youtube video on evolution simuation, [Bibites Link Here](https://www.youtube.com/watch?v=xBQ3knSi0Uo&t=1331s)
 This has me thinking I could add some functionality to include powerups. 
 
 1/4/2024 - I've been taking Coursera classes lately, and haven't been writing much code for the boids. However I did see an video on Particle Life. It's some really cool and interesting programming. I don't know if I'll be able to add it into SnakeBoidAI though. [Particle Life Video](https://www.youtube.com/watch?v=p4YirERTVF0)
 
+1/8/2024 - It's 2024! Got into the code the other day, now I'm working on the UI for touch screen devices, powerups, Boid AI implementation (almost there), and the end level functionality. Lots of tickets to get through to make this a very cool game demo.
 
 
