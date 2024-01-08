@@ -331,7 +331,7 @@ window.addEventListener('load', function(){
             this.keys = []
             this.boids = []
             this.powerUpsOnScreen = []
-            this.powerUpsOn = []
+            // this.powerUpsOn = []
             this.powerUpsInPlay = 1
             this.sightedBoids = []
             this.stars = []
@@ -651,6 +651,7 @@ window.addEventListener('load', function(){
 
         // POWERUPS - Speed Boost
         speedBoost(deltaTime){
+            console.log(this.speedMode.on)
             if(this.speedMode.on === false){ 
                 return 
             }
@@ -659,7 +660,7 @@ window.addEventListener('load', function(){
                 this.speedMode.on = false
                 return
             }else if(this.speedMode.timer <= 0) {
-                this.snake.snakeSpeed += 2
+                this.snake.snakeSpeed += 1
                 this.speedMode.timer += deltaTime
             }else{
                 this.speedMode.timer += deltaTime
