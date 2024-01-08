@@ -78,14 +78,14 @@ window.addEventListener('load', function(){
                 let timeLeft = 15 - Math.floor(this.game.gargantuanMode.timer / 1000)
                 context.fillStyle = `rgba(${this.red},${this.green},${this.blue}, 1)`
                 context.font = this.fontSize + 'px ' + this.fontFamily
-                context.fillText('Power Up: ' + timeLeft, game.width - 200, 40)
+                context.fillText('Big Time: ' + timeLeft, game.width - 200, 40)
             }
 
             if (this.game.speedMode.on){
                 let timeLeft = 15 - Math.floor(this.game.speedMode.timer / 1000)
                 context.fillStyle = `rgba(${this.red},${this.green},${this.blue}, 1)`
                 context.font = this.fontSize + 'px ' + this.fontFamily
-                context.fillText('Power Up: ' + timeLeft, game.width - 200, 80)
+                context.fillText('Speed Time: ' + timeLeft, game.width - 200, 80)
             }
 
             if (this.game.gargantuanMode.on){
