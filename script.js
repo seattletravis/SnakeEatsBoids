@@ -322,7 +322,7 @@ window.addEventListener('load', function(){
             this.boidAlignProxy = 150
             this.snakeSightAngle = 2.355
             this.boidSightAngle = 1.57
-            this.speed = .5 //initial boid speed
+            this.speed = 1.5 //initial boid speed
             this.red = 0
             this.blue = 255
             this.green = 0
@@ -330,7 +330,7 @@ window.addEventListener('load', function(){
             this.keys = []
             this.boids = []
             this.powerUpsOnScreen = []
-            // this.powerUpsOn = []
+            this.powerUpsOn = []
             this.powerUpsInPlay = 1
             this.sightedBoids = []
             this.stars = []
@@ -382,6 +382,7 @@ window.addEventListener('load', function(){
                     }
                 }
 
+                //empty array sightedBoids
                 this.sightedBoids = []
                 // BEHAVIOR CALLS FOR AVOID EACH OTHER BEHAVIOR
                 this.boids.forEach(otherBoid => {
@@ -395,11 +396,18 @@ window.addEventListener('load', function(){
                         // this.align(otherBoid.velocity, boid.velocity)                    
                     }
                 })  
+                //Get average Vectors x, and y respectively for sightedBoids
                 if(this.sightedBoids.length > 0){
+                    let sumX = 0
+                    let sumY = 0
                     this.sightedBoids.forEach(boid => {
-    
+                        sumX += boid.velocity.x
+                        sumY += boid.velocity.y
                     })
-                    
+                    let averageX = sumX / this.sightedBoids.length
+                    let averageY = sumY / this.sightedBoids.length
+                    boid.velocity.x += averageX * this.boidSwerveValue
+                    boid.velocity.y += averageY * this.boidSwerveValue
                 }
             })
 
@@ -552,14 +560,11 @@ window.addEventListener('load', function(){
             if (Math.abs(angleDifference) < sightAngle){
                 this.sightedBoids.push(otherBoid)
             }
-            
-
-
-
-
         }
 
-        align(otherBoid, boid){
+        align(averageX, averageY){
+            // boid.velocity.x = averageX
+            // boid.
 
         }
 
