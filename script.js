@@ -83,7 +83,7 @@ window.addEventListener('load', function(){
             }
 
             if (this.game.speedMode.on){
-                let timeLeft = 15 - Math.floor(this.game.gargantuanMode.timer / 1000)
+                let timeLeft = 15 - Math.floor(this.game.speedMode.timer / 1000)
                 context.fillStyle = `rgba(${this.red},${this.green},${this.blue}, 1)`
                 context.font = this.fontSize + 'px ' + this.fontFamily
                 context.fillText('Power Up: ' + timeLeft, game.width - 200, 80)
@@ -332,7 +332,7 @@ window.addEventListener('load', function(){
             this.boids = []
             this.powerUpsOnScreen = []
             this.powerUpsOn = []
-            this.powerUpsInPlay = 2
+            this.powerUpsInPlay = 1
             this.sightedBoids = []
             this.stars = []
             this.particles = []
@@ -340,7 +340,7 @@ window.addEventListener('load', function(){
             this.score = 0
             this.pointValue = 10
             this.gargantuanMode = {on: false, timer: 0, interval: 15000}
-            this.speedMode = {on: false, timer: 0, interval: 15000}
+            this.speedMode = {on: true, timer: 0, interval: 15000}
             this.shrinkFactorSegments = 2
             this.shrinkFactorRadius = 0.5
 
@@ -412,6 +412,7 @@ window.addEventListener('load', function(){
                 this.addPowerUp()
             }
             this.gargantuan(deltaTime)
+            this.speedBoost(deltaTime)
             //add boids every second until boidsInPlay number is met.
             if (this.boidTimer > this.boidInterval && this.boids.length < this.boidsInPlay && !this.gameOver) {
                 this.addBoid(this)
@@ -631,7 +632,7 @@ window.addEventListener('load', function(){
             return distance  
         }
 
-        //POWERUPS
+        //POWERUPS - gargantuan
         gargantuan(deltaTime){
             if(this.gargantuanMode.on === false){ 
                 return 
@@ -648,22 +649,22 @@ window.addEventListener('load', function(){
             }
         }
 
-        //POWERUPS - Speed Boost
-        // speedBoost(deltaTime){
-        //     if(this.speedBoostMode === false){ 
-        //         return 
-        //     }
-        //     if(this.powerTimer > this.powerInterval){
-        //         this.speed -= 100
-        //         this.gargantuanMode = false
-        //         return
-        //     }else if(this.powerTimer <= 0) {
-        //         this.snake. += 50
-        //         this.powerTimer += deltaTime
-        //     }else{
-        //         this.powerTimer += deltaTime
-        //     }
-        // }
+        // POWERUPS - Speed Boost
+        speedBoost(deltaTime){
+            if(this.speedMode.on === false){ 
+                return 
+            }
+            if(this.speedMode.timer > this.speedMode.interval){
+                this.snake.snakeSpeed -= 2
+                this.speedMode.on = false
+                return
+            }else if(this.speedMode.timer <= 0) {
+                this.snake.snakeSpeed += 2
+                this.speedMode.timer += deltaTime
+            }else{
+                this.speedMode.timer += deltaTime
+            }
+        }
 
     }
 
