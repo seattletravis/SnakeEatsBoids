@@ -641,11 +641,11 @@ window.addEventListener('load', function(){
                 return 
             }
             if(this.gargantuanMode.timer > this.gargantuanMode.interval){
-                this.snake.radius -= 100
+                this.snake.radius -= 60
                 this.gargantuanMode.on = false
                 return
             }else if(this.gargantuanMode.timer <= 0) {
-                this.snake.radius += 100
+                this.snake.radius += 60
                 this.gargantuanMode.timer += deltaTime
             }else{
                 this.gargantuanMode.timer += deltaTime
