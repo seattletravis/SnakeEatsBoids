@@ -396,19 +396,22 @@ window.addEventListener('load', function(){
                         // this.align(otherBoid.velocity, boid.velocity)                    
                     }
                 })  
-                //Get average Vectors x, and y respectively for sightedBoids
-                if(this.sightedBoids.length > 0){
-                    let sumX = 0
-                    let sumY = 0
-                    this.sightedBoids.forEach(boid => {
-                        sumX += boid.velocity.x
-                        sumY += boid.velocity.y
-                    })
-                    let averageX = sumX / this.sightedBoids.length
-                    let averageY = sumY / this.sightedBoids.length
-                    boid.velocity.x += averageX * this.boidSwerveValue
-                    boid.velocity.y += averageY * this.boidSwerveValue
-                }
+                //Get average Vectors x, and y respectively for sightedBoids AND
+                //swerve Boid into alignment.
+
+                this.align(this.sightedBoids, boid, this.boidSwerveValue)
+                // if(this.sightedBoids.length > 0){
+                //     let sumX = 0
+                //     let sumY = 0
+                //     this.sightedBoids.forEach(boid => {
+                //         sumX += boid.velocity.x
+                //         sumY += boid.velocity.y
+                //     })
+                //     let averageX = sumX / this.sightedBoids.length
+                //     let averageY = sumY / this.sightedBoids.length
+                //     boid.velocity.x += averageX * this.boidSwerveValue
+                //     boid.velocity.y += averageY * this.boidSwerveValue
+                // }
             })
 
             this.boids = this.boids.filter(boid => !boid.markedForDeletion)
@@ -562,9 +565,19 @@ window.addEventListener('load', function(){
             }
         }
 
-        align(averageX, averageY){
-            // boid.velocity.x = averageX
-            // boid.
+        align(sightedBoids, boid, boidSwerveValue){
+            if(sightedBoids.length > 0){
+                let sumX = 0
+                let sumY = 0
+                sightedBoids.forEach(boid => {
+                    sumX += boid.velocity.x
+                    sumY += boid.velocity.y
+                })
+                let averageX = sumX / sightedBoids.length
+                let averageY = sumY / sightedBoids.length
+                boid.velocity.x += averageX * boidSwerveValue
+                boid.velocity.y += averageY * boidSwerveValue
+            }
 
         }
 
