@@ -74,7 +74,6 @@ window.addEventListener('load', function(){
             context.fillStyle = `rgba(${this.red},${this.green},${this.blue}, 1)`
             context.font = this.fontSize + 'px ' + this.fontFamily
             context.fillText('Score: ' + this.game.score, 20, 40)   
-            // console.log(this.game.powerups.length)       
             if (this.game.gargantuanMode.on){
                 let timeLeft = 15 - Math.floor(this.game.gargantuanMode.timer / 1000)
                 context.fillStyle = `rgba(${this.red},${this.green},${this.blue}, 1)`
@@ -400,7 +399,6 @@ window.addEventListener('load', function(){
                     this.sightedBoids.forEach(boid => {
     
                     })
-                    // console.log(this.sightedBoids)
                     
                 }
             })
@@ -651,7 +649,6 @@ window.addEventListener('load', function(){
 
         // POWERUPS - Speed Boost
         speedBoost(deltaTime){
-            console.log(this.speedMode.on)
             if(this.speedMode.on === false){ 
                 return 
             }
