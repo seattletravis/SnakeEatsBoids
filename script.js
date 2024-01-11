@@ -552,20 +552,24 @@ window.addEventListener('load', function(){
             }
         }
 
-        align(sightedBoids, boid, boidSwerveValue){
-            if(sightedBoids.length > 0){
-                let sumX = 0
-                let sumY = 0
-                sightedBoids.forEach(boid => {
-                    sumX += boid.velocity.x
-                    sumY += boid.velocity.y
-                })
-                let averageX = sumX / sightedBoids.length
-                let averageY = sumY / sightedBoids.length
-                boid.velocity.x += averageX * boidSwerveValue
-                boid.velocity.y += averageY * boidSwerveValue
-            }
+        cohesion(sightedBoids, boid, boidCohesionValue){
+            if (sightedBoids.length > 0){}
+        }
 
+        align(sightedBoids, boid, boidSwerveValue){
+            if(sightedBoids.length < 1) {
+                return 
+            }
+            let sumX = 0
+            let sumY = 0
+            sightedBoids.forEach(boid => {
+                sumX += boid.velocity.x
+                sumY += boid.velocity.y
+            })
+            let averageX = sumX / sightedBoids.length
+            let averageY = sumY / sightedBoids.length
+            boid.velocity.x += averageX * boidSwerveValue
+            boid.velocity.y += averageY * boidSwerveValue
         }
 
         avoid(otherBody, boid, proximal, swerveValue, sightAngle){
