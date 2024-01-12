@@ -20,7 +20,9 @@ As always this is a Travis Lamberte Original Implementation. I'm pulling out all
 
 Put Boids that affect the boids incremental alignment movement in a list and average the direction and position. These can be used for alignment, cohesion, and seperation (change seperation to avoid). 
 
-AI Characteristics include:
+During each iteration over the list of boids iterate over the list again and push to array named 'sightedBoids'. sightedBoids is used to get all the boids seen by a boid respectivly so the boid can determine things such as alignment (average vector of all seen boids: move in direction of average vector) and cohesion (average x,y position of all seen boids: move toward average x,y position).
+
+AI Characteristics include the following...
 
 
 ### Alignment:
