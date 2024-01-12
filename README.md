@@ -73,7 +73,7 @@ Lets add some powerups! Power ups will include but not be limited to, powerups w
 
 Completed: 1/4/2023
 
-**Turboid Speed** - increase snake speed, (implementation notes: change affects snake objects, this.speed attribute)
+**Speed Boost** - increase snake speed, (implementation notes: change affects snake objects, this.speed attribute)
 
 In Process: 1/4/2023
 
@@ -81,7 +81,7 @@ In Process: 1/4/2023
 
 **Battle Ship** - add lasers that project from snake head and shoot at boids and when they hit boids the boids get fragged! (implemention notes: requires a lot of code)
 
-
+**Containment** - deny boids from side window travel. Boids bounce back when hitting side window.
 
 
 ## Developer Log:
