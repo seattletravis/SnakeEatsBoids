@@ -92,6 +92,6 @@ This has me thinking I could add some functionality to include powerups.
 
 1/8/2024 - It's 2024! Got into the code the other day, now I'm working on the UI for touch screen devices, powerups, Boid AI implementation (almost there), and the end level functionality. Lots of tickets to get through to make this a very cool game demo.
 
-1/11/2024 - It's Go time!!! Alignment behavior is working and online.
+1/11/2024 - It's Go time!!! Alignment behavior is working and online. Focus on Cohesion behavior, Win level and restart new level functionality, add joycon for touch screen devices, and more powerups.
 
 
