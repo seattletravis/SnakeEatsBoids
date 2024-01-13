@@ -96,3 +96,5 @@ This has me thinking I could add some functionality to include powerups.
 1/11/2024 - It's Go time!!! Alignment behavior is working and online. Focus on Cohesion behavior, Win level and restart new level functionality, add joycon for touch screen devices, and more powerups. It would be fun to use particle life for background animations. [Particle Life Code](https://github.com/hunar4321/particle-life)
 
 1/12/2024 - Working in progress. It's cold in Seattle this weekend temperatures getting down into the teens.
+
+1/13/2024 - Found a joystick library that can be used for touchscreen devices. 
