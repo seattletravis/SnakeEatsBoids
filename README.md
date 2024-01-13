@@ -97,4 +97,4 @@ This has me thinking I could add some functionality to include powerups.
 
 1/12/2024 - Working in progress. It's cold in Seattle this weekend temperatures getting down into the teens.
 
-1/13/2024 - Found a joystick library that can be used for touchscreen devices. Will implement a joystick controller into project when i get a chance.
+1/13/2024 - Found a joystick library that can be used for touchscreen devices. Will implement a joystick controller into project when i get a chance. [Joystick Code](https://www.cssscript.com/tag/joystick/)
