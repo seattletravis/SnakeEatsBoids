@@ -12,6 +12,7 @@ As always this is a Travis Lamberte Original Implementation. I'm pulling out all
 
 ### AI Movement is affected by:
 
+
 1. Boid is 'In Sight' in front or to the sides.
 
 2. Boid is 'In Range' within a certain distance.
