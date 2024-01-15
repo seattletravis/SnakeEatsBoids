@@ -66,6 +66,7 @@ Cohesion may be similar enough to Avoid to resuse the Avoid function to accompli
 
 Craig Reynolds calls this Speration however in this implementation we will be calling this Avoid specifically.
 
+
 ## Power Ups!
 
 Lets add some powerups! Power ups will include but not be limited to, powerups will be initiated with a banner message accross screen declaring mode on, and then a countdown message in the UI window designating how much time is left on the powerup. 
