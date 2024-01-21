@@ -108,8 +108,8 @@ This has me thinking I could add some functionality to include powerups.
 
 My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop... 
 
-Everywhere I go He goes. 
+Everywhere I go... Devlog goes. 
 
-My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop. Ya! You're the best Devlop.
+My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop. Ya! You're the best Devlop!
 
 
