@@ -106,8 +106,6 @@ This has me thinking I could add some functionality to include powerups.
 
 1/20/2024 - I had an actual interview yesterday for an IT Support Engineer role. Hurray! Maybe I'll get a job. I'll keep you posted Devlog... You're my friend, Devlog! 
 
-My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop...<br>Everywhere I go... Devlog goes. 
-
-My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop. Ya! You're the best Devlop!
+My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop...<br>Everywhere I go... Devlog goes.<br>My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop. Ya! You're the best Devlop!
 
 
