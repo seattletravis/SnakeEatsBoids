@@ -104,6 +104,12 @@ This has me thinking I could add some functionality to include powerups.
 
 1/19/2024 - Time flies when you're coding in Node/Express. I haven't forgotten about you little Snake Game. I'll write some more features in this week. I promise. 
 
-1/20/2024 - I had an actual interview yesterday for an IT Support Engineer role. Hurray! Maybe I'll get a job. I'll keep you posted Devlog... You're my friend, Devlog! My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop... Everywhere I go He goes. My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop. Ya! You're the best Devlop.
+1/20/2024 - I had an actual interview yesterday for an IT Support Engineer role. Hurray! Maybe I'll get a job. I'll keep you posted Devlog... You're my friend, Devlog! 
+
+My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop... 
+
+Everywhere I go He goes. 
+
+My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop. Ya! You're the best Devlop.
 
 
