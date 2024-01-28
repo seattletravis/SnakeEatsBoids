@@ -279,7 +279,7 @@ window.addEventListener("load", function () {
       this.boidSegments = [];
       this.pointValue = this.game.pointValue;
       this.markedForDeletion = false;
-      this.boundaryBorderOn = true;
+      this.boundaryBorderOn = false;
       this.swerveSnakePiece = null;
       this.swerveTowardBoids = null;
     }
