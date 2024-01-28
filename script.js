@@ -279,7 +279,7 @@ window.addEventListener("load", function () {
       this.boidSegments = [];
       this.pointValue = this.game.pointValue;
       this.markedForDeletion = false;
-      this.boundaryBorderOn = false;
+      this.boundaryBorderOn = true;
       this.swerveSnakePiece = null;
       this.swerveTowardBoids = null;
     }
@@ -294,7 +294,7 @@ window.addEventListener("load", function () {
     }
 
     update() {
-      //Boundary Handling - false -> pass through : true -> bounce back
+      //Boundary Handling - boundryBorderOn - false -> pass through : true -> bounce back
       if (this.boundaryBorderOn) {
         if (this.position.y < 30) this.velocity.y = Math.abs(this.velocity.y);
         if (this.position.y > canvas.height - 30)
@@ -362,7 +362,7 @@ window.addEventListener("load", function () {
       this.stopAddingBoids = false;
       this.snakeSwerveValue = 0.001;
       this.boidSwerveValue = 0.01;
-      this.boidCohesionSwerveValue = 0.008;
+      this.boidCohesionSwerveValue = 0.01;
       this.snakeProxy = 125;
       this.boidAvoidProxy = 75;
       this.boidAlignProxy = 150;
