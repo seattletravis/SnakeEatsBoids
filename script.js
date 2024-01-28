@@ -461,13 +461,14 @@ window.addEventListener("load", function () {
               this.boidSwerveValue,
               this.boidSightAngle
             );
-            //ALIGN CALL
-            // this.align(otherBoid.velocity, boid.velocity)
           }
         });
         //Get average Vectors x, and y respectively for sightedBoids AND
         //swerve Boid into alignment Call Align Function.
         this.align(this.sightedBoids, boid, this.boidSwerveValue);
+
+        //COHESION CALL
+        this.cohesion(this.sightedBoids, boid, 0.02);
       });
 
       this.boids = this.boids.filter((boid) => !boid.markedForDeletion);
@@ -660,9 +661,10 @@ window.addEventListener("load", function () {
     }
 
     cohesion(sightedBoids, boid, boidCohesionValue) {
-      if (sightedBoids.length > 1) {
-        console.log("boids sees more that one other boid");
+      if (sightedBoids.length < 1) {
+        return;
       }
+      console.log(sightedBoids);
     }
 
     align(sightedBoids, boid, boidSwerveValue) {
