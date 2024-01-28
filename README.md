@@ -1,6 +1,5 @@
 # Welcome to SnakeEatsBoids
 
-
 [PLAY ONLINE HERE](https://seattletravis.com)
 
 This web application is my implementation of the Snake Game but with AI driven food.
@@ -13,19 +12,17 @@ As always this is a Travis Lamberte Original Implementation. I'm pulling out all
 
 ### AI Movement is affected by:
 
-
 1. Boid is 'In Sight' in front or to the sides.
 
 2. Boid is 'In Range' within a certain distance.
 
-3. Boid is !self is not itself. 
+3. Boid is !self is not itself.
 
-Put Boids that affect the boids incremental alignment movement in a list and average the direction and position. These can be used for alignment, cohesion, and seperation (change seperation to avoid). 
+Put Boids that affect the boids incremental alignment movement in a list and average the direction and position. These can be used for alignment, cohesion, and seperation (change seperation to avoid).
 
 During each iteration over the list of boids iterate over the list again and push to array named 'sightedBoids'. sightedBoids is used to get all the boids seen by a boid respectivly so the boid can determine things such as alignment (average vector of all seen boids: move in direction of average vector) and cohesion (average x,y position of all seen boids: move toward average x,y position).
 
 AI Characteristics include the following...
-
 
 ### Alignment:
 
@@ -44,7 +41,7 @@ Each other Boid in play will be dtermined if it will affect boid0 and be added t
 3. Compare the 2 angles to see if otherboid is in front or to the sides of boid0. (use 3PI/4 for angle of affect).
 4. Get distance between boid0 and otherboid and check distance
 5. If boid is in sight and in range add it to list of affection.
-6. Return correction angle to be used to get vector velocity changes later. 
+6. Return correction angle to be used to get vector velocity changes later.
 
 ### Avoid - Completed
 
@@ -56,8 +53,8 @@ Boid changes direction in order to be closer to other boids that are near by.
 
 ### Align - Completed
 
-Align calculation is fundamentally different than the avoid calucaltion because it takes into account an average of all boids 'in sight' of the affected boid. The average can be done many different ways but we'll 
-focus on 2 ways, namely; save all affected boids to a list then use them in the calculation or calculate average in place. The implementation we'll use for this project is to add the objects to a list and use the list as this is truer to object oriented programming, easier to cospetualize, and to implement. 
+Align calculation is fundamentally different than the avoid calucaltion because it takes into account an average of all boids 'in sight' of the affected boid. The average can be done many different ways but we'll
+focus on 2 ways, namely; save all affected boids to a list then use them in the calculation or calculate average in place. The implementation we'll use for this project is to add the objects to a list and use the list as this is truer to object oriented programming, easier to cospetualize, and to implement.
 
 ### Cohesion - Under Construction
 
@@ -67,10 +64,9 @@ Cohesion may be similar enough to Avoid to resuse the Avoid function to accompli
 
 Craig Reynolds calls this Speration however in this implementation we will be calling this Avoid specifically.
 
-
 ## Power Ups!
 
-Lets add some powerups! Power ups will include but not be limited to, powerups will be initiated with a banner message accross screen declaring mode on, and then a countdown message in the UI window designating how much time is left on the powerup. 
+Lets add some powerups! Power ups will include but not be limited to, powerups will be initiated with a banner message accross screen declaring mode on, and then a countdown message in the UI window designating how much time is left on the powerup.
 
 **Gigantuan** - increase length and width of snake, (implemention notes: change affects snake object's this.radius, and this.snakeSegements)
 
@@ -86,11 +82,10 @@ In Process: 1/4/2023
 
 **Containment** - deny boids from side window travel. Boids bounce back when hitting side window.
 
-
 ## Developer Log:
 
 12/27/2023 - I watched a very cool youtube video on evolution simuation, [Bibites Link Here](https://www.youtube.com/watch?v=xBQ3knSi0Uo&t=1331s)
-This has me thinking I could add some functionality to include powerups. 
+This has me thinking I could add some functionality to include powerups.
 
 1/4/2024 - I've been taking Coursera classes lately, and haven't been writing much code for the boids. However I did see an video on Particle Life. It's some really cool and interesting programming. I don't know if I'll be able to add it into SnakeBoidAI though. [Particle Life Video](https://www.youtube.com/watch?v=p4YirERTVF0)
 
@@ -102,10 +97,10 @@ This has me thinking I could add some functionality to include powerups.
 
 1/13/2024 - Found a joystick library that can be used for touchscreen devices. Will implement a joystick controller into project when i get a chance. [Joystick Code](https://www.cssscript.com/tag/joystick/)
 
-1/19/2024 - Time flies when you're coding in Node/Express. I haven't forgotten about you little Snake Game. I'll write some more features in this week. I promise. 
+1/19/2024 - Time flies when you're coding in Node/Express. I haven't forgotten about you little Snake Game. I'll write some more features in this week. I promise.
 
-1/20/2024 - I had an actual interview yesterday for an IT Support Engineer role. Hurray! Maybe I'll get a job. I'll keep you posted Devlog... You're my friend, Devlog! 
+1/20/2024 - I had an actual interview yesterday for an IT Support Engineer role. Hurray! Maybe I'll get a job. I'll keep you posted Devlog... You're my friend, Devlog!
 
 My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop...<br>Everywhere I go... Devlog goes.<br>My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop. Ya! You're the best Devlop!
 
-
+1/27/2024 - Just finished Node/Express course and Python AI fundamentals courses on Coursera.
