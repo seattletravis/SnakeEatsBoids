@@ -362,6 +362,7 @@ window.addEventListener("load", function () {
       this.stopAddingBoids = false;
       this.snakeSwerveValue = 0.001;
       this.boidSwerveValue = 0.01;
+      this.boidCohesionSwerveValue = 0.008;
       this.snakeProxy = 125;
       this.boidAvoidProxy = 75;
       this.boidAlignProxy = 150;
@@ -473,7 +474,7 @@ window.addEventListener("load", function () {
         this.cohesion(
           this.sightedBoids,
           boid,
-          this.boidSwerveValue,
+          this.boidCohesionSwerveValue,
           this.boidCohesionSightAngle
         );
       });
