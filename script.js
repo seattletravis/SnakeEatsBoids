@@ -281,6 +281,7 @@ window.addEventListener("load", function () {
       this.markedForDeletion = false;
       this.boundaryBorderOn = false;
       this.swerveSnakePiece = null;
+      this.swerveTowardBoids = null;
     }
 
     getAngleSelf() {
@@ -360,12 +361,13 @@ window.addEventListener("load", function () {
       this.maxBoids = 80;
       this.stopAddingBoids = false;
       this.snakeSwerveValue = 0.001;
-      this.boidSwerveValue = 0.1;
+      this.boidSwerveValue = 0.01;
       this.snakeProxy = 125;
       this.boidAvoidProxy = 75;
       this.boidAlignProxy = 150;
       this.snakeSightAngle = 2.355;
       this.boidSightAngle = 1.57;
+      this.boidCohesionSightAngle = 2.355;
       this.speed = 1.5; //initial boid speed
       this.red = 0;
       this.blue = 255;
@@ -468,7 +470,12 @@ window.addEventListener("load", function () {
         this.align(this.sightedBoids, boid, this.boidSwerveValue);
 
         //COHESION CALL
-        this.cohesion(this.sightedBoids, boid, 0.02);
+        this.cohesion(
+          this.sightedBoids,
+          boid,
+          this.boidSwerveValue,
+          this.boidCohesionSightAngle
+        );
       });
 
       this.boids = this.boids.filter((boid) => !boid.markedForDeletion);
@@ -660,11 +667,45 @@ window.addEventListener("load", function () {
       }
     }
 
-    cohesion(sightedBoids, boid, boidCohesionValue) {
+    cohesion(sightedBoids, boid, swerveValue, sightAngle) {
       if (sightedBoids.length < 1) {
         return;
       }
-      console.log(sightedBoids);
+      let sumPosX = 0;
+      let sumPosY = 0;
+      sightedBoids.forEach((otherBoid) => {
+        sumPosX += otherBoid.position.x;
+        sumPosY += otherBoid.position.y;
+      });
+      let averagePositionX = sumPosX / sightedBoids.length;
+      let averagePositionY = sumPosY / sightedBoids.length;
+      const vec1 = boid.position.clone();
+      const vec2 = new Victor(averagePositionX, averagePositionY);
+      let angleTowardBoids = vec2.subtract(vec1).direction();
+      angleTowardBoids =
+        angleTowardBoids < 0
+          ? Math.PI - angleTowardBoids
+          : Math.abs(Math.PI - angleTowardBoids) % (Math.PI * 2);
+      let difference = 0;
+      let swerveTowardBoids = 0;
+      if (boid.angleSelf <= angleTowardBoids) {
+        let diff1 = angleTowardBoids - boid.angleSelf;
+        let diff2 = boid.angleSelf + 6.28 - angleTowardBoids;
+        swerveTowardBoids = diff1 < diff2 ? -1 * swerveValue : 1 * swerveValue;
+        difference = diff1 < diff2 ? diff1 : diff2;
+      } else {
+        let diff1 = boid.angleSelf - angleTowardBoids;
+        let diff2 = angleTowardBoids + 6.28 - boid.angleSelf;
+        swerveTowardBoids = diff1 < diff2 ? 1 * swerveValue : -1 * swerveValue;
+        difference = diff1 < diff2 ? diff1 : diff2;
+      }
+      boid.swerveTowardBoids =
+        difference < sightAngle
+          ? boid.swerveTowardBoids + swerveTowardBoids
+          : null;
+      boid.angleSelf += boid.swerveTowardBoids;
+      boid.velocity.x = Math.cos(boid.angleSelf) * boid.speed;
+      boid.velocity.y = -Math.sin(boid.angleSelf) * boid.speed;
     }
 
     align(sightedBoids, boid, boidSwerveValue) {
