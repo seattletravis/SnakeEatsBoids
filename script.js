@@ -837,6 +837,7 @@ window.addEventListener('load', function () {
 			if (this.gargantuanMode.timer > this.gargantuanMode.interval) {
 				this.snake.radius -= 60;
 				this.gargantuanMode.on = false;
+				this.gargantuanMode.timer = 0;
 				return;
 			} else if (this.gargantuanMode.timer <= 0) {
 				this.snake.radius += 60;
