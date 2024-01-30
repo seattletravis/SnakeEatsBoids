@@ -498,6 +498,7 @@ window.addEventListener('load', function () {
 				const type = Math.random() <= 0.5 ? 'speed' : 'big';
 				this.addPowerUp(type);
 			}
+			this.addPowerUpsInPlay(deltaTime);
 			this.gargantuan(deltaTime);
 			this.speedBoost(deltaTime);
 			//add boids every second until boidsInPlay number is met.
@@ -600,7 +601,7 @@ window.addEventListener('load', function () {
 			this.stars.push(new Star(this));
 		}
 
-		checkPowerUpCollision(snake, powerup, deltaTime) {
+		checkPowerUpCollision(snake, powerup) {
 			for (let i = 0; i < snake.snakeSegments.length; i++) {
 				let distance = Math.sqrt(
 					Math.abs(snake.snakeSegments[i].x - powerup.x) ** 2 +
@@ -810,6 +811,22 @@ window.addEventListener('load', function () {
 			const vec2 = body1.position.clone();
 			let distance = vec1.distance(vec2);
 			return distance;
+		}
+
+		//POWERUPS - gargantuan
+		addPowerUpsInPlay(deltaTime) {
+			if (this.powerUpsInPlay > 0) {
+				return;
+			}
+			if (this.powerTimer.timer > this.powerTimer.interval) {
+				this.powerUpsInPlay += 1;
+				this.powerTimer.timer = 0;
+				return;
+				// } else if (this.powerTimer.timer <= 0) {
+				// 	this.powerTimer.timer += deltaTime;
+			} else {
+				this.powerTimer.timer += deltaTime;
+			}
 		}
 
 		//POWERUPS - gargantuan
