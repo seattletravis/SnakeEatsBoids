@@ -360,21 +360,22 @@ window.addEventListener('load', function () {
 			this.ui = new UI(this);
 			this.boidTimer = 0;
 			this.boidInterval = 150;
+			this.powerTimer = { timer: 0, interval: 5000 };
 			this.starTimer = 0;
 			this.starInterval = 100;
 			this.boidsInPlay = 30;
 			this.maxBoids = 80;
 			this.stopAddingBoids = false;
 			this.snakeSwerveValue = 0.001;
-			this.boidSwerveValue = 0.01;
-			this.boidCohesionSwerveValue = 0.01;
+			this.boidSwerveValue = 0.05;
+			this.boidCohesionSwerveValue = 0.03;
 			this.snakeProxy = 125;
 			this.boidAvoidProxy = 75;
 			this.boidAlignProxy = 150;
 			this.snakeSightAngle = 2.355;
 			this.boidSightAngle = 1.57;
 			this.boidCohesionSightAngle = 2.355;
-			this.speed = 1.5; //initial boid speed
+			this.speed = 0.25; //initial boid speed
 			this.red = 0;
 			this.blue = 255;
 			this.green = 0;
@@ -383,7 +384,7 @@ window.addEventListener('load', function () {
 			this.boids = [];
 			this.powerUpsOnScreen = [];
 			this.powerUpsOn = [];
-			this.powerUpsInPlay = 2;
+			this.powerUpsInPlay = 1;
 			this.sightedBoids = [];
 			this.stars = [];
 			this.particles = [];
@@ -489,6 +490,8 @@ window.addEventListener('load', function () {
 			});
 
 			this.boids = this.boids.filter((boid) => !boid.markedForDeletion);
+
+			//logic controller for putting powerups in play
 
 			//Manage Powerup Mode - Gargantuan
 			if (this.powerUpsOnScreen.length < this.powerUpsInPlay) {
@@ -597,7 +600,7 @@ window.addEventListener('load', function () {
 			this.stars.push(new Star(this));
 		}
 
-		checkPowerUpCollision(snake, powerup) {
+		checkPowerUpCollision(snake, powerup, deltaTime) {
 			for (let i = 0; i < snake.snakeSegments.length; i++) {
 				let distance = Math.sqrt(
 					Math.abs(snake.snakeSegments[i].x - powerup.x) ** 2 +
