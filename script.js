@@ -610,7 +610,11 @@ window.addEventListener('load', function () {
 				let checkDistance = snake.radius + powerup.radius + 2;
 				if (distance < checkDistance) {
 					powerup.markedForDeletion = true;
-					this.gargantuanMode.on = true;
+					if (powerup.type === 'big') {
+						this.gargantuanMode.on = true;
+					} else {
+						this.speedMode.on = true;
+					}
 					this.powerUpsInPlay -= 1;
 					return;
 				}
