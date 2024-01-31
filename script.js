@@ -192,9 +192,9 @@ window.addEventListener("load", function () {
       this.game = game;
       this.radius = 3;
       this.position = new Victor(400, 400);
+      this.snakeSpeed = 2;
       this.speedY = 0;
       this.speedX = 0;
-      this.snakeSpeed = 2;
       this.snakePieces = 30;
       this.snakeSegments = [];
       this.snakeColorPattern = 12;
@@ -204,17 +204,18 @@ window.addEventListener("load", function () {
     }
 
     update() {
+      let snakeSpeed = this.snakeSpeed;
       if (this.game.keys.includes("ArrowUp") && this.speedY === 0) {
-        this.speedY = -this.snakeSpeed;
+        this.speedY = -snakeSpeed;
         this.speedX = 0;
       } else if (this.game.keys.includes("ArrowDown") && this.speedY === 0) {
-        this.speedY = this.snakeSpeed;
+        this.speedY = snakeSpeed;
         this.speedX = 0;
       } else if (this.game.keys.includes("ArrowLeft") && this.speedX === 0) {
-        this.speedX = -this.snakeSpeed;
+        this.speedX = -snakeSpeed;
         this.speedY = 0;
       } else if (this.game.keys.includes("ArrowRight") && this.speedX === 0) {
-        this.speedX = this.snakeSpeed;
+        this.speedX = snakeSpeed;
         this.speedY = 0;
       } else if (this.game.keys.includes(" ")) {
         this.speedX = 0;
@@ -525,7 +526,7 @@ window.addEventListener("load", function () {
         this.starTimer += deltaTime;
       }
 
-      //shink snake if snake doesnt eat
+      //shrink snake if snake doesnt eat
       if (
         this.snake.snakeTimer > this.snake.snakeInterval &&
         this.snake.radius > 3 &&
@@ -556,7 +557,7 @@ window.addEventListener("load", function () {
       } else {
         this.snake.snakeTimer += deltaTime;
       }
-    }
+    } //END GAME UPDATE FUNCTION
 
     draw(context) {
       this.ui.draw(context);
