@@ -205,7 +205,6 @@ window.addEventListener("load", function () {
     }
 
     update() {
-      console.log(this.speedFlag);
       if (this.speedFlag === true) {
         this.speedY *= 2;
         this.speedX *= 2;
