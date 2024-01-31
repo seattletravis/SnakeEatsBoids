@@ -619,9 +619,17 @@ window.addEventListener("load", function () {
         if (distance < checkDistance) {
           powerup.markedForDeletion = true;
           if (powerup.type === "big") {
-            this.gargantuanMode.on = true;
+            if (this.gargantuanMode.on === true) {
+              this.gargantuanMode.timer -= 3000;
+            } else {
+              this.gargantuanMode.on = true;
+            }
           } else {
-            this.speedMode.on = true;
+            if (this.speedMode.on === true) {
+              this.speedMode.timer -= 3000;
+            } else {
+              this.speedMode.on = true;
+            }
           }
           this.powerUpsInPlay -= 1;
           return;
