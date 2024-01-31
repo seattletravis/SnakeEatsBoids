@@ -201,21 +201,28 @@ window.addEventListener("load", function () {
       this.radiusIncreasePerFrag = 1 / this.radius;
       this.snakeTimer = 0;
       this.snakeInterval = 2000;
+      this.speedFlag = false;
     }
 
     update() {
-      let snakeSpeed = this.snakeSpeed;
+      console.log(this.speedFlag);
+      if (this.speedFlag === true) {
+        this.speedY *= 2;
+        this.speedX *= 2;
+        this.speedFlag = false;
+      }
+
       if (this.game.keys.includes("ArrowUp") && this.speedY === 0) {
-        this.speedY = -snakeSpeed;
+        this.speedY = -this.snakeSpeed;
         this.speedX = 0;
       } else if (this.game.keys.includes("ArrowDown") && this.speedY === 0) {
-        this.speedY = snakeSpeed;
+        this.speedY = this.snakeSpeed;
         this.speedX = 0;
       } else if (this.game.keys.includes("ArrowLeft") && this.speedX === 0) {
-        this.speedX = -snakeSpeed;
+        this.speedX = -this.snakeSpeed;
         this.speedY = 0;
       } else if (this.game.keys.includes("ArrowRight") && this.speedX === 0) {
-        this.speedX = snakeSpeed;
+        this.speedX = this.snakeSpeed;
         this.speedY = 0;
       } else if (this.game.keys.includes(" ")) {
         this.speedX = 0;
@@ -376,7 +383,7 @@ window.addEventListener("load", function () {
       this.snakeSightAngle = 2.355;
       this.boidSightAngle = 1.57;
       this.boidCohesionSightAngle = 2.355;
-      this.speed = 0.25; //initial boid speed
+      this.speed = 1; //initial boid speed
       this.red = 0;
       this.blue = 255;
       this.green = 0;
@@ -827,8 +834,6 @@ window.addEventListener("load", function () {
         this.powerUpsInPlay += 1;
         this.powerTimer.timer = 0;
         return;
-        // } else if (this.powerTimer.timer <= 0) {
-        // 	this.powerTimer.timer += deltaTime;
       } else {
         this.powerTimer.timer += deltaTime;
       }
@@ -864,6 +869,8 @@ window.addEventListener("load", function () {
         return;
       } else if (this.speedMode.timer <= 0) {
         this.snake.snakeSpeed += 2;
+        this.snake.speedFlag = true;
+
         this.speedMode.timer += deltaTime;
       } else {
         this.speedMode.timer += deltaTime;
