@@ -280,8 +280,6 @@ window.addEventListener('load', function () {
 
 		draw(context) {
 			this.snakeColorPattern = Math.floor(this.snakeSegments.length / 6);
-
-			console.log(this.snakeColorPattern);
 			let radius = this.radius;
 			for (let i = this.snakeSegments.length - 1; i >= 0; i--) {
 				if (Math.floor(i / this.snakeColorPattern) % 2 === 0) {
