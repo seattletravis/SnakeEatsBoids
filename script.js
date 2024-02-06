@@ -410,7 +410,7 @@ window.addEventListener("load", function () {
       this.snakeSwerveValue = 0.001;
       this.boidSwerveValue = 0.05;
       this.boidCohesionSwerveValue = 0.03;
-      this.snakeProxy = 125;
+      this.snakeProxy = 200;
       this.boidAvoidProxy = 75;
       this.boidAlignProxy = 150;
       this.snakeSightAngle = 2.355;
@@ -474,7 +474,6 @@ window.addEventListener("load", function () {
           boid.markedForDeletion = true;
         }
 
-        // CALL avoid FUNCTION FOR AVOID SNAKE BEHAVIOR - NEED TO REFACTOR FUNCTION
         for (let i = 0; i < this.snake.snakeSegments.length; i++) {
           if (i % 3 == 0) {
             const snakePiecePosition = new Victor(
