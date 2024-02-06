@@ -236,7 +236,6 @@ window.addEventListener("load", function () {
     }
 
     update() {
-      // this.snakeColorPattern = Math.floor(this.snakeSegments.length / 4);
       if (this.speedFlag === true) {
         this.speedY *= 2;
         this.speedX *= 2;
@@ -379,8 +378,8 @@ window.addEventListener("load", function () {
     draw(context) {
       let opacity = 1;
       this.boidSegments.forEach((segment) => {
-        opacity -= 0.1;
-        segment.radius = Math.abs(segment.radius - 1.5);
+        // opacity -= 0.05;
+        segment.radius = Math.abs(segment.radius - 1.2);
         context.fillStyle = `rgba(${this.red},${this.green},${
           255 - this.red
         },${opacity})`;
@@ -713,7 +712,7 @@ window.addEventListener("load", function () {
             this.snake.snakePieces += 3;
             this.snake.radius += this.snake.radiusIncreasePerFrag;
             this.boidRadius += 0.25;
-            this.addBoidPieces += 1;
+            this.addBoidPieces += 0.15;
             if (this.speed < this.maxSpeed) {
               this.speed += 0.125;
             }
