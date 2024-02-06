@@ -705,7 +705,7 @@ window.addEventListener("load", function () {
               this.boidsInPlay = 0;
             } else {
               this.boidsInPlay += 1;
-              this.snakeProxy += 0.5;
+              //   this.snakeProxy += 5;
               this.snakeSwerveValue += 0.0000001;
             }
             this.snake.snakePieces += 3;
