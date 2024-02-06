@@ -320,7 +320,7 @@ window.addEventListener("load", function () {
         this.speed * Math.sin(initialDirection)
       );
       this.angleSelf = this.getAngleSelf();
-      this.boidPieces = 5;
+      this.boidPieces = this.game.addBoidPieces;
       this.boidSegments = [];
       this.pointValue = this.game.pointValue;
       this.markedForDeletion = false;
@@ -399,6 +399,7 @@ window.addEventListener("load", function () {
       this.input = new InputHandler(this);
       this.ui = new UI(this);
       this.boidRadius = 5;
+      this.addBoidPieces = 5;
       this.boidTimer = 0;
       this.boidInterval = 150;
       this.powerTimer = { timer: 0, interval: 5000 };
@@ -713,6 +714,7 @@ window.addEventListener("load", function () {
             this.snake.snakePieces += 3;
             this.snake.radius += this.snake.radiusIncreasePerFrag;
             this.boidRadius += 0.25;
+            this.addBoidPieces += 1;
 
             // this.snake.radius += 1.5/this.snake.radius
             if (this.speed < this.maxSpeed) {
