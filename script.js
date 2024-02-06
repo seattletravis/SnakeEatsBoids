@@ -681,7 +681,7 @@ window.addEventListener("load", function () {
             Math.abs(snake.snakeSegments[i].x - boid.boidSegments[j].x) ** 2 +
               Math.abs(snake.snakeSegments[i].y - boid.boidSegments[j].y) ** 2
           );
-          let checkDistance = snake.radius + boid.radius - 2;
+          let checkDistance = snake.radius + boid.radius + 4;
           if (distance < checkDistance) {
             this.particles.push(
               new Particle(
@@ -710,13 +710,10 @@ window.addEventListener("load", function () {
               this.snakeProxy += 0.5;
               this.snakeSwerveValue += 0.0000001;
             }
-
             this.snake.snakePieces += 3;
             this.snake.radius += this.snake.radiusIncreasePerFrag;
             this.boidRadius += 0.25;
             this.addBoidPieces += 1;
-
-            // this.snake.radius += 1.5/this.snake.radius
             if (this.speed < this.maxSpeed) {
               this.speed += 0.125;
             }
