@@ -326,6 +326,7 @@ window.addEventListener("load", function () {
       this.boundaryBorderOn = false;
       this.swerveSnakePiece = null;
       this.swerveTowardBoids = null;
+      this.sightProximal = 200;
     }
 
     getAngleSelf() {
@@ -480,10 +481,11 @@ window.addEventListener("load", function () {
               this.snake.snakeSegments[i].x,
               this.snake.snakeSegments[i].y
             );
+            let dist = boid.sightProximal + boid.radius + this.snake.radius;
             this.avoid(
               snakePiecePosition,
               boid,
-              this.snakeProxy,
+              dist,
               this.snakeSwerveValue,
               this.snakeSightAngle
             );
@@ -652,13 +654,13 @@ window.addEventListener("load", function () {
           powerup.markedForDeletion = true;
           if (powerup.type === "big") {
             if (this.gargantuanMode.on === true) {
-              this.gargantuanMode.timer -= 3000;
+              this.gargantuanMode.timer -= 9000;
             } else {
               this.gargantuanMode.on = true;
             }
           } else {
             if (this.speedMode.on === true) {
-              this.speedMode.timer -= 3000;
+              this.speedMode.timer -= 9000;
             } else {
               this.speedMode.on = true;
             }
@@ -705,7 +707,7 @@ window.addEventListener("load", function () {
               this.boidsInPlay = 0;
             } else {
               this.boidsInPlay += 1;
-              //   this.snakeProxy += 5;
+              boid.sightProximal += 5;
               this.snakeSwerveValue += 0.0000001;
             }
             this.snake.snakePieces += 3;
