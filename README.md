@@ -107,4 +107,4 @@ My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop...<br>Everywhere I go..
 
 2/6/2024 - [Dev Log has moved to 'Dev Log is a Blog'](https://github.com/seattletravis/Blog) I will continue to update this development log as it pertains to SnakeEatsBoid, but most blogging will be done on the Blog.
 
-2/7/2024
+2/7/2024 - Completed significant changes to visuals of boids, and upgraded logic controller for Boid AI implementaion
