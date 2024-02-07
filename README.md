@@ -105,4 +105,6 @@ My Devlog, (echo) my Devlop, My Devlog, (echo) my Devlop...<br>Everywhere I go..
 
 1/27/2024 - Just finished Node/Express course and Python AI fundamentals courses on Coursera. Cohesion implementation completed!
 
-2/6//2024 - [Dev Log has moved to 'Dev Log is a Blog'](https://github.com/seattletravis/Blog)  I will continue to update this development log as it pertains to SnakeEatsBoid, but most blogging will be done on the Blog.
+2/6/2024 - [Dev Log has moved to 'Dev Log is a Blog'](https://github.com/seattletravis/Blog) I will continue to update this development log as it pertains to SnakeEatsBoid, but most blogging will be done on the Blog.
+
+2/7/2024
