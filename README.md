@@ -1,6 +1,6 @@
 # Welcome to SnakeEatsBoids
 
-[PLAY ONLINE HERE](https://seattletravis.com)
+[PLAY ONLINE HERE](https://lambertedesign.com)
 
 This web application is my implementation of the Snake Game but with AI driven food.
 
