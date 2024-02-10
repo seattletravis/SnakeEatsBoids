@@ -30,7 +30,7 @@ Boid changes direction over time to match average direction of nearby boids.
 
 We'll call the boid being affected 'boid0'
 
-Each other Boid in play will be dtermined if it will affect boid0 and be added to "Affection" list if it satisfies the criteria.
+Each other boid in play will be checked to see if it will affect boid0 and be added to "Affection" list if it satisfies the criteria.
 
 #### Algorithms - In Process
 
