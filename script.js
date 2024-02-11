@@ -326,6 +326,7 @@ window.addEventListener("load", function () {
       this.boundaryBorderOn = false;
       this.swerveSnakePiece = null;
       this.swerveTowardBoids = null;
+      this.boidProxyModifier = this.game.boidProxyModifier;
     }
 
     getAngleSelf() {
@@ -410,7 +411,8 @@ window.addEventListener("load", function () {
       this.snakeSwerveValue = 0.001;
       this.boidSwerveValue = 0.05;
       this.boidCohesionSwerveValue = 0.03;
-      this.snakeProxy = 200;
+      this.snakeProxy = 125;
+      this.boidProxyModifier = 0;
       this.boidAvoidProxy = 75;
       this.boidAlignProxy = 150;
       this.snakeSightAngle = 2.355;
@@ -482,7 +484,7 @@ window.addEventListener("load", function () {
             this.avoid(
               snakePiecePosition,
               boid,
-              this.snakeProxy + this.snake.radius,
+              this.snakeProxy + this.snake.radius + this.boidProxyModifier,
               this.snakeSwerveValue,
               this.snakeSightAngle
             );
@@ -704,7 +706,7 @@ window.addEventListener("load", function () {
               this.boidsInPlay = 0;
             } else {
               this.boidsInPlay += 1;
-              //   this.snakeProxy += 5;
+              this.boidProxyModifier += 1;
               this.snakeSwerveValue += 0.0000001;
             }
             this.snake.snakePieces += 3;
