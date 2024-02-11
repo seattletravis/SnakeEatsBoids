@@ -473,7 +473,6 @@ window.addEventListener("load", function () {
         if (this.checkCollision(this.snake, boid)) {
           boid.markedForDeletion = true;
         }
-
         for (let i = 0; i < this.snake.snakeSegments.length; i++) {
           if (i % 3 == 0) {
             const snakePiecePosition = new Victor(
@@ -483,7 +482,7 @@ window.addEventListener("load", function () {
             this.avoid(
               snakePiecePosition,
               boid,
-              this.snakeProxy,
+              this.snakeProxy + this.snake.radius,
               this.snakeSwerveValue,
               this.snakeSightAngle
             );
