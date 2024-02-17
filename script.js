@@ -442,6 +442,13 @@ window.addEventListener("load", function () {
       this.initialBoidsAdded = false;
     }
     update(deltaTime) {
+      if (
+        this.score > 1000 &&
+        this.boids.length === 0 &&
+        this.gameOver === false
+      ) {
+        this.winGame();
+      }
       this.ui.update(deltaTime);
       this.snake.update();
       //powerups update - for opacity animation
@@ -914,8 +921,14 @@ window.addEventListener("load", function () {
         this.speedMode.timer += deltaTime;
       }
     }
+
+    winGame() {
+      console.log("You Win!!!");
+      this.gameOver = true;
+    }
   }
 
+  //Main Game Loop
   const game = new Game(canvas.width, canvas.height);
   let lastTime = 0;
   //animation loop
