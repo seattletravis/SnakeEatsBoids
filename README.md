@@ -1,5 +1,7 @@
 # Welcome to SnakeEatsBoids
 
+[2 Minute Video Demo](https://youtu.be/WzBhyxWUdJA?si=tAKQxHtip39tyON-)
+
 [PLAY ONLINE HERE](https://lambertedesign.com)
 
 This web application is my implementation of the Snake Game but with AI driven food.
