@@ -1,6 +1,6 @@
 # Welcome to SnakeEatsBoids
 
-[2 Minute Video Demo](https://youtu.be/WzBhyxWUdJA?si=tAKQxHtip39tyON-)
+[2 MINUTE VIDEO DEMO](https://youtu.be/WzBhyxWUdJA?si=tAKQxHtip39tyON-)
 
 [PLAY ONLINE HERE](https://lambertedesign.com)
 
