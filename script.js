@@ -1,5 +1,7 @@
 window.addEventListener("load", function () {
   const canvas = document.getElementById("canvas1");
+  const upButton = document.getElementById("up");
+
   const ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -18,6 +20,9 @@ window.addEventListener("load", function () {
         ) {
           this.game.keys.push(e.key);
         }
+      });
+      upButton.addEventListener("click", (e) => {
+        console.log("Hello wolrd");
       });
       window.addEventListener("keyup", (e) => {
         if (this.game.keys.indexOf(e.key) > -1) {
