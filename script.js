@@ -1,7 +1,5 @@
 window.addEventListener('load', function () {
 	const canvas = document.getElementById('canvas1');
-	// const upButton = document.getElementById('up');
-
 	const ctx = canvas.getContext('2d');
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
@@ -21,14 +19,19 @@ window.addEventListener('load', function () {
 					this.game.keys.push(e.key);
 				}
 			});
-			// upButton.addEventListener('click', (e) => {
-			// 	console.log('Hello wolrd');
-			// });
-			onmousemove = function (e) {
-				let fingerX = canvas.width - e.x - 125;
-				let fingerY = canvas.height - e.y - 125;
-				console.log(`mouse location = X: ${fingerX}, Y: ${fingerY}`);
+
+			//WORKING HERE!!!!!!
+			//CHECK STYLE SHEET FOR
+			onmousemove = (event) => {
+				let divStyleCenter = 175;
+				let fingery = canvas.width - event.x - divStyleCenter;
+				let fingerx = canvas.height - event.y - divStyleCenter;
+				let fingerAngle = Math.atan(fingery / fingerx);
+				console.log(`mouse location = X: ${fingerx}, Y: ${fingery}`);
+				console.log(`Finger Angle: ${fingerAngle}`);
 			};
+
+			//END WORKING HERE!!!!!!
 			window.addEventListener('keyup', (e) => {
 				if (this.game.keys.indexOf(e.key) > -1) {
 					this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
