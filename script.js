@@ -27,8 +27,8 @@ window.addEventListener('load', function () {
 				let fingery = canvas.width - event.x - divStyleCenter;
 				let fingerx = canvas.height - event.y - divStyleCenter;
 				this.game.fingerAngle = new Victor(fingery, fingerx).horizontalAngle();
-				console.log(`mouse location = X: ${fingerx}, Y: ${fingery}`);
-				console.log(`Finger Angle: ${this.game.fingerAngle}`);
+				// console.log(`mouse location = X: ${fingerx}, Y: ${fingery}`);
+				// console.log(`Finger Angle: ${this.game.fingerAngle}`);
 			};
 
 			//END WORKING HERE!!!!!!
@@ -241,7 +241,7 @@ window.addEventListener('load', function () {
 			b = (255 - b).toString(16);
 			return '#' + this.padZero(r) + this.padZero(g) + this.padZero(b);
 		}
-
+		//helper function for invertColor
 		padZero(str, len) {
 			len = len || 2;
 			var zeros = new Array(len).join('0');
@@ -255,8 +255,10 @@ window.addEventListener('load', function () {
 				this.speedFlag = false;
 			}
 
+			let ampy = Math.sin(this.game.fingerAngle);
+
 			if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {
-				this.speedY = -this.snakeSpeed;
+				this.speedY = -this.snakeSpeed * ampy;
 				this.speedX = 0;
 			} else if (this.game.keys.includes('ArrowDown') && this.speedY === 0) {
 				this.speedY = this.snakeSpeed;
@@ -271,6 +273,10 @@ window.addEventListener('load', function () {
 				this.speedX = 0;
 				this.speedY = 0;
 			}
+
+			// console.log(Math.sin(this.game.fingerAngle));
+			// let ampy = Math.sin(this.game.fingerAngle);
+			// this.speedY = -this.snakeSpeed;
 
 			if (this.position.x > game.width) {
 				this.position.x = 0;
