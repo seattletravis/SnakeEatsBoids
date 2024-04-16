@@ -26,9 +26,9 @@ window.addEventListener('load', function () {
 				let divStyleCenter = 175;
 				let fingery = canvas.width - event.x - divStyleCenter;
 				let fingerx = canvas.height - event.y - divStyleCenter;
-				let fingerAngle = Math.atan(fingery / fingerx);
+				this.game.fingerAngle = new Victor(fingery, fingerx).horizontalAngle();
 				console.log(`mouse location = X: ${fingerx}, Y: ${fingery}`);
-				console.log(`Finger Angle: ${fingerAngle}`);
+				console.log(`Finger Angle: ${this.game.fingerAngle}`);
 			};
 
 			//END WORKING HERE!!!!!!
@@ -271,6 +271,7 @@ window.addEventListener('load', function () {
 				this.speedX = 0;
 				this.speedY = 0;
 			}
+
 			if (this.position.x > game.width) {
 				this.position.x = 0;
 			} else if (this.position.x < 0) {
@@ -404,6 +405,7 @@ window.addEventListener('load', function () {
 
 	class Game {
 		constructor(width, height) {
+			this.fingerAngle;
 			this.width = width;
 			this.height = height;
 			this.snake = new Snake(this);
