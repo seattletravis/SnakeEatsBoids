@@ -20,18 +20,6 @@ window.addEventListener('load', function () {
 				}
 			});
 
-			//WORKING HERE!!!!!!
-			//CHECK STYLE SHEET FOR
-			onmousemove = (event) => {
-				let divStyleCenter = 175;
-				let fingery = canvas.width - event.x - divStyleCenter;
-				let fingerx = canvas.height - event.y - divStyleCenter;
-				this.game.fingerAngle = new Victor(fingery, fingerx).horizontalAngle();
-				// console.log(`mouse location = X: ${fingerx}, Y: ${fingery}`);
-				// console.log(`Finger Angle: ${this.game.fingerAngle}`);
-			};
-
-			//END WORKING HERE!!!!!!
 			window.addEventListener('keyup', (e) => {
 				if (this.game.keys.indexOf(e.key) > -1) {
 					this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
@@ -255,10 +243,10 @@ window.addEventListener('load', function () {
 				this.speedFlag = false;
 			}
 
-			let ampy = Math.sin(this.game.fingerAngle);
+			// let ampy = Math.sin(this.game.fingerAngle);
 
 			if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {
-				this.speedY = -this.snakeSpeed * ampy;
+				this.speedY = -this.snakeSpeed;
 				this.speedX = 0;
 			} else if (this.game.keys.includes('ArrowDown') && this.speedY === 0) {
 				this.speedY = this.snakeSpeed;
@@ -273,6 +261,18 @@ window.addEventListener('load', function () {
 				this.speedX = 0;
 				this.speedY = 0;
 			}
+
+			//WORKING HERE!!!!!!
+			//CHECK STYLE SHEET FOR
+			// onmousemove = (event) => {
+			// 	let divStyleCenter = 175;
+			// 	let fingery = canvas.width - event.x - divStyleCenter;
+			// 	let fingerx = canvas.height - event.y - divStyleCenter;
+			// 	this.game.fingerAngle = new Victor(fingery, fingerx).horizontalAngle();
+			// 	console.log(`Finger Angle: ${this.game.fingerAngle}`);
+			// };
+
+			//END WORKING HERE!!!!!!
 
 			// console.log(Math.sin(this.game.fingerAngle));
 			// let ampy = Math.sin(this.game.fingerAngle);
