@@ -3,6 +3,10 @@ window.addEventListener('load', function () {
 	const ctx = canvas.getContext('2d');
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
+	const touchPadUp = document.getElementById('up');
+	const touchPadDown = document.getElementById('Down');
+	const touchPadLeft = document.getElementById('Left');
+	const touchPadRight = document.getElementById('Right');
 
 	class InputHandler {
 		constructor(game) {
