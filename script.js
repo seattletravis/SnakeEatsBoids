@@ -11,6 +11,7 @@ window.addEventListener('load', function () {
 	class InputHandler {
 		constructor(game) {
 			this.game = game;
+
 			touchPadUp.addEventListener('mousedown', () => {
 				if (this.game.keys.indexOf('ArrowUp') === -1) {
 					this.game.keys.push('ArrowUp');
@@ -21,6 +22,18 @@ window.addEventListener('load', function () {
 					this.game.keys.splice(this.game.keys.indexOf('ArrowUp'), 1);
 				}
 			});
+
+			// touchPadLeft.addEventListener('mousedown', () => {
+			// 	if (this.game.keys.indexOf('ArrowLeft') === -1) {
+			// 		this.game.keys.push('ArrowLeft');
+			// 	}
+			// });
+			// touchPadLeft.addEventListener('mouseup', () => {
+			// 	if (this.game.keys.indexOf('ArrowLeft') > -1) {
+			// 		this.game.keys.splice(this.game.keys.indexOf('ArrowLeft'), 1);
+			// 	}
+			// });
+
 			window.addEventListener('keydown', (e) => {
 				if (
 					(e.key === 'ArrowUp' ||
