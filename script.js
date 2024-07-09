@@ -11,6 +11,16 @@ window.addEventListener('load', function () {
 	class InputHandler {
 		constructor(game) {
 			this.game = game;
+			touchPadUp.addEventListener('mousedown', () => {
+				if (this.game.keys.indexOf('ArrowUp') === -1) {
+					this.game.keys.push('ArrowUp');
+				}
+				touchPadUp.addEventListener('mouseup', () => {
+					if (this.game.keys.indexOf('ArrowUp') > -1) {
+						this.game.keys.splice(this.game.keys.indexOf('ArrowUp'), 1);
+					}
+				});
+			});
 			window.addEventListener('keydown', (e) => {
 				if (
 					(e.key === 'ArrowUp' ||
