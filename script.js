@@ -15,11 +15,11 @@ window.addEventListener('load', function () {
 				if (this.game.keys.indexOf('ArrowUp') === -1) {
 					this.game.keys.push('ArrowUp');
 				}
-				touchPadUp.addEventListener('mouseup', () => {
-					if (this.game.keys.indexOf('ArrowUp') > -1) {
-						this.game.keys.splice(this.game.keys.indexOf('ArrowUp'), 1);
-					}
-				});
+			});
+			touchPadUp.addEventListener('mouseup', () => {
+				if (this.game.keys.indexOf('ArrowUp') > -1) {
+					this.game.keys.splice(this.game.keys.indexOf('ArrowUp'), 1);
+				}
 			});
 			window.addEventListener('keydown', (e) => {
 				if (
