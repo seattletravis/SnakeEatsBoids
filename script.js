@@ -12,45 +12,56 @@ window.addEventListener('load', function () {
 		constructor(game) {
 			this.game = game;
 
-			const checkTouchPad = (touchPadTouched, game) => {
-				touchPadUp.addEventListener('mousedown', () => {
-					if (this.game.keys.indexOf(touchPadTouched) === -1) {
-						this.game.keys.push(touchPadTouched);
-					}
-				});
-				touchPadUp.addEventListener('mouseup', () => {
-					if (this.game.keys.indexOf(touchPadTouched) > -1) {
-						this.game.keys.splice(this.game.keys.indexOf(touchPadTouched), 1);
-					}
-				});
-			};
+			// const checkTouchPad = (touchPadTouched, game) => {
+			// 	touchPadUp.addEventListener('mousedown', () => {
+			// 		if (this.game.keys.indexOf(touchPadTouched) === -1) {
+			// 			this.game.keys.push(touchPadTouched);
+			// 		}
+			// 	});
+			// 	touchPadUp.addEventListener('mouseup', () => {
+			// 		if (this.game.keys.indexOf(touchPadTouched) > -1) {
+			// 			this.game.keys.splice(this.game.keys.indexOf(touchPadTouched), 1);
+			// 		}
+			// 	});
+			// };
 
-			checkTouchPad('ArrowUp');
-			checkTouchPad('ArrowDown');
-			checkTouchPad('ArrowLeft');
-			checkTouchPad('ArrowRight');
+			// checkTouchPad('ArrowUp');
+			// checkTouchPad('ArrowDown');
+			// checkTouchPad('ArrowLeft');
+			// checkTouchPad('ArrowRight');
 
-			// touchPadUp.addEventListener('mousedown', () => {
-			// 	if (this.game.keys.indexOf('ArrowUp') === -1) {
-			// 		this.game.keys.push('ArrowUp');
-			// 	}
-			// });
-			// touchPadUp.addEventListener('mouseup', () => {
-			// 	if (this.game.keys.indexOf('ArrowUp') > -1) {
-			// 		this.game.keys.splice(this.game.keys.indexOf('ArrowUp'), 1);
-			// 	}
-			// });
+			touchPadUp.addEventListener('mousedown', () => {
+				if (this.game.keys.indexOf('ArrowUp') === -1) {
+					this.game.keys.push('ArrowUp');
+				}
+			});
+			touchPadUp.addEventListener('mouseup', () => {
+				if (this.game.keys.indexOf('ArrowUp') > -1) {
+					this.game.keys.splice(this.game.keys.indexOf('ArrowUp'), 1);
+				}
+			});
 
-			// touchPadLeft.addEventListener('mousedown', () => {
-			// 	if (this.game.keys.indexOf('ArrowLeft') === -1) {
-			// 		this.game.keys.push('ArrowLeft');
-			// 	}
-			// });
-			// touchPadLeft.addEventListener('mouseup', () => {
-			// 	if (this.game.keys.indexOf('ArrowLeft') > -1) {
-			// 		this.game.keys.splice(this.game.keys.indexOf('ArrowLeft'), 1);
-			// 	}
-			// });
+			touchPadLeft.addEventListener('mousedown', () => {
+				if (this.game.keys.indexOf('ArrowLeft') === -1) {
+					this.game.keys.push('ArrowLeft');
+				}
+			});
+			touchPadLeft.addEventListener('mouseup', () => {
+				if (this.game.keys.indexOf('ArrowLeft') > -1) {
+					this.game.keys.splice(this.game.keys.indexOf('ArrowLeft'), 1);
+				}
+			});
+
+			touchPadDown.addEventListener('mousedown', () => {
+				if (this.game.keys.indexOf('ArrowDown') === -1) {
+					this.game.keys.push('ArrowDown');
+				}
+			});
+			touchPadDown.addEventListener('mouseup', () => {
+				if (this.game.keys.indexOf('ArrowDown') > -1) {
+					this.game.keys.splice(this.game.keys.indexOf('ArrowDown'), 1);
+				}
+			});
 
 			window.addEventListener('keydown', (e) => {
 				if (
