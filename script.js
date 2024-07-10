@@ -4,24 +4,42 @@ window.addEventListener('load', function () {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 	const touchPadUp = document.getElementById('up');
-	const touchPadDown = document.getElementById('Down');
-	const touchPadLeft = document.getElementById('Left');
-	const touchPadRight = document.getElementById('Right');
+	const touchPadDown = document.getElementById('down');
+	const touchPadLeft = document.getElementById('left');
+	const touchPadRight = document.getElementById('right');
 
 	class InputHandler {
 		constructor(game) {
 			this.game = game;
 
-			touchPadUp.addEventListener('mousedown', () => {
-				if (this.game.keys.indexOf('ArrowUp') === -1) {
-					this.game.keys.push('ArrowUp');
-				}
-			});
-			touchPadUp.addEventListener('mouseup', () => {
-				if (this.game.keys.indexOf('ArrowUp') > -1) {
-					this.game.keys.splice(this.game.keys.indexOf('ArrowUp'), 1);
-				}
-			});
+			const checkTouchPad = (touchPadTouched, game) => {
+				touchPadUp.addEventListener('mousedown', () => {
+					if (this.game.keys.indexOf(touchPadTouched) === -1) {
+						this.game.keys.push(touchPadTouched);
+					}
+				});
+				touchPadUp.addEventListener('mouseup', () => {
+					if (this.game.keys.indexOf(touchPadTouched) > -1) {
+						this.game.keys.splice(this.game.keys.indexOf(touchPadTouched), 1);
+					}
+				});
+			};
+
+			checkTouchPad('ArrowUp');
+			checkTouchPad('ArrowDown');
+			checkTouchPad('ArrowLeft');
+			checkTouchPad('ArrowRight');
+
+			// touchPadUp.addEventListener('mousedown', () => {
+			// 	if (this.game.keys.indexOf('ArrowUp') === -1) {
+			// 		this.game.keys.push('ArrowUp');
+			// 	}
+			// });
+			// touchPadUp.addEventListener('mouseup', () => {
+			// 	if (this.game.keys.indexOf('ArrowUp') > -1) {
+			// 		this.game.keys.splice(this.game.keys.indexOf('ArrowUp'), 1);
+			// 	}
+			// });
 
 			// touchPadLeft.addEventListener('mousedown', () => {
 			// 	if (this.game.keys.indexOf('ArrowLeft') === -1) {
