@@ -35,40 +35,40 @@ window.addEventListener("load", function () {
           this.game.keys.push("ArrowUp");
         }
       });
-      touchPadUp.addEventListener("mouseup", () => {
+      touchPadUp.addEventListener("pointerup", () => {
         if (this.game.keys.indexOf("ArrowUp") > -1) {
           this.game.keys.splice(this.game.keys.indexOf("ArrowUp"), 1);
         }
       });
 
-      touchPadLeft.addEventListener("mousedown", () => {
+      touchPadLeft.addEventListener("pointerdown", () => {
         if (this.game.keys.indexOf("ArrowLeft") === -1) {
           this.game.keys.push("ArrowLeft");
         }
       });
-      touchPadLeft.addEventListener("mouseup", () => {
+      touchPadLeft.addEventListener("pointerup", () => {
         if (this.game.keys.indexOf("ArrowLeft") > -1) {
           this.game.keys.splice(this.game.keys.indexOf("ArrowLeft"), 1);
         }
       });
 
-      touchPadDown.addEventListener("mousedown", () => {
+      touchPadDown.addEventListener("pointerdown", () => {
         if (this.game.keys.indexOf("ArrowDown") === -1) {
           this.game.keys.push("ArrowDown");
         }
       });
-      touchPadDown.addEventListener("mouseup", () => {
+      touchPadDown.addEventListener("pointerup", () => {
         if (this.game.keys.indexOf("ArrowDown") > -1) {
           this.game.keys.splice(this.game.keys.indexOf("ArrowDown"), 1);
         }
       });
 
-      touchPadRight.addEventListener("mousedown", () => {
+      touchPadRight.addEventListener("pointerdown", () => {
         if (this.game.keys.indexOf("ArrowRight") === -1) {
           this.game.keys.push("ArrowRight");
         }
       });
-      touchPadRight.addEventListener("mouseup", () => {
+      touchPadRight.addEventListener("pointerup", () => {
         if (this.game.keys.indexOf("ArrowRight") > -1) {
           this.game.keys.splice(this.game.keys.indexOf("ArrowRight"), 1);
         }
