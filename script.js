@@ -30,7 +30,7 @@ window.addEventListener("load", function () {
       // checkTouchPad('ArrowLeft');
       // checkTouchPad('ArrowRight');
 
-      touchPadUp.addEventListener("mousedown", () => {
+      touchPadUp.addEventListener("pointerdown", () => {
         if (this.game.keys.indexOf("ArrowUp") === -1) {
           this.game.keys.push("ArrowUp");
         }
