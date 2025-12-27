@@ -1,90 +1,66 @@
-# Welcome to SnakeEatsBoids
+🚀 SnakeEatsBoids
+A real‑time, agent‑based simulation built into a playable Snake game
+🎥 2‑Minute Demo
+▶️ Play Online
+SnakeEatsBoids is a browser‑based game that blends classic Snake mechanics with Craig Reynolds–style Boid AI. Instead of static food, each “food” object is an autonomous agent exhibiting alignment, cohesion, and avoidance behaviors. The result is a dynamic, emergent system where the snake must hunt intelligent, flocking prey.
+This project demonstrates real‑time simulation, vector math, performance optimization, and modular JavaScript architecture. The engine has been tested with 10,000+ boids running smoothly during a live coding meetup.
 
-[2 MINUTE VIDEO DEMO](https://youtu.be/WzBhyxWUdJA?si=tAKQxHtip39tyON-)
+🎯 Key Features
+🧠 Agent‑Based AI (Craig Reynolds Boids)
+Each food object behaves as an independent agent with:
 
-[PLAY ONLINE HERE](https://lambertedesign.com)
+- Alignment – steering toward the average heading of nearby boids
+- Cohesion – steering toward the average position of neighbors
+- Avoidance – steering away from obstacles (including the snake)
+- Sight & Range Filtering – boids only react to agents within a defined field of view
+- Dynamic Behavior Tuning – adjustable coefficients for responsiveness, turning radius, and detection angles
+  The simulation uses vector averaging, angle comparisons, and distance thresholds to compute steering forces each frame.
 
-This web application is my implementation of the Snake Game but with AI driven food.
+⚙️ Technical Highlights
+🧩 Modular Architecture
 
-The Food in this implementation will be given Boid AI Characteristics based on Craig Reynolds research, you can view his paper here.
+- Separate classes for Snake, Boid, Game Controller, and UI
+- Reusable steering functions for both snake–boid and boid–boid interactions
+- Clean separation between physics, rendering, and input handling
+  ⚡ Performance & Robustness
+- Smooth performance with 10,000 boids tested live
+- Efficient double‑loop neighbor detection with early exits
+- Optimized canvas rendering for mobile and desktop
+- Runs reliably on older iPhone hardware
+  📐 Math & Simulation
+- Angle‑based field‑of‑view checks
+- Vector normalization and weighted steering
+- Averaging algorithms for alignment and cohesion
+- Reused avoidance logic for multiple interaction types
+  📱 Cross‑Platform Input
+- Keyboard controls
+- Touchscreen joystick support (mobile‑friendly)
 
-[Boids Paper 1987 - Craig Reynolds](https://team.inria.fr/imagine/files/2014/10/flocks-hers-and-schools.pdf)
+🕹️ Gameplay Enhancements
+Power‑Ups (Implemented & Planned)
 
-As always this is a Travis Lamberte Original Implementation. I'm pulling out all the stops on this one. Hopefully I'll be able to give them little AI's a fighting chance against the Snake!!!
+- Gigantuan – increases snake size
+- Speed Boost – temporary velocity increase
+- Time Dilation – slows boid movement
+- Containment – boids bounce off boundaries
+- Battle Ship (Planned) – snake fires projectiles to “frag” boids
+  Each power‑up includes UI banners, countdown timers, and state transitions.
 
-### AI Movement is affected by:
+🛠️ Tech Stack
 
-1. Boid is 'In Sight' in front or to the sides.
+- JavaScript (ES6)
+- HTML5 Canvas
+- CSS
+- Node/Express (development tooling)
+- Custom vector math utilities
 
-2. Boid is 'In Range' within a certain distance.
+📚 Inspiration & Research
 
-3. Boid is !self is not itself.
+- Craig Reynolds, Flocks, Herds, and Schools: A Distributed Behavioral Model (1987)
+- Particle Life simulations
+- Evolutionary agent systems (e.g., Bibites)
 
-Put Boids that affect the boids incremental alignment movement in a list and average the direction and position. These can be used for alignment, cohesion, and seperation (change seperation to avoid).
-
-During each iteration over the list of boids iterate over the list again and push to array named 'sightedBoids'. sightedBoids is used to get all the boids seen by a boid respectivly so the boid can determine things such as alignment (average vector of all seen boids: move in direction of average vector) and cohesion (average x,y position of all seen boids: move toward average x,y position).
-
-AI Characteristics include the following...
-
-### Alignment:
-
-Boid changes direction over time to match average direction of nearby boids.
-
-We'll call the boid being affected 'boid0'
-
-Each other boid in play will be checked to see if it will affect boid0 and be added to "Affection" list if it satisfies the criteria.
-
-#### Algorithms - Completed
-
-##### Affection Criteria
-
-1. Get the direction angle that the boid0 is facing.
-2. Get the direction angle from boid0 to otherboid.
-3. Compare the 2 angles to see if otherboid is in front or to the sides of boid0. (use 3PI/4 for angle of affect).
-4. Get distance between boid0 and otherboid and check distance
-5. If boid is in sight and in range add it to list of affection.
-6. Return correction angle to be used to get vector velocity changes later.
-
-### Avoid - Completed
-
-Avoid takes in boid direction and gets boid to other object direction and calcualtes a 'swerve value' to swerve away from the object to avoid.
-
-Avoid method for snake boid interaction is reused for boid boid interactrion. several coeeficients are changed such as distance to target, and angle of sight to target.
-
-Boid changes direction in order to be closer to other boids that are near by.
-
-### Align - Completed
-
-Align calculation is fundamentally different than the avoid calucaltion because it takes into account an average of all boids 'in sight' of the affected boid. The average can be done many different ways but we'll
-focus on 2 ways, namely; save all affected boids to a list then use them in the calculation or calculate average in place. The implementation we'll use for this project is to add the objects to a list and use the list as this is truer to object oriented programming, easier to cospetualize, and to implement.
-
-### Cohesion - Completed
-
-Cohesion may be similar enough to Avoid to resuse the Avoid function to accomplish this behavior.
-
-### Seperation:
-
-Craig Reynolds calls this Speration however in this implementation we will be calling this Avoid specifically.
-
-## Power Ups!
-
-Lets add some powerups! Power ups will include but not be limited to, powerups will be initiated with a banner message accross screen declaring mode on, and then a countdown message in the UI window designating how much time is left on the powerup.
-
-**Gigantuan** - increase length and width of snake, (implemention notes: change affects snake object's this.radius, and this.snakeSegements)
-
-Completed: 1/4/2023
-
-**Speed Boost** - increase snake speed, (implementation notes: change affects snake objects, this.speed attribute)
-
-In Process: 1/4/2023
-
-**Time Dialation** - decrease boids in play speed, (implementation notes: loop over boids list and reduce speed value)
-
-**Battle Ship** - add lasers that project from snake head and shoot at boids and when they hit boids the boids get fragged! (implemention notes: requires a lot of code)
-
-**Containment** - deny boids from side window travel. Boids bounce back when hitting side window.
-
-## Developer Log:
+📝 Development Log
 
 12/27/2023 - I watched a very cool youtube video on evolution simuation, [Bibites Link Here](https://www.youtube.com/watch?v=xBQ3knSi0Uo&t=1331s)
 This has me thinking I could add some functionality to include powerups.
