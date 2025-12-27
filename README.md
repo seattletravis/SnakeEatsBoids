@@ -1,67 +1,125 @@
-🚀 SnakeEatsBoids
-A real‑time, agent‑based simulation built into a playable Snake game
-🎥 2‑Minute Demo
-▶️ Play Online
-SnakeEatsBoids is a browser‑based game that blends classic Snake mechanics with Craig Reynolds–style Boid AI. Instead of static food, each “food” object is an autonomous agent exhibiting alignment, cohesion, and avoidance behaviors. The result is a dynamic, emergent system where the snake must hunt intelligent, flocking prey.
-This project demonstrates real‑time simulation, vector math, performance optimization, and modular JavaScript architecture. The engine has been tested with 10,000+ boids running smoothly during a live coding meetup.
+# 🐍 SnakeEatsBoids  
+**A real‑time, agent‑based simulation built into a playable Snake game**
 
-🎯 Key Features
-🧠 Agent‑Based AI (Craig Reynolds Boids)
-Each food object behaves as an independent agent with:
+[🎥 2‑Minute Demo](https://youtu.be/WzBhyxWUdJA?si=tAKQxHtip39tyON-)  
+[▶️ Play Online](https://lambertedesign.com)
 
-- Alignment – steering toward the average heading of nearby boids
-- Cohesion – steering toward the average position of neighbors
-- Avoidance – steering away from obstacles (including the snake)
-- Sight & Range Filtering – boids only react to agents within a defined field of view
-- Dynamic Behavior Tuning – adjustable coefficients for responsiveness, turning radius, and detection angles
-  The simulation uses vector averaging, angle comparisons, and distance thresholds to compute steering forces each frame.
+SnakeEatsBoids is a browser‑based game that blends classic Snake mechanics with **Craig Reynolds–style Boid AI**. Instead of static food, each “food” object is an autonomous agent exhibiting alignment, cohesion, and avoidance behaviors. The result is a dynamic, emergent system where the snake must hunt intelligent, flocking prey.
 
-⚙️ Technical Highlights
-🧩 Modular Architecture
+This project demonstrates **real‑time simulation**, **vector math**, **performance optimization**, and **modular JavaScript engineering**. The engine has been tested with **10,000+ boids running smoothly** during a live coding meetup.
 
-- Separate classes for Snake, Boid, Game Controller, and UI
-- Reusable steering functions for both snake–boid and boid–boid interactions
-- Clean separation between physics, rendering, and input handling
-  ⚡ Performance & Robustness
-- Smooth performance with 10,000 boids tested live
-- Efficient double‑loop neighbor detection with early exits
-- Optimized canvas rendering for mobile and desktop
-- Runs reliably on older iPhone hardware
-  📐 Math & Simulation
-- Angle‑based field‑of‑view checks
-- Vector normalization and weighted steering
-- Averaging algorithms for alignment and cohesion
-- Reused avoidance logic for multiple interaction types
-  📱 Cross‑Platform Input
-- Keyboard controls
-- Touchscreen joystick support (mobile‑friendly)
+---
 
-🕹️ Gameplay Enhancements
-Power‑Ups (Implemented & Planned)
+## 📌 Overview  
+SnakeEatsBoids is both a game and a simulation engine. It showcases:
 
-- Gigantuan – increases snake size
-- Speed Boost – temporary velocity increase
-- Time Dilation – slows boid movement
-- Containment – boids bounce off boundaries
-- Battle Ship (Planned) – snake fires projectiles to “frag” boids
-  Each power‑up includes UI banners, countdown timers, and state transitions.
+- Agent‑based modeling  
+- Real‑time decision making  
+- Physics‑inspired steering behaviors  
+- Performance‑tuned rendering  
+- Cross‑platform input (keyboard + mobile joystick)  
+- Clean, modular architecture  
 
-🛠️ Tech Stack
+It’s a systems‑engineering demo disguised as a game.
 
-- JavaScript (ES6)
-- HTML5 Canvas
-- CSS
-- Node/Express (development tooling)
-- Custom vector math utilities
+---
 
-📚 Inspiration & Research
+## 🧠 AI Behaviors (Boids)
 
-- Craig Reynolds, Flocks, Herds, and Schools: A Distributed Behavioral Model (1987)
-- Particle Life simulations
+### **Alignment**  
+Boids steer toward the average heading of nearby agents.  
+- Computes angle differences  
+- Filters by field of view  
+- Averages direction vectors  
+- Produces a smooth steering correction
+
+### **Cohesion**  
+Boids steer toward the average position of neighbors.  
+- Collects all “in‑sight” boids  
+- Computes centroid  
+- Generates a vector toward the group center
+
+### **Avoidance (Separation)**  
+Boids steer away from obstacles or nearby agents.  
+- Reuses snake–boid avoidance logic  
+- Calculates “swerve” values  
+- Applies stronger weights at close distances
+
+### **Sight & Range Logic**  
+Each boid evaluates:  
+- Angle between its heading and another boid  
+- Distance threshold  
+- Whether the other boid is in front or to the sides  
+- Whether the object is itself (!self)
+
+This produces emergent flocking behavior with minimal rules.
+
+---
+
+## ⚙️ Technical Highlights
+
+### **Modular Architecture**  
+- Separate classes for Snake, Boid, Game Controller, and UI  
+- Reusable steering functions  
+- Clean separation of physics, rendering, and input  
+
+### **Performance & Robustness**  
+- Smooth performance with **10,000+ boids**  
+- Efficient neighbor detection  
+- Optimized canvas rendering  
+- Runs reliably on **older iPhone hardware**  
+- Stable under high‑load conditions (large flocks, rapid respawns)
+
+### **Math & Simulation**  
+- Vector normalization  
+- Weighted steering  
+- Angle‑based field‑of‑view checks  
+- Averaging algorithms for alignment & cohesion  
+
+### **Cross‑Platform Input**  
+- Keyboard controls  
+- Touchscreen joystick support  
+- Mobile‑friendly UI elements  
+
+---
+
+## 🎮 Gameplay Features
+
+### **Dynamic Boid Behavior**  
+As the snake eats boids, new ones spawn with:  
+- Faster movement  
+- Sharper turning  
+- Larger size  
+- Different colors  
+
+### **Power‑Ups**  
+Each power‑up includes UI banners and countdown timers.
+
+- **Gigantuan** – increases snake size  
+- **Speed Boost** – temporary velocity increase  
+- **Time Dilation** – slows boid movement  
+- **Containment** – boids bounce off boundaries  
+- **Battle Ship (Planned)** – snake fires projectiles to “frag” boids  
+
+---
+
+## 🛠️ Tech Stack  
+- **JavaScript (ES6)**  
+- **HTML5 Canvas**  
+- **CSS**  
+- **Node/Express** (development tooling)  
+- **Custom vector math utilities**  
+
+---
+
+## 📚 Research & Inspiration  
+- Craig Reynolds, *Flocks, Herds, and Schools: A Distributed Behavioral Model* (1987)  
+- Particle Life simulations  
 - Evolutionary agent systems (e.g., Bibites)
 
-📝 Development Log
+---
 
+## 📝 Development Log  
 12/27/2023 - I watched a very cool youtube video on evolution simuation, [Bibites Link Here](https://www.youtube.com/watch?v=xBQ3knSi0Uo&t=1331s)
 This has me thinking I could add some functionality to include powerups.
 
