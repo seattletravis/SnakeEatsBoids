@@ -174,20 +174,30 @@ window.addEventListener('load', function () {
 	class PowerUp {
 		constructor(game, type) {
 			this.game = game;
-			this.radius = 9;
+			this.type = type;
 			this.x = Math.random() * game.width * 0.6 + game.width * 0.2;
 			this.y = Math.random() * game.height * 0.6 + game.height * 0.2;
-			this.type = type;
-			this.red = 70;
-			this.green = 255;
-			this.blue = 180;
 			this.opacity = 0.5;
 			this.opacityAnimator = 0.01;
-			this.color = 'white';
-			this.markedForDeletion = false;
 			this.timeRemaining = 15;
 			this.powerTimer = 0;
 			this.powerInterval = 15000;
+			this.markedForDeletion = false;
+			if (type === 'speed') {
+				this.radius = 10;
+				this.shape = 'diamond';
+				this.color = { r: 255, g: 50, b: 50 }; // 🔥 red
+			} else if (type === 'big') {
+				this.radius = 14;
+				this.shape = 'circle';
+				this.color = { r: 50, g: 150, b: 255 }; // 🔵 blue
+			}
+
+			// this.red = 70;
+			// this.green = 255;
+			// this.blue = 180;
+			// this.radius = 9;
+			// this.color = 'white';
 		}
 
 		update() {
@@ -206,18 +216,38 @@ window.addEventListener('load', function () {
 				this.timeRemaining -= 0.01;
 			} else this.markedForDeletion = true;
 		}
-
+		drawDiamond(context, x, y, size, color, opacity) {
+			context.save();
+			context.translate(x, y);
+			context.rotate(Math.PI / 4);
+			context.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity})`;
+			context.fillRect(-size / 2, -size / 2, size, size);
+			context.restore();
+		}
 		draw(context) {
 			let displayTime = Math.floor(this.timeRemaining);
 			let xAdjust = displayTime < 10 ? 4 : 8.5;
-			context.fillStyle = `rgba(${this.red},${this.green},${this.blue},${this.opacity})`;
-			context.beginPath();
-			context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
-			context.fill();
-			context.fillStyle = `rgba(0, 0, 0, 1)`;
+
+			if (this.shape === 'diamond') {
+				this.drawDiamond(
+					context,
+					this.x,
+					this.y,
+					this.radius * 2,
+					this.color,
+					this.opacity,
+				);
+			} else {
+				context.fillStyle = `rgba(${this.color.r},${this.color.g},${this.color.b},${this.opacity})`;
+				context.beginPath();
+				context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+				context.fill();
+			}
+
+			// Timer text
+			context.fillStyle = 'black';
 			context.font = 'bold 14px Arial';
 			context.fillText(displayTime, this.x - xAdjust, this.y + 5);
-			context.fill;
 		}
 	}
 
@@ -298,6 +328,36 @@ window.addEventListener('load', function () {
 			len = len || 2;
 			var zeros = new Array(len).join('0');
 			return (zeros + str).slice(-len);
+		}
+		applyCurrentDirection() {
+			// Determine direction from current velocity
+			const magnitude = Math.hypot(this.speedX, this.speedY);
+
+			// If not moving, do nothing
+			if (magnitude === 0) return;
+
+			// Normalize direction
+			const dirX = this.speedX / magnitude;
+			const dirY = this.speedY / magnitude;
+
+			// Apply new speed
+			this.speedX = dirX * this.snakeSpeed;
+			this.speedY = dirY * this.snakeSpeed;
+		}
+		scaleSnakeToScreen() {
+			const maxRadius = Math.min(canvas.width, canvas.height) * 0.05;
+			const maxSegments = Math.floor((canvas.width + canvas.height) / 20);
+
+			// Clamp radius
+			if (this.radius > maxRadius) {
+				this.radius = maxRadius;
+			}
+
+			// Clamp segment count
+			if (this.snakeSegments.length > maxSegments) {
+				this.snakeSegments.length = maxSegments;
+				this.snakePieces = maxSegments;
+			}
 		}
 
 		update() {
@@ -495,8 +555,8 @@ window.addEventListener('load', function () {
 			this.powerTimer = { timer: 0, interval: 5000 };
 			this.starTimer = 0;
 			this.starInterval = 100;
-			this.boidsInPlay = 30;
-			this.maxBoids = 80;
+			this.boidsInPlay = 15;
+			this.maxBoids = 50;
 			this.stopAddingBoids = false;
 			this.snakeSwerveValue = 0.001;
 			this.boidSwerveValue = 0.05;
@@ -529,11 +589,13 @@ window.addEventListener('load', function () {
 				interval: 15000,
 			};
 			this.speedMode = { on: false, timer: 0, interval: 15000 };
-			this.shrinkFactorSegments = 2;
-			this.shrinkFactorRadius = 0.5;
+			this.shrinkFactorSegments = 1;
+			this.shrinkFactorRadius = 0.4;
 			this.initialBoidsAdded = false;
 		}
 		update(deltaTime) {
+			this.snake.scaleSnakeToScreen();
+
 			if (
 				this.score > 1000 &&
 				this.boids.length === 0 &&
@@ -750,13 +812,13 @@ window.addEventListener('load', function () {
 					powerup.markedForDeletion = true;
 					if (powerup.type === 'big') {
 						if (this.gargantuanMode.on === true) {
-							this.gargantuanMode.timer -= 3000;
+							this.gargantuanMode.timer -= 6000;
 						} else {
 							this.gargantuanMode.on = true;
 						}
 					} else {
 						if (this.speedMode.on === true) {
-							this.speedMode.timer -= 3000;
+							this.speedMode.timer -= 6000;
 						} else {
 							this.speedMode.on = true;
 						}
@@ -982,12 +1044,12 @@ window.addEventListener('load', function () {
 				return;
 			}
 			if (this.gargantuanMode.timer > this.gargantuanMode.interval) {
-				this.snake.radius -= 60;
+				this.snake.radius -= 20;
 				this.gargantuanMode.on = false;
 				this.gargantuanMode.timer = 0;
 				return;
 			} else if (this.gargantuanMode.timer <= 0) {
-				this.snake.radius += 60;
+				this.snake.radius += 20;
 				this.gargantuanMode.timer += deltaTime;
 			} else {
 				this.gargantuanMode.timer += deltaTime;
@@ -1000,12 +1062,16 @@ window.addEventListener('load', function () {
 				return;
 			}
 			if (this.speedMode.timer > this.speedMode.interval) {
-				this.snake.snakeSpeed -= 2;
+				this.snake.snakeSpeed -= 1;
+				this.snake.applyCurrentDirection();
+
 				this.speedMode.on = false;
 				this.speedMode.timer = 0;
 				return;
 			} else if (this.speedMode.timer <= 0) {
-				this.snake.snakeSpeed += 2;
+				this.snake.snakeSpeed += 1;
+				this.snake.applyCurrentDirection();
+
 				this.snake.speedFlag = true;
 
 				this.speedMode.timer += deltaTime;

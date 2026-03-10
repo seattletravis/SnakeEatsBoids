@@ -4,6 +4,16 @@
 	box-sizing: border-box;
 }
 
+html,
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden; /* Prevent scrolling */
+	touch-action: none; /* Disable default touch behaviors */
+}
+
 #joystick-area {
 	touch-action: none;
 	position: fixed;
@@ -17,7 +27,7 @@
 }
 
 #joystick {
-	touch-action: none;
+	/* touch-action: none; */
 	width: 60px;
 	height: 60px;
 	background: rgba(255, 255, 255, 0.3);
@@ -28,43 +38,12 @@
 	transition: 0.05s;
 }
 
-/* #joystick {
-	bottom: 150px;
-	right: 150px;
-	position: absolute;
-	border-radius: 50%;
-	width: 50px;
-	height: 50px;
-	background-color: white;
-	opacity: 0.5;
-} */
-
 .buttonStyling {
 	position: absolute;
 	width: 50px;
 	height: 50px;
 	background-color: white;
 	opacity: 0.5;
-}
-
-#up {
-	bottom: 125px;
-	right: 75px;
-}
-
-#down {
-	bottom: 25px;
-	right: 75px;
-}
-
-#left {
-	bottom: 75px;
-	right: 125px;
-}
-
-#right {
-	bottom: 75px;
-	right: 25px;
 }
 
 #canvas1 {
@@ -76,4 +55,6 @@
 	background: black;
 	max-width: 100%;
 	max-height: 100%;
+	display: block;
+	touch-action: none;
 }
