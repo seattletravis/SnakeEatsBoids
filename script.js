@@ -3,6 +3,8 @@ window.addEventListener('load', function () {
 	const ctx = canvas.getContext('2d');
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
+	const baseWidth = 1200;
+	const scaleFactor = window.innerWidth / baseWidth;
 
 	class InputHandler {
 		constructor(game) {
@@ -427,13 +429,17 @@ window.addEventListener('load', function () {
 
 		draw(context) {
 			this.snakeColorPattern = Math.floor(this.snakeSegments.length / 6);
-			let radius = this.radius;
+
+			// radius is already clamped everywhere else
+			const radius = this.radius;
+
 			for (let i = this.snakeSegments.length - 1; i >= 0; i--) {
 				if (Math.floor(i / this.snakeColorPattern) % 2 === 0) {
 					context.fillStyle = this.primaryColor;
 				} else {
 					context.fillStyle = this.invertedColor;
 				}
+
 				context.beginPath();
 				context.arc(
 					this.snakeSegments[i].x,
@@ -693,11 +699,19 @@ window.addEventListener('load', function () {
 
 			//logic controller for putting powerups in play
 
-			//Manage Powerup Mode - Gargantuan
+			// Manage Powerup Mode - Gargantuan
 			if (this.powerUpsOnScreen.length < this.powerUpsInPlay) {
-				const type = Math.random() <= 0.5 ? 'speed' : 'big';
+				// Remove gargantuan on small screens
+				let type;
+				if (this.scaleFactor < 0.8) {
+					type = 'speed'; // only speed spawns
+				} else {
+					type = Math.random() <= 0.5 ? 'speed' : 'big';
+				}
+
 				this.addPowerUp(type);
 			}
+
 			this.addPowerUpsInPlay(deltaTime);
 			this.gargantuan(deltaTime);
 			this.speedBoost(deltaTime);
@@ -794,6 +808,7 @@ window.addEventListener('load', function () {
 		}
 
 		addPowerUp(type) {
+			if (type === 'big' && this.scaleFactor < 0.8) return;
 			this.powerUpsOnScreen.push(new PowerUp(this, type));
 		}
 
@@ -1037,24 +1052,43 @@ window.addEventListener('load', function () {
 				this.powerTimer.timer += deltaTime;
 			}
 		}
-
-		//POWERUPS - gargantuan
+		// POWERUPS - gargantuan
 		gargantuan(deltaTime) {
-			if (this.gargantuanMode.on === false) {
-				return;
-			}
+			if (!this.gargantuanMode.on) return;
+
 			if (this.gargantuanMode.timer > this.gargantuanMode.interval) {
 				this.snake.radius -= 20;
+				this.snake.radius = Math.max(3, this.snake.radius); // clamp here
 				this.gargantuanMode.on = false;
 				this.gargantuanMode.timer = 0;
 				return;
-			} else if (this.gargantuanMode.timer <= 0) {
+			}
+
+			if (this.gargantuanMode.timer <= 0) {
 				this.snake.radius += 20;
+				this.snake.radius = Math.min(80, this.snake.radius); // optional max clamp
 				this.gargantuanMode.timer += deltaTime;
 			} else {
 				this.gargantuanMode.timer += deltaTime;
 			}
 		}
+		// //POWERUPS - gargantuan
+		// gargantuan(deltaTime) {
+		// 	if (this.gargantuanMode.on === false) {
+		// 		return;
+		// 	}
+		// 	if (this.gargantuanMode.timer > this.gargantuanMode.interval) {
+		// 		this.snake.radius -= 20;
+		// 		this.gargantuanMode.on = false;
+		// 		this.gargantuanMode.timer = 0;
+		// 		return;
+		// 	} else if (this.gargantuanMode.timer <= 0) {
+		// 		this.snake.radius += 20;
+		// 		this.gargantuanMode.timer += deltaTime;
+		// 	} else {
+		// 		this.gargantuanMode.timer += deltaTime;
+		// 	}
+		// }
 
 		// POWERUPS - Speed Boost
 		speedBoost(deltaTime) {
