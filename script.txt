@@ -28,7 +28,6 @@ window.addEventListener('load', function () {
 			});
 		}
 	}
-
 	class TouchJoystick {
 		constructor(game) {
 			this.game = game;
@@ -38,27 +37,51 @@ window.addEventListener('load', function () {
 			this.active = false;
 			this.center = { x: 0, y: 0 };
 
+			// Pointer events
 			this.joystickArea.addEventListener('pointerdown', (e) => this.start(e));
-			this.joystickArea.addEventListener('pointermove', (e) => this.move(e));
-			this.joystickArea.addEventListener('pointerup', () => this.end());
-			this.joystickArea.addEventListener('pointercancel', () => this.end());
+			this.joystickArea.addEventListener('pointermove', (e) => this.move(e), {
+				passive: true,
+			});
+			this.joystickArea.addEventListener('pointerup', (e) => this.end(e));
+			this.joystickArea.addEventListener('pointercancel', (e) => this.end(e));
 		}
-
 		start(e) {
 			this.active = true;
+			this.game.joystickActive = true;
+
+			this.joystickArea.setPointerCapture(e.pointerId);
 
 			const rect = this.joystickArea.getBoundingClientRect();
 			this.center.x = rect.left + rect.width / 2;
 			this.center.y = rect.top + rect.height / 2;
 
+			// Compute angle immediately
+			const x = e.pageX ?? e.clientX;
+			const y = e.pageY ?? e.clientY;
+			const dx = x - this.center.x;
+			const dy = y - this.center.y;
+			const angle = Math.atan2(dy, dx);
+
+			// Set joystick angle immediately
+			this.game.joystickAngle = angle;
+			this.game.snake.lastAngle = angle;
+
+			// Force snake to move immediately
+			this.game.snake.speedX = Math.cos(angle) * this.game.snake.snakeSpeed;
+			this.game.snake.speedY = Math.sin(angle) * this.game.snake.snakeSpeed;
+
+			// Update joystick knob visually
 			this.move(e);
 		}
 
 		move(e) {
 			if (!this.active) return;
 
-			const dx = e.clientX - this.center.x;
-			const dy = e.clientY - this.center.y;
+			const x = e.pageX ?? e.clientX;
+			const y = e.pageY ?? e.clientY;
+
+			const dx = x - this.center.x;
+			const dy = y - this.center.y;
 
 			const angle = Math.atan2(dy, dx);
 			const distance = Math.min(Math.hypot(dx, dy), 60);
@@ -69,9 +92,28 @@ window.addEventListener('load', function () {
 			this.game.joystickAngle = angle;
 			this.game.joystickActive = true;
 		}
+		// move(e) {
+		// 	if (!this.active) return;
 
-		end() {
+		// 	const dx = e.clientX - this.center.x;
+		// 	const dy = e.clientY - this.center.y;
+
+		// 	const angle = Math.atan2(dy, dx);
+		// 	const distance = Math.min(Math.hypot(dx, dy), 60);
+
+		// 	this.joystick.style.left = `${60 + Math.cos(angle) * distance}px`;
+		// 	this.joystick.style.top = `${60 + Math.sin(angle) * distance}px`;
+
+		// 	this.game.joystickAngle = angle;
+		// 	this.game.joystickActive = true;
+		// }
+
+		end(e) {
 			this.active = false;
+
+			// Release pointer capture
+			if (e) this.joystickArea.releasePointerCapture(e.pointerId);
+
 			this.joystick.style.left = `60px`;
 			this.joystick.style.top = `60px`;
 			this.game.joystickActive = false;
@@ -255,7 +297,6 @@ window.addEventListener('load', function () {
 			this.primaryColor =
 				'#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0');
 			this.invertedColor = this.invertColor(this.primaryColor);
-			this.lastAngle = 0;
 		}
 
 		invertColor(hex, bw) {
@@ -287,37 +328,45 @@ window.addEventListener('load', function () {
 		}
 
 		update() {
-			if (this.speedFlag === true) {
-        this.snakeSpeed *= 2;
-				this.speedFlag = false;
-			}
-
+			// let ampy = Math.sin(this.game.fingerAngle);
 			// JOYSTICK MOVEMENT (final stable version)
 			if (this.game.joystickActive) {
 				const targetAngle = this.game.joystickAngle;
 
-				// Compute smallest angle difference using lastAngle (not speed)
-				let diff = targetAngle - this.lastAngle;
-				diff = Math.atan2(Math.sin(diff), Math.cos(diff)); // normalize to [-π, π]
+				// Always update movement every frame
+				this.speedX = Math.cos(targetAngle) * this.snakeSpeed;
+				this.speedY = Math.sin(targetAngle) * this.snakeSpeed;
 
-				// TRUE reversal only if > 90°
-				const reversing = Math.abs(diff) > Math.PI / 2;
+				this.lastAngle = targetAngle;
 
-				if (!reversing) {
-					// Always full speed — never let velocity decay
-					this.speedX = Math.cos(targetAngle) * this.snakeSpeed;
-					this.speedY = Math.sin(targetAngle) * this.snakeSpeed;
-
-					// Update lastAngle ONLY when movement is valid
-					this.lastAngle = targetAngle;
-				} else {
-					// If reversing, KEEP MOVING in lastAngle direction at full speed
-					this.speedX = Math.cos(this.lastAngle) * this.snakeSpeed;
-					this.speedY = Math.sin(this.lastAngle) * this.snakeSpeed;
-				}
-
-				return; // Skip keyboard logic
+				return;
 			}
+
+			// if (this.game.joystickActive) {
+			// 	const targetAngle = this.game.joystickAngle;
+
+			// 	// Compute smallest angle difference using lastAngle (not speed)
+			// 	let diff = targetAngle - this.lastAngle;
+			// 	diff = Math.atan2(Math.sin(diff), Math.cos(diff)); // normalize to [-π, π]
+
+			// 	// TRUE reversal only if > 90°
+			// 	const reversing = Math.abs(diff) > Math.PI / 2;
+
+			// 	if (!reversing) {
+			// 		// Always full speed — never let velocity decay
+			// 		this.speedX = Math.cos(targetAngle) * this.snakeSpeed;
+			// 		this.speedY = Math.sin(targetAngle) * this.snakeSpeed;
+
+			// 		// Update lastAngle ONLY when movement is valid
+			// 		this.lastAngle = targetAngle;
+			// 	} else {
+			// 		// If reversing, KEEP MOVING in lastAngle direction at full speed
+			// 		this.speedX = Math.cos(this.lastAngle) * this.snakeSpeed;
+			// 		this.speedY = Math.sin(this.lastAngle) * this.snakeSpeed;
+			// 	}
+
+			// 	return; // Skip keyboard logic
+			// }
 
 			if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {
 				this.speedY = -this.snakeSpeed;
@@ -330,9 +379,6 @@ window.addEventListener('load', function () {
 				this.speedY = 0;
 			} else if (this.game.keys.includes('ArrowRight') && this.speedX === 0) {
 				this.speedX = this.snakeSpeed;
-				this.speedY = 0;
-			} else if (this.game.keys.includes(' ')) {
-				this.speedX = 0;
 				this.speedY = 0;
 			}
 
@@ -654,8 +700,7 @@ window.addEventListener('load', function () {
 			}
 
 			//shrink snake if snake doesnt eat
-			if (!this.game.joystickActive){
-        if (
+			if (
 				this.snake.snakeTimer > this.snake.snakeInterval &&
 				this.snake.radius > 3 &&
 				!this.gargantuanMode.on &&
@@ -797,11 +842,8 @@ window.addEventListener('load', function () {
 							this.snakeProxy += 1;
 							this.snakeSwerveValue += 0.0000001;
 						}
-            if (!this.joystickActive) {
-              this.snake.snakePieces += 3;
-              this.snake.radius += this.snake.radiusIncreasePerFrag;
-            }
-						// this.snake.radius += this.snake.radiusIncreasePerFrag;
+						this.snake.snakePieces += 3;
+						this.snake.radius += this.snake.radiusIncreasePerFrag;
 						this.boidRadius += 0.25;
 						this.addBoidPieces += 0.15;
 						if (this.speed < this.maxSpeed) {

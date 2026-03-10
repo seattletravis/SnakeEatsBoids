@@ -5,6 +5,7 @@
 }
 
 #joystick-area {
+	touch-action: none;
 	position: fixed;
 	bottom: 40px;
 	left: 40px;
@@ -16,6 +17,7 @@
 }
 
 #joystick {
+	touch-action: none;
 	width: 60px;
 	height: 60px;
 	background: rgba(255, 255, 255, 0.3);
