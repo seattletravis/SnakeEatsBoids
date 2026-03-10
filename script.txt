@@ -255,6 +255,7 @@ window.addEventListener('load', function () {
 			this.primaryColor =
 				'#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0');
 			this.invertedColor = this.invertColor(this.primaryColor);
+			this.lastAngle = 0;
 		}
 
 		invertColor(hex, bw) {
@@ -287,26 +288,35 @@ window.addEventListener('load', function () {
 
 		update() {
 			if (this.speedFlag === true) {
-				this.speedY *= 2;
-				this.speedX *= 2;
+        this.snakeSpeed *= 2;
 				this.speedFlag = false;
 			}
 
-			// let ampy = Math.sin(this.game.fingerAngle);
-			// JOYSTICK MOVEMENT
+			// JOYSTICK MOVEMENT (final stable version)
 			if (this.game.joystickActive) {
-				const angle = this.game.joystickAngle;
+				const targetAngle = this.game.joystickAngle;
 
-				const newX = Math.cos(angle);
-				const newY = Math.sin(angle);
+				// Compute smallest angle difference using lastAngle (not speed)
+				let diff = targetAngle - this.lastAngle;
+				diff = Math.atan2(Math.sin(diff), Math.cos(diff)); // normalize to [-π, π]
 
-				// Prevent instant reversal
-				if (Math.sign(newX) !== -Math.sign(this.speedX)) {
-					this.speedX = newX * this.snakeSpeed;
+				// TRUE reversal only if > 90°
+				const reversing = Math.abs(diff) > Math.PI / 2;
+
+				if (!reversing) {
+					// Always full speed — never let velocity decay
+					this.speedX = Math.cos(targetAngle) * this.snakeSpeed;
+					this.speedY = Math.sin(targetAngle) * this.snakeSpeed;
+
+					// Update lastAngle ONLY when movement is valid
+					this.lastAngle = targetAngle;
+				} else {
+					// If reversing, KEEP MOVING in lastAngle direction at full speed
+					this.speedX = Math.cos(this.lastAngle) * this.snakeSpeed;
+					this.speedY = Math.sin(this.lastAngle) * this.snakeSpeed;
 				}
-				if (Math.sign(newY) !== -Math.sign(this.speedY)) {
-					this.speedY = newY * this.snakeSpeed;
-				}
+
+				return; // Skip keyboard logic
 			}
 
 			if (this.game.keys.includes('ArrowUp') && this.speedY === 0) {
@@ -644,7 +654,8 @@ window.addEventListener('load', function () {
 			}
 
 			//shrink snake if snake doesnt eat
-			if (
+			if (!this.game.joystickActive){
+        if (
 				this.snake.snakeTimer > this.snake.snakeInterval &&
 				this.snake.radius > 3 &&
 				!this.gargantuanMode.on &&
@@ -786,8 +797,11 @@ window.addEventListener('load', function () {
 							this.snakeProxy += 1;
 							this.snakeSwerveValue += 0.0000001;
 						}
-						this.snake.snakePieces += 3;
-						this.snake.radius += this.snake.radiusIncreasePerFrag;
+            if (!this.joystickActive) {
+              this.snake.snakePieces += 3;
+              this.snake.radius += this.snake.radiusIncreasePerFrag;
+            }
+						// this.snake.radius += this.snake.radiusIncreasePerFrag;
 						this.boidRadius += 0.25;
 						this.addBoidPieces += 0.15;
 						if (this.speed < this.maxSpeed) {
